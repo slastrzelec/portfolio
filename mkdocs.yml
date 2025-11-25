@@ -10,7 +10,8 @@ theme:
 
 nav:
   - Home: index.md
-  - O mnie: o-mnie.md
-  - Projekty:
-      - Erytrocyty: 01_erytro/index.md
-      - EDA Chemoinformatyka: 02_eda_chem/index.md
+  - About Me : o-mnie.md
+  - Projects:
+      - Erytrocytes: 01_erytro/index.md
+      - EDA Chemoinformtics: 02_eda_chem/index.md
+      - Nanotubes Simulation: 03_nanotubes/index.md

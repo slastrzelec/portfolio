@@ -1,35 +1,23 @@
-# Witaj w moim portfolio 👋
 
-Cześć! Nazywam się **Sławomir Strzelec** i zajmuję się **data science i machine learning**.  
-Tutaj znajdziesz moje projekty, doświadczenie i osiągnięcia.
 
-## Projekty
+# Welcome to My Portfolio 👋
 
-- [Erytrocyty](01_erytro/index.md) – analiza kształtu erytrocytów i detekcja anomalii  
-- [EDA QM9](02_eda_chem/EDA_QM9.md) – eksploracyjna analiza danych zbioru QM9
+<p style="text-align: justify;">
+Hi! My name is <strong>Sławomir Strzelec</strong>. I’m a scientist transitioning into <strong>data science and machine learning</strong>, with a strong background in <strong>organic chemistry, nanotechnology, spectroscopy</strong>, and experimental research.
+In this portfolio, you’ll find selected projects showcasing my analytical skills, <strong>Python proficiency</strong>, and interest in applying ML to scientific and technical problems.
+</p>
 
-## O mnie
 
-- [O mnie](o-mnie.md) – dowiedz się więcej o mojej ścieżce i umiejętnościach
+## Projects
+
+* [Erythrocytes](01_erytro/index.md) – erythrocyte shape analysis and anomaly detection
+* [EDA QM9](02_eda_chem/EDA_QM9.md) – exploratory data analysis of the QM9 dataset
+* [03_nanotubes](02_eda_chem/EDA_QM9.md) – carbon nanotubes visualization
+
+## About Me
+
+* [About Me](o-mnie.md) – learn more about my background and skills
 
 ---
 
-*Portfolio stworzone z użyciem MkDocs*
-```
-
-## Kluczowe zasady:
-
-✅ **Linki w Markdown**: `[Tekst](ścieżka/plik.md)`
-- Bez podkreśleń `__`
-- Bez `html` - tylko `.md`
-- Ścieżki względne od folderu `docs/`
-
-✅ **Struktura katalogów musi pasować**:
-```
-docs/
-├── index.md           ← ten plik
-├── o-mnie.md
-├── 01_erytro/
-│   └── index.md
-└── 02_eda_chem/       ← uwaga: podkreślnik!
-    └── EDA_QM9.md
+*Portfolio created using MkDocs*
