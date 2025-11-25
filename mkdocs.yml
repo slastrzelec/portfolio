@@ -1,21 +1,16 @@
-site_name: Sławomir Strzelec
-site_author: Maciej Sobczak
-site_description: >-
-    Portfolio moich wspaniałych projektów z Data Science i AI!
+site_name: Portfolio - Sławomir Strzelec
 theme:
   name: material
-
-repo_name: slastrzelec/portfolio
-repo_url: https://github.com/slastrzelec/portfolio
-
-
-
-
-
+  palette:
+    primary: indigo
+    accent: blue
+  features:
+    - navigation.tabs
+    - navigation.sections
 
 nav:
-  - Strona główna: index.md
+  - Home: index.md
   - O mnie: o-mnie.md
   - Projekty:
-      - Erytro: 01_erytro/index.md
-      - EDA Chem: 02_eda_chem/EDA_QM9.md 
+      - Erytrocyty: 01_erytro/index.md
+      - EDA Chemoinformatyka: 02_eda_chem/index.md
