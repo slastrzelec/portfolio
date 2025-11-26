@@ -1,0 +1,913 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../03_nanotubes/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Raman Spectra Analyzer - Portfolio - Sławomir Strzelec</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#raman-spectroscopy-analysis-tool" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Portfolio - Sławomir Strzelec" class="md-header__button md-logo" aria-label="Portfolio - Sławomir Strzelec" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Portfolio - Sławomir Strzelec
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Raman Spectra Analyzer
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../o-mnie/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About Me
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01_erytro/" class="md-tabs__link">
+          
+  
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Portfolio - Sławomir Strzelec" class="md-nav__button md-logo" aria-label="Portfolio - Sławomir Strzelec" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Portfolio - Sławomir Strzelec
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../o-mnie/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Me
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_erytro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Erytrocytes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_eda_chem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EDA Chemoinformtics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_nanotubes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nanotubes Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raman Spectra Analyzer
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raman Spectra Analyzer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✨ Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✨ Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#peak-detection-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 Peak Detection Visualization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loaded-spectrum-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 Loaded Spectrum Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spectrum-normalization-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📈 Spectrum Normalization Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-features-and-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ Key Features and Workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 Technical Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributions-and-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🌟 Contributions and Impact
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 Project Links
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✨ Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✨ Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#peak-detection-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 Peak Detection Visualization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loaded-spectrum-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 Loaded Spectrum Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spectrum-normalization-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📈 Spectrum Normalization Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-features-and-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ Key Features and Workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 Technical Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributions-and-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🌟 Contributions and Impact
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 Project Links
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="raman-spectroscopy-analysis-tool">🔬 Raman Spectroscopy Analysis Tool</h1>
+<h2 id="overview">✨ Overview</h2>
+<p>The <strong>Raman Spectroscopy Analysis Tool</strong> is a comprehensive web application built with Streamlit and advanced scientific Python libraries (like Pandas, NumPy, and potentially SciPy/LMFIT) designed for chemists, materials scientists, and engineers to quickly and accurately process, analyze, and characterize Raman spectroscopy data, particularly focusing on <strong>carbonaceous materials</strong> (e.g., graphene, carbon nanotubes).</p>
+<p>It streamlines the entire workflow from raw data import to quantitative material property extraction, eliminating the need for complex desktop software.</p>
+<p>📈 Some Some screenshots from application: </p>
+<p><img alt="Screen from app" src="img%20%281%29.png" /></p>
+<h4 id="peak-detection-visualization">🔍 Peak Detection Visualization</h4>
+<p>The "Peak Detection" screen displays the results of automatic peak identification within a Raman spectrum (example for CNT-COOH_c.txt). The overlaid interactive Plotly chart visualizes 11 detected peaks (marked with a red 'X'), based on defined parameters such as Minimum height (0.15) and Prominence (0.08).</p>
+<p><img alt="Screen from app" src="img%20%282%29.png" /></p>
+<h4 id="loaded-spectrum-overview">📊 Loaded Spectrum Overview</h4>
+<p>The <strong>"Data Overview"</strong> screen serves as the analysis starting point. It displays <strong>metadata</strong> for the loaded file (e.g., CNT-COOH_c.txt), including the <strong>number of data points</strong> (7070), the <strong>Wavenumber Range</strong> (603.2 - 3400.0 cm^{-1}), and the minimum and maximum intensity values. The <strong>"Data validation passed"</strong> section confirms that the data format is correct before commencing the processing workflow.</p>
+<p><img alt="Screen from app" src="img%20%283%29.png" /></p>
+<h4 id="spectrum-normalization-comparison">📈 Spectrum Normalization Comparison</h4>
+<p>The <strong>"Preprocessing"</strong> tab allows you to select a normalization method. The screenshot shows a comparison of the original spectrum (left, blue) with the normalized spectrum (right, green) using the <strong>Min-Max</strong> method. This method scales intensities to the range [0, 1], which is crucial for sample comparison and ensuring data consistency for peak detection algorithms.</p>
+<h2 id="key-features-and-workflow">🛠️ Key Features and Workflow</h2>
+<p>The application implements a full-featured spectroscopy workflow across several tabs:</p>
+<ul>
+<li><strong>Data Handling:</strong> Supports easy upload of single or multiple <code>.txt</code> files with Wavenumber and Intensity columns. Includes data <strong>validation</strong> and metadata extraction.</li>
+<li><strong>Preprocessing:</strong> Essential steps to prepare spectra for analysis:<ul>
+<li><strong>Baseline Correction:</strong> Algorithms including <strong>Linear (Endpoints)</strong> and <strong>Asymmetric Least Squares (ALS)</strong> to remove fluorescence background. </li>
+<li><strong>Normalization:</strong> Methods like Min-Max, Max-Intensity, Area, and Vector (L2) normalization for comparison.</li>
+<li><strong>Smoothing:</strong> Optional Savitzky-Golay filtering to reduce noise.</li>
+</ul>
+</li>
+<li><strong>Peak Analysis:</strong> Automated detection and categorization of Raman bands (suchowo <strong>D, G, RBM, 2D bands</strong> for carbon materials). Calculates fundamental peak statistics.</li>
+<li><strong>Quantitative Fitting &amp; Deconvolution:</strong> Advanced fitting using <strong>Lorentzian</strong> or <strong>Gaussian</strong> models for precise deconvolution of overlapping bands (e.g., D and G bands). This allows calculation of critical ratios.</li>
+<li><strong>Material Characterization:</strong> Calculates key material parameters based on fitting results, such as:<ul>
+<li>The <strong>$I_D/I_G$ ratio</strong>, crucial for determining defect density/crystallinity.</li>
+<li>The <strong>$I_{2D}/I_G$ ratio</strong>, critical for characterizing the number of graphene layers.</li>
+</ul>
+</li>
+<li><strong>Visualization &amp; Export:</strong> Interactive plots (Plotly) at every stage of the pipeline and the ability to export final results.</li>
+</ul>
+<h2 id="technical-stack">💻 Technical Stack</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">Technology</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Frontend/App</strong></td>
+<td style="text-align: left;"><strong>Streamlit</strong></td>
+<td style="text-align: left;">Rapid web application development and interactive UI/UX.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Data Processing</strong></td>
+<td style="text-align: left;"><strong>Python (Pandas, NumPy)</strong></td>
+<td style="text-align: left;">Core data manipulation and scientific computing.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Signal Processing</strong></td>
+<td style="text-align: left;"><strong>SciPy</strong></td>
+<td style="text-align: left;">Implementation of advanced algorithms (Savitzky-Golay, Peak Detection, ALS).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Peak Fitting</strong></td>
+<td style="text-align: left;"><strong>LMFIT</strong> (Implied by functionality)</td>
+<td style="text-align: left;">Non-linear least squares minimization for peak deconvolution.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Visualization</strong></td>
+<td style="text-align: left;"><strong>Plotly</strong> / <strong>Matplotlib</strong></td>
+<td style="text-align: left;">Generating responsive, interactive data visualizations.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contributions-and-impact">🌟 Contributions and Impact</h2>
+<p>This project showcases expertise in:</p>
+<ul>
+<li><strong>Scientific Software Development:</strong> Creating reliable, user-friendly tools for specialized scientific domains.</li>
+<li><strong>Signal and Data Processing:</strong> Applying statistical methods to complex spectral data.</li>
+<li><strong>Chemical/Materials Informatics:</strong> Direct application of computational tools to characterize physical properties from spectroscopic data.</li>
+</ul>
+<h2 id="project-links">🔗 Project Links</h2>
+<ul>
+<li><a href="YOUR_DEPLOYMENT_LINK">Live Demo (Placeholder)</a></li>
+<li><a href="YOUR_GITHUB_LINK">GitHub Repository</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections"], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  </body>
+</html>
