@@ -17,3 +17,4 @@ nav:
       - Nanotubes Simulation: 03_nanotubes/index.md
       - Raman Spectra Analyzer: 04_raman/index.md
       - Drug Solubility ML: 05_drug_solub/index.md
+      - Buchwald-Hartwig C-N Coupling Optimizer: 06_reaction_opt/index.md
