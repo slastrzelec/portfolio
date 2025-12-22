@@ -10,6 +10,7 @@ In this portfolio, you’ll find selected projects showcasing my analytical skil
 
 ## Projects
 
+* [🧬 logP Predictor (PyTorch)](07_logP Predictor/index.md)
 * [Erythrocytes](01_erytro/index.md) – erythrocyte shape analysis and anomaly detection
 * [EDA QM9](02_eda_chem/index.md) – exploratory data analysis of the QM9 dataset
 * [03_nanotubes](02_eda_chem/EDA_QM9.md) – carbon nanotubes visualization

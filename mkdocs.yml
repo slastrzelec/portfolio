@@ -12,6 +12,7 @@ nav:
   - Home: index.md
   - About Me : o-mnie.md
   - Projects:
+      - 🧬 logP Predictor (PyTorch): 07_logP Predictor/index.md
       - Erytrocytes: 01_erytro/index.md
       - EDA Chemoinformtics: 02_eda_chem/index.md
       - Nanotubes Simulation: 03_nanotubes/index.md
