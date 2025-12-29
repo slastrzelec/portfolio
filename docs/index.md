@@ -17,6 +17,7 @@ In this portfolio, you’ll find selected projects showcasing my analytical skil
 * [Raman Spectroscopy Analysis Tool](04_raman/index.md) - tool for analysis of raman spectra
 * [Drug Solubility Prediction using Machine Learning](05_drug_solub/index.md)
 * [🧪 Buchwald-Hartwig C-N Coupling Optimizer](06_reaction_opt/index.md)
+* [📊 Time Series Forecasting at Scale (AWS + SQL)](08_AWS_Energy/index.md)
 
 ## About Me
 

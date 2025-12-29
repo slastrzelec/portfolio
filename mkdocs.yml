@@ -19,3 +19,4 @@ nav:
       - Raman Spectra Analyzer: 04_raman/index.md
       - Drug Solubility ML: 05_drug_solub/index.md
       - Buchwald-Hartwig C-N Coupling Optimizer: 06_reaction_opt/index.md
+      - 📊 Time Series Forecasting at Scale (AWS + SQL): 08_AWS_Energy/index.md
