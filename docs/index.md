@@ -9,7 +9,7 @@ In this portfolio, you’ll find selected projects showcasing my analytical skil
 
 
 ## Projects
-
+* [😊 Emotion Recognition System (OpenCV · PyTorch)](12_emotion-detection/index.md)
 * [🧬 logP Predictor (PyTorch)](07_logP Predictor/index.md)
 * [Erythrocytes](01_erytro/index.md) – erythrocyte shape analysis and anomaly detection
 * [EDA QM9](02_eda_chem/index.md) – exploratory data analysis of the QM9 dataset

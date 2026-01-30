@@ -8,64 +8,117 @@ My name is <strong>Sławomir Strzelec</strong>. I am a scientist transitioning i
 </p>
 
 <p style="text-align: justify;">
-After completing my studies in chemistry and gaining extensive experience in laboratory work, structural analysis, and computational research, I decided to combine my scientific knowledge with modern <strong>data analysis</strong> and <strong>Python-based machine learning</strong> techniques.  
-I enjoy solving scientific and technical problems using analytical thinking, programming, and data-driven methods.
+After completing my studies in chemistry and gaining extensive experience in laboratory research, structural analysis, and computational work, I decided to combine my scientific background with modern <strong>data engineering</strong>, <strong>data analysis</strong>, and <strong>Python-based machine learning</strong>.  
+I focus on building reproducible, data-driven solutions that connect scientific understanding with practical AI systems.
 </p>
+
+---
 
 ## What I Focus On
 
-- Data processing and analysis in Python (NumPy, Pandas, Matplotlib, SciPy, SymPy)  
-- Machine learning and predictive modelling (scikit-learn, PyCaret)  
-- Exploratory data analysis and visualization  
+- Data processing, analysis, and modeling in Python  
+- Machine learning & deep learning for scientific and real-world data  
+- Computer Vision and image-based analysis  
+- Natural Language Processing and Retrieval-Augmented Generation (RAG) systems  
+- Scalable data processing and analytics pipelines  
 - Scientific computing and analytical reasoning  
-- Chemoinformatics and chemical structure analysis  
+
+---
 
 ## Skills
 
-- **Programming & Data:** Python, NumPy, Pandas, Matplotlib, SciPy, SymPy, Jupyter Notebook, Git, SQL  
-- **Machine Learning:** regression, classification, model validation, feature importance  
-- **Analytics:** descriptive statistics, visualization, problem-solving  
-- **Chemistry & Materials Science:** organic synthesis, nanotechnology of carbon structures, NMR spectroscopy, spectroscopy methods, scientific literature research (SciFinder, Reaxys)  
-- **Laboratory Techniques:** purification, inert-atmosphere techniques, column chromatography, recrystallization  
-- **Soft Skills:** teaching, science communication, time management, teamwork, mentoring  
+### 🧑‍💻 Programming, Data & Engineering
+- **Python**, NumPy, Pandas, Matplotlib, SciPy, SymPy  
+- **PySpark** (distributed data processing)  
+- SQL  
+- Git, GitHub  
+- Linux (CLI, environment management)  
+- Docker (basics)
+
+### 🤖 Machine Learning & AI
+- **scikit-learn**, **PyCaret**  
+- **PyTorch** (deep learning)  
+- Classical ML: regression, classification, model evaluation  
+- **Computer Vision** (OpenCV, CNN-based models)  
+- **Natural Language Processing (NLP)**  
+- **Retrieval-Augmented Generation (RAG)** pipelines  
+- Feature importance & model interpretability  
+
+### 📊 Data Analysis & Visualization
+- Exploratory Data Analysis (EDA)  
+- Descriptive and inferential statistics  
+- Data visualization and storytelling  
+
+### 🧪 Chemistry, Materials Science & Scientific Computing
+- Organic synthesis and reaction optimization  
+- Nanotechnology of carbon structures (CNTs)  
+- Spectroscopy: NMR, Raman, UV–Vis  
+- **Chemoinformatics** (RDKit, molecular descriptors)  
+- Scientific literature research (SciFinder, Reaxys)
+
+### 🧠 Soft Skills
+- Analytical thinking  
+- Teaching and mentoring  
+- Science communication  
+- Time management and teamwork  
+
+---
 
 ## My Background
 
 ### 🎓 Education
 
 - **PhD (in progress)** – AGH University of Krakow  
-  Interdisciplinary Environmental PhD Studies in physics, chemistry, biophysics, and nanotechnology  
+  Interdisciplinary Environmental PhD Studies (physics, chemistry, biophysics, nanotechnology)  
+
 - **MSc in Chemistry** – Jagiellonian University  
-  Modern organic synthesis & physiochemistry  
+  Modern organic synthesis & physicochemistry  
+
 - **BSc in Chemistry** – Jagiellonian University  
   Synthesis and catalytic studies of chiral half-salen complexes  
+
+---
 
 ### 🔬 Scientific & Industry Experience
 
 - **Scientist II – Selvita (2024–2025)**  
-  Design, synthesis, purification and characterization of compounds in early-stage drug discovery  
+  Data analysis and experimental work in early-stage drug discovery; compound design, synthesis, and characterization  
+
 - **Internship – University of Turin (2023)**  
-  Organic synthesis & reaction mechanisms  
-- **UNISON (2018–2019)**  
-  Co-author of a successful national research funding application  
-- **UNISON internship – Chemical-resistant coatings (2016)**  
+  Organic synthesis and reaction mechanism studies  
+
+- **UNISON Project (2018–2019)**  
+  Co-author of a successful national research funding proposal  
+
+- **UNISON Internship – Chemical-Resistant Coatings (2016)**  
+
 - **Coordination Chemistry Group – Jagiellonian University (2010)**  
-  Research on vanadium-based metallopharmaceuticals
+  Research on vanadium-based metallopharmaceuticals  
+
+---
 
 ### 🧪 Scientific Interests
 
-Organic chemistry, nanotechnology, spectroscopy, quantum physics, photovoltaics, drug delivery, targeted cancer therapies, NMR, energy storage.
+Organic chemistry, nanotechnology, spectroscopy, machine learning in science, quantum physics, photovoltaics, drug discovery, targeted cancer therapies, energy storage.
+
+---
 
 ### 📚 Publications & Awards
 
 - **Scientific publication (2025):**  
-  “Study of the Influence of Multi-Walled Carbon Nanotubes Functionalised with Nickel Ions on the Functioning of Red Blood Cells”  
+  *“Study of the Influence of Multi-Walled Carbon Nanotubes Functionalised with Nickel Ions on the Functioning of Red Blood Cells”*  
+
 - Rector’s 1st-degree team award for creating a new academic program at AGH  
-- Winner of a Jagiellonian University chemistry competition
+- Winner of a Jagiellonian University chemistry competition  
+
+---
 
 ## My Projects
 
-You’ll find projects that reflect both my scientific background and my transition into data science — including erythrocyte image analysis, exploratory analysis of chemical datasets, machine learning for chemical property prediction, and data exploration in various domains.
+My projects reflect both my scientific background and my transition into data science and AI.  
+They include computer vision systems for biomedical imaging, exploratory analysis of chemical datasets, machine learning models for chemical property prediction, NLP-based tools, and end-to-end ML applications with web deployment.
+
+---
 
 ## Contact
 
@@ -77,5 +130,5 @@ You’ll find projects that reflect both my scientific background and my transit
 ---
 
 <p style="text-align: justify;">
-I am open to new challenges, collaborations, and opportunities in <strong>data science</strong>, <strong>machine learning</strong>, and <strong>scientific analytics</strong>. 🚀
+I am open to new challenges, collaborations, and opportunities in <strong>data science</strong>, <strong>machine learning</strong>, <strong>AI engineering</strong>, and <strong>scientific analytics</strong>. 🚀
 </p>

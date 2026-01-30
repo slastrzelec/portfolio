@@ -12,6 +12,7 @@ nav:
   - Home: index.md
   - About Me : o-mnie.md
   - Projects:
+      - 😊 Emotion Recognition System (OpenCV · PyTorch): 12_emotion-detection/index.md
       - 🧬 logP Predictor (PyTorch): 07_logP Predictor/index.md
       - Erytrocytes: 01_erytro/index.md
       - EDA Chemoinformtics: 02_eda_chem/index.md
@@ -20,3 +21,4 @@ nav:
       - Drug Solubility ML: 05_drug_solub/index.md
       - Buchwald-Hartwig C-N Coupling Optimizer: 06_reaction_opt/index.md
       - 📊 Time Series Forecasting at Scale (AWS + SQL): 08_AWS_Energy/index.md
+  - Certificates: certificates.md
