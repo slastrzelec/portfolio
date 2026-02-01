@@ -9,6 +9,7 @@ In this portfolio, you’ll find selected projects showcasing my analytical skil
 
 
 ## Projects
+* [💡 Carbon Nanotubes RAG System (FAISS · OpenAI)](13_RAG_raman/index.md)
 * [😊 Emotion Recognition System (OpenCV · PyTorch)](12_emotion-detection/index.md)
 * [🧬 logP Predictor (PyTorch)](07_logP Predictor/index.md)
 * [Erythrocytes](01_erytro/index.md) – erythrocyte shape analysis and anomaly detection
