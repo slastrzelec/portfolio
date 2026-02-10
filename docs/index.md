@@ -19,6 +19,7 @@ In this portfolio, you’ll find selected projects showcasing my analytical skil
 * [Drug Solubility Prediction using Machine Learning](05_drug_solub/index.md)
 * [🧪 Buchwald-Hartwig C-N Coupling Optimizer](06_reaction_opt/index.md)
 * [📊 Time Series Forecasting at Scale (AWS + SQL)](08_AWS_Energy/index.md)
+* [🫁 Pneumonia Detection Deep Learning (TensorFlow)]: (15_TensorFlow/index.md)
 
 ## About Me
 
