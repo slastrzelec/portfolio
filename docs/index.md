@@ -11,15 +11,16 @@ In this portfolio, you’ll find selected projects showcasing my analytical skil
 ## Projects
 * [💡 Carbon Nanotubes RAG System (FAISS · OpenAI)](13_RAG_raman/index.md)
 * [😊 Emotion Recognition System (OpenCV · PyTorch)](12_emotion-detection/index.md)
+* [👥 Person Counter (OpenCV · Streamlit)](16_person_counter/index.md)
 * [🧬 logP Predictor (PyTorch)](07_logP Predictor/index.md)
-* [Erythrocytes](01_erytro/index.md) – erythrocyte shape analysis and anomaly detection
+* [🔬Erythrocytes (NumPy · OpenCV)](01_erytro/index.md) – erythrocyte shape analysis and anomaly detection
 * [EDA QM9](02_eda_chem/index.md) – exploratory data analysis of the QM9 dataset
 * [03_nanotubes](02_eda_chem/EDA_QM9.md) – carbon nanotubes visualization
 * [Raman Spectroscopy Analysis Tool](04_raman/index.md) - tool for analysis of raman spectra
 * [Drug Solubility Prediction using Machine Learning](05_drug_solub/index.md)
 * [🧪 Buchwald-Hartwig C-N Coupling Optimizer](06_reaction_opt/index.md)
 * [📊 Time Series Forecasting at Scale (AWS + SQL)](08_AWS_Energy/index.md)
-* [🫁 Pneumonia Detection Deep Learning (TensorFlow)]: (15_TensorFlow/index.md)
+* [🫁 Pneumonia Detection Deep Learning (TensorFlow)](15_TensorFlow/index.md)
 
 ## About Me
 
