@@ -9,12 +9,13 @@ In this portfolio, you’ll find selected projects showcasing my analytical skil
 
 
 ## Projects
+* [🤖 Scientific Research Agent (LangChain · LangGraph · LangFuse)](17_research-agent-langchain/index.md)
 * [💡 Carbon Nanotubes RAG System (FAISS · OpenAI)](13_RAG_raman/index.md)
 * [😊 Emotion Recognition System (OpenCV · PyTorch)](12_emotion-detection/index.md)
 * [👥 Person Counter (OpenCV · Streamlit)](16_person_counter/index.md)
 * [🧬 logP Predictor (PyTorch)](07_logP Predictor/index.md)
-* [🔬Erythrocytes (NumPy · OpenCV)](01_erytro/index.md) – erythrocyte shape analysis and anomaly detection
-* [EDA QM9](02_eda_chem/index.md) – exploratory data analysis of the QM9 dataset
+* [🔬 Erythrocytes (NumPy · OpenCV)](01_erytro/index.md) – erythrocyte shape analysis and anomaly detection
+* [⚛️EDA QM9](02_eda_chem/index.md) – exploratory data analysis of the QM9 dataset
 * [03_nanotubes](02_eda_chem/EDA_QM9.md) – carbon nanotubes visualization
 * [Raman Spectroscopy Analysis Tool](04_raman/index.md) - tool for analysis of raman spectra
 * [Drug Solubility Prediction using Machine Learning](05_drug_solub/index.md)

@@ -12,12 +12,13 @@ nav:
   - Home: index.md
   - About Me : o-mnie.md
   - Projects:
+      - 🤖 Scientific Research Agent (LangChain · LangGraph · LangFuse): 17_research-agent-langchain/index.md
       - 💡 Carbon Nanotubes RAG System (FAISS · OpenAI): 13_RAG_raman/index.md
       - 😊 Emotion Recognition System (OpenCV · PyTorch): 12_emotion-detection/index.md
       - 👥 Person Counter (OpenCV · Streamlit): 16_person_counter/index.md
       - 🧬 logP Predictor (PyTorch): 07_logP Predictor/index.md
       - 🔬 Erytrocytes (NumPy · OpenCV): 01_erytro/index.md
-      - EDA Chemoinformtics: 02_eda_chem/index.md
+      - ⚛️ EDA Chemoinformtics: 02_eda_chem/index.md
       - Nanotubes Simulation: 03_nanotubes/index.md
       - Raman Spectra Analyzer: 04_raman/index.md
       - Drug Solubility ML: 05_drug_solub/index.md

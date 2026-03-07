@@ -273,8 +273,6 @@ Error:  33% (HSV sensitivity)
 
 ## 📚 References
 
-## 📚 References
-
 - Viola, P., & Jones, M. (2001). Rapid object detection using a boosted cascade of simple features. *IEEE Transactions on Pattern Analysis and Machine Intelligence*, 24(9), 1158-1167.
 - <a href="https://docs.opencv.org/" target="_blank">OpenCV Documentation</a>
 - <a href="https://docs.streamlit.io/" target="_blank">Streamlit Documentation</a>
