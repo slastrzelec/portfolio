@@ -2,11 +2,22 @@ site_name: Portfolio - Sławomir Strzelec
 theme:
   name: material
   palette:
-    primary: indigo
-    accent: blue
+    scheme: slate
+    primary: deep orange
+    accent: deep orange
+  font:
+    text: Roboto
+    code: JetBrains Mono
   features:
     - navigation.tabs
     - navigation.sections
+    - navigation.top
+    - navigation.instant
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
 
 nav:
   - Home: index.md
