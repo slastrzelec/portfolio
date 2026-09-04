@@ -31,3 +31,6 @@ In this portfolio, you’ll find selected projects showcasing my analytical skil
 ---
 
 *Portfolio created using MkDocs*
+
+
+![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=slastrzelec.portfolio)

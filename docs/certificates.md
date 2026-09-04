@@ -74,4 +74,3 @@ Online professional course focused on:
 ---
 
 📌 *Certificates are available upon request and can be verified via official providers or documentation.*
-
