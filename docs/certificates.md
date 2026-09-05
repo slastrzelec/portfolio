@@ -2,12 +2,50 @@
 
 Curated list of completed certifications and professional training programs, focused on **Data Science, Machine Learning, Cloud Computing, Big Data, LLMs, and Security Awareness**.
 
+## 🌟 Featured Programs
+
+### Practical Python Programming
+**praktycznypython.pl**, trainer: Krzysztof Mędrela | *Completed: February 16, 2025*
+
+A standard, thorough core-Python course covering the language end to end — completed all course projects and passed the final exam:
+
+- Core data types: lists, tuples, dictionaries, sets, and their proper use cases
+- Control flow, functions, and error handling
+- Object-oriented programming (classes, inheritance, encapsulation)
+- Writing clean, idiomatic, maintainable Python code
+
+The trainer, Krzysztof Mędrela, is an IT/Python consultant with 10+ years of experience who also delivers corporate Python and Machine Learning training (including for HSBC).
+
+### Pracuj w AI: Zostań Data Scientist od Zera
+**gotoit.pl** (branded "Work in AI") | *Completed: November 25, 2025*
+
+A full, quarter-long program taking a beginner through the entire path to a Data Scientist / AI role, across 12 modules plus bonus material:
+
+1. Przygotowanie i narzędzia (setup & tools)
+2. Myśleć jak Data Scientist (data science mindset)
+3. Python od podstaw (Python fundamentals)
+4. Pandas i praca z danymi (data wrangling)
+5. SQL, formaty i bazy danych (SQL & databases)
+6. Przegląd pakietów Pythona (the Python data/ML ecosystem)
+7. Budujemy pierwsze AI (building a first AI model)
+8. AI w praktyce (applied AI)
+9. Inżynieria AI (AI engineering)
+10. Jak prezentować wnioski i analizy (presenting analysis & findings)
+11. Jak pracować w zespołach (working in teams)
+12. Interview (interview preparation)
+
+Plus bonus modules on monetizing AI skills and using an AI assistant in the job search, and live Q&A sessions.
+
+---
+
+## All Certificates
+
 | Certificate | Provider | Date |
 |---|---|---|
 | 🔐 Cyber Security Awareness Academy Q1 2025 | Selvita S.A. / Proofpoint | Feb 6, 2025 |
-| 🐍 Practical Python Programming | praktycznypython.pl | Feb 16, 2025 |
+| 🐍 Practical Python Programming | praktycznypython.pl (Krzysztof Mędrela) | Feb 16, 2025 |
 | 📚 Machine Learning & Data Science | Udemy | 2025 |
-| 🤖 Become a Data Scientist from Scratch | Work in AI (gotoit.pl) | Nov 25, 2025 |
+| 🤖 Pracuj w AI: Zostań Data Scientist od Zera | gotoit.pl | Nov 25, 2025 |
 | ☁️ Practical Data Science with Amazon SageMaker | Amazon Web Services (AWS) | Dec 24, 2025 |
 | 🔥 Spark and Python for Big Data with PySpark | Udemy | Jan 13, 2026 |
 | 🧠 TensorFlow 2: Deep Learning & Artificial Intelligence | Udemy | Feb 16, 2026 |
@@ -31,20 +69,6 @@ Corporate cybersecurity awareness training covering:
 
 ---
 
-## 🐍 Programming & Software Development
-
-### Practical Python Programming
-**praktycznypython.pl** | *Completed: February 16, 2025*
-
-Practical Python training with emphasis on:
-
-- Data analysis with Python
-- Scripting and automation
-- Writing clean, maintainable code
-- Building small applications and utilities
-
----
-
 ## 🤖 Data Science & AI Programs
 
 ### Machine Learning & Data Science (Udemy Certificate)
@@ -55,16 +79,6 @@ Online professional course focused on:
 - Core machine learning concepts
 - Supervised and unsupervised learning
 - Practical model implementation in Python
-
-### Become a Data Scientist from Scratch
-**Work in AI**, via gotoit.pl | *Completed: November 25, 2025*
-
-Comprehensive data science program focused on:
-
-- Statistics and data analysis
-- Machine learning algorithms
-- Applied AI use cases
-- Practical projects and real-world datasets
 
 ---
 
