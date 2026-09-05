@@ -9,7 +9,7 @@ In this portfolio, you’ll find selected projects showcasing my analytical skil
 
 
 ## Projects
-* [🎯 CV–Job Matching System using Embeddings(OpenAI API, REST API, emmbedings)](18_cv-matching-openai-embeddings\index.md)
+* [🎯 CV–Job Matching System using Embeddings(OpenAI API, REST API, emmbedings)](18_cv-matching-openai-embeddings/index.md)
 * [🤖 Scientific Research Agent (LangChain · LangGraph · LangFuse)](17_research-agent-langchain/index.md)
 * [💡 Carbon Nanotubes RAG System (FAISS · OpenAI)](13_RAG_raman/index.md)
 * [😊 Emotion Recognition System (OpenCV · PyTorch)](12_emotion-detection/index.md)
@@ -17,7 +17,7 @@ In this portfolio, you’ll find selected projects showcasing my analytical skil
 * [🧬 logP Predictor (PyTorch)](07_logP Predictor/index.md)
 * [🔬 Erythrocytes (NumPy · OpenCV)](01_erytro/index.md) – erythrocyte shape analysis and anomaly detection
 * [⚛️EDA QM9](02_eda_chem/index.md) – exploratory data analysis of the QM9 dataset
-* [⛓️ 03_nanotubes](03_nanotubes\index.md) – carbon nanotubes visualization
+* [⛓️ 03_nanotubes](03_nanotubes/index.md) – carbon nanotubes visualization
 * [Raman Spectroscopy Analysis Tool](04_raman/index.md) - tool for analysis of raman spectra
 * [Drug Solubility Prediction using Machine Learning](05_drug_solub/index.md)
 * [🧪 Buchwald-Hartwig C-N Coupling Optimizer](06_reaction_opt/index.md)
