@@ -33,7 +33,7 @@ A Streamlit prototype rebuilt into a full production system: hybrid dense+BM25 r
 
 - **Faithfulness ≈ 0.80–0.82** (RAGAs evaluation, 14-question domain set)
 - **21/21 tests passing**, enforced automatically on every push
-- 🔌 [Live REST API](https://rag-raman-api.onrender.com/docs) · 💻 [Live Demo](https://carbon-nanotubes-rag.streamlit.app/) · 📦 [Repository](https://github.com/slastrzelec/13_RAG_raman_carbon_nanotubes)
+- 🔌 <a href="https://rag-raman-api.onrender.com/docs" target="_blank">Live REST API</a> · 💻 <a href="https://carbon-nanotubes-rag.streamlit.app/" target="_blank">Live Demo</a> · 📦 <a href="https://github.com/slastrzelec/13_RAG_raman_carbon_nanotubes" target="_blank">Repository</a>
 
 ---
 
@@ -134,7 +134,7 @@ Organic chemistry, nanotechnology, spectroscopy, machine learning in science, qu
 
 My projects reflect both my scientific background and my engineering practice: production-grade RAG and agentic AI systems, computer vision for biomedical imaging, machine learning models for chemical property prediction, and end-to-end ML applications with full deployment — not just notebooks, but tested, documented, and shipped systems.
 
-[→ See all projects](../index.md)
+<a href="../index.md" target="_blank">→ See all projects</a>
 
 ---
 
