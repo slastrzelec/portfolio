@@ -147,12 +147,3 @@ A highlighted abstract is shown inside the app, together with a direct download 
 
 This project demonstrates how **computer vision, scientific analysis, and interactive UI** can be combined to support hematology research.
 It automates time-consuming manual image interpretation and helps detect early morphological anomalies in erythrocytes — potentially supporting diagnostic workflows.
-
-If you want, I can also:
-
-✅ Generate a **short version** for GitHub
-✅ Write a **MkDocs page** formatted with sections
-✅ Create an **English + Polish version side-by-side**
-✅ Add **animated diagrams or architecture flowcharts**
-
-
