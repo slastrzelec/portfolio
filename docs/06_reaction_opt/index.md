@@ -2,9 +2,11 @@
 
 📈 Screenshots from the application:
 
-![Screen from app](zdj_1.png)
+![Input substrates and live structure preview](zdj_1.png)
+*Enter aryl halide and nucleophile SMILES; structures render automatically and the v3 model (XGBoost, R² = 0.93) is loaded and ready.*
 
-![Screen from app](zdj_2.png)
+![Detailed statistics for the predicted conditions](zdj_2.png)
+*Yield statistics across all 288 base/ligand/additive combinations for the given substrates, plus a per-base and per-ligand performance breakdown.*
 
 ## Overview
 
