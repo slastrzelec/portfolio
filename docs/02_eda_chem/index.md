@@ -69,7 +69,7 @@ This suggests that changes in the LUMO energy primarily **drive changes in the o
 
 ## 🚀 **QM9 Dataset Executive Summary**
 
-This dashboard provides a comprehensive Exploratory Data Analysis (EDA) of the **QM9 quantum chemistry dataset**, confirming its readiness for Machine Learning (ML) applications. The dataset features over **130,000 molecules** with an average molecular weight of **$123.8\ \text{g/mol}$**. Key metrics show excellent quality: **100% compliance with Lipinski's Rule of Five (Ro5)** and **100% data completeness**.
+This dashboard provides a comprehensive Exploratory Data Analysis (EDA) of the **QM9 quantum chemistry dataset**, confirming its readiness for Machine Learning (ML) applications. The dataset features over **130,000 molecules** with an average molecular weight of **$123.8\ \text{g/mol}$**. Key metrics show excellent quality: **98% compliance with Lipinski's Rule of Five (Ro5)** and **100% data completeness**.
 
 * **Composition:** Molecules are primarily small organic compounds, with an average atomic composition of **9.3 H**, **6.3 C**, **1.1 N**, and **1.4 O** atoms.
 * **Electronic Properties:** The **HOMO-LUMO Gap** distribution is centered around **$6\ \text{eV}$**. Key structural properties, such as the number of rings and molecular polarity (Dipole Moment), show highly skewed distributions towards smaller values.

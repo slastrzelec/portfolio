@@ -12,7 +12,7 @@ It was designed as an **end-to-end portfolio project**, showcasing both machine 
 
 ---
 
-![Top 20 Consumers](zdj1.png)
+![Emotion Recognition App Interface](zdj1.png)
 
 ## 🎯 Features
 
