@@ -24,7 +24,7 @@ nav:
   - About Me : o-mnie.md
   - Projects:
       - 💡 Carbon Nanotubes RAG System — Production RAG (FastAPI · Docker · CI/CD · RAGAs): 13_RAG_raman/index.md
-      - 🎯 CV–Job Matching System using Embeddings(OpenAI API, REST API, emmbedings): 18_cv-matching-openai-embeddings\index.md
+      - 🎯 CV–Job Matching System using Embeddings(OpenAI API, REST API, emmbedings): 18_cv-matching-openai-embeddings/index.md
       - 🤖 Scientific Research Agent (LangChain · LangGraph · LangFuse): 17_research-agent-langchain/index.md
       - 😊 Emotion Recognition System (OpenCV · PyTorch): 12_emotion-detection/index.md
       - 👥 Person Counter (OpenCV · Streamlit): 16_person_counter/index.md
