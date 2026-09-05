@@ -134,7 +134,7 @@ Organic chemistry, nanotechnology, spectroscopy, machine learning in science, qu
 
 My projects reflect both my scientific background and my engineering practice: production-grade RAG and agentic AI systems, computer vision for biomedical imaging, machine learning models for chemical property prediction, and end-to-end ML applications with full deployment — not just notebooks, but tested, documented, and shipped systems.
 
-<a href="../index.md" target="_blank">→ See all projects</a>
+<a href="../" target="_blank">→ See all projects</a>
 
 ---
 
