@@ -6,7 +6,7 @@ The **Raman Spectroscopy Analysis Tool** is a comprehensive web application buil
 
 It streamlines the entire workflow from raw data import to quantitative material property extraction, eliminating the need for complex desktop software.
 
-📈 Some Some screenshots from application: 
+📈 Screenshots from the application: 
 
 
 ![Screen from app](img%20(1).png)
@@ -34,7 +34,7 @@ The application implements a full-featured spectroscopy workflow across several 
     * **Baseline Correction:** Algorithms including **Linear (Endpoints)** and **Asymmetric Least Squares (ALS)** to remove fluorescence background. 
     * **Normalization:** Methods like Min-Max, Max-Intensity, Area, and Vector (L2) normalization for comparison.
     * **Smoothing:** Optional Savitzky-Golay filtering to reduce noise.
-* **Peak Analysis:** Automated detection and categorization of Raman bands (suchowo **D, G, RBM, 2D bands** for carbon materials). Calculates fundamental peak statistics.
+* **Peak Analysis:** Automated detection and categorization of Raman bands (such as **D, G, RBM, 2D bands** for carbon materials). Calculates fundamental peak statistics.
 * **Quantitative Fitting & Deconvolution:** Advanced fitting using **Lorentzian** or **Gaussian** models for precise deconvolution of overlapping bands (e.g., D and G bands). This allows calculation of critical ratios.
 * **Material Characterization:** Calculates key material parameters based on fitting results, such as:
     * The **$I_D/I_G$ ratio**, crucial for determining defect density/crystallinity.

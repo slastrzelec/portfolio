@@ -1,6 +1,6 @@
 # Buchwald-Hartwig C-N Coupling Optimizer
 
-📈 Some Some screenshots from application: 
+📈 Screenshots from the application: 
 
 ![Screen from app](zdj_1.png)
 

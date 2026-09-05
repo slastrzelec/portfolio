@@ -1,15 +1,8 @@
-The provided Python code is an impressive, comprehensive application for **Carbon Nanotube (CNT) Visualization** built using **NumPy**, **Matplotlib**, and **Streamlit**. It effectively showcases advanced skills in computational materials science, physics-based modeling, and interactive web application development.
-
-Here is the description for your portfolio, formatted in Markdown, based on the code provided.
-
-***
-# Screen from app:
-
-https://nanotubes.streamlit.app/
-
-# ![Screen from app](naotubes.png)
-
 # ⚛️ Interactive Carbon Nanotube (CNT) Visualization Tool
+
+🚀 **Live Demo:** <a href="https://nanotubes.streamlit.app/" target="_blank">nanotubes.streamlit.app</a>
+
+![Screen from app](naotubes.png)
 
 ## 🎯 Project Goal
 To create an interactive, physics-based application for the **3D modeling and visualization** of Single-Walled Carbon Nanotubes (SWCNTs). The tool allows users to explore the geometry and key properties of different CNT types, including those defined by the **Chiral Vector** (n,m).
