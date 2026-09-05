@@ -2,7 +2,7 @@
 
 ## ✨ Overview
 
-The **Raman Spectroscopy Analysis Tool** is a comprehensive web application built with Streamlit and advanced scientific Python libraries (like Pandas, NumPy, and potentially SciPy/LMFIT) designed for chemists, materials scientists, and engineers to quickly and accurately process, analyze, and characterize Raman spectroscopy data, particularly focusing on **carbonaceous materials** (e.g., graphene, carbon nanotubes).
+The **Raman Spectroscopy Analysis Tool** is a comprehensive web application built with Streamlit and scientific Python libraries (Pandas, NumPy, SciPy, LMFIT), designed for chemists, materials scientists, and engineers to quickly and accurately process, analyze, and characterize Raman spectroscopy data, particularly focusing on **carbonaceous materials** (e.g., graphene, carbon nanotubes).
 
 It streamlines the entire workflow from raw data import to quantitative material property extraction, eliminating the need for complex desktop software.
 
@@ -48,7 +48,7 @@ The application implements a full-featured spectroscopy workflow across several 
 | **Frontend/App** | **Streamlit** | Rapid web application development and interactive UI/UX. |
 | **Data Processing** | **Python (Pandas, NumPy)** | Core data manipulation and scientific computing. |
 | **Signal Processing** | **SciPy** | Implementation of advanced algorithms (Savitzky-Golay, Peak Detection, ALS). |
-| **Peak Fitting** | **LMFIT** (Implied by functionality) | Non-linear least squares minimization for peak deconvolution. |
+| **Peak Fitting** | **LMFIT** | Non-linear least squares minimization for peak deconvolution. |
 | **Visualization** | **Plotly** / **Matplotlib** | Generating responsive, interactive data visualizations. |
 
 ## 🌟 Contributions and Impact
