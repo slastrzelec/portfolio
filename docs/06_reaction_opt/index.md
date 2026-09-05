@@ -8,14 +8,14 @@
 
 ## Overview
 
-An **interactive ML-powered web application** that predicts optimal reaction conditions for Buchwald-Hartwig C-N cross-coupling reactions. Users input substrate SMILES strings and receive AI-generated recommendations for base, ligand, and additive combinations, with the coupling product generated automatically and its real molecular descriptors used in the prediction.
+An **interactive ML-powered web application** that predicts optimal reaction conditions for Buchwald-Hartwig C-N cross-coupling reactions. Users input substrate SMILES strings and receive AI-generated recommendations for base, ligand, and additive combinations, with the coupling product generated automatically and its real molecular structure (descriptors + Morgan fingerprints) used in the prediction.
 
 - **🚀 Live Demo** - <a href="https://buchwald-hartwig-optimizer.streamlit.app/" target="_blank">View Live App</a>
 - **📂 GitHub Repository** - <a href="https://github.com/slastrzelec/06_reaction_opt" target="_blank">View on GitHub</a>
 
 ## Tech Stack
 
-- **Backend:** Python, Scikit-learn (Gradient Boosting), RDKit
+- **Backend:** Python, XGBoost, Scikit-learn, RDKit
 - **Frontend:** Streamlit
 - **Data Processing:** Pandas, NumPy
 - **Deployment:** Streamlit Cloud
@@ -34,11 +34,12 @@ An **interactive ML-powered web application** that predicts optimal reaction con
 ```
 data/
 ├── doyle_buchwald_data_cleaned.csv      # 4,312 training samples
-├── X_features_scaled_v2.csv             # Scaled feature matrix (71 features)
+├── X_features_scaled_v3.csv             # Scaled/encoded feature matrix (327 features)
 ├── trained_models/
-│   ├── best_model_v2.pkl                # Gradient Boosting model (R² = 0.72)
-│   ├── scaler_v2.pkl                    # Feature scaler
-│   └── feature_names_v2.pkl             # Trained feature name order
+│   ├── best_model_v3.pkl                # XGBoost model (Test R² = 0.93)
+│   ├── scaler_v2.pkl                    # Feature scaler for the descriptor block
+│   ├── feature_names_v2.pkl             # Descriptor+categorical feature order (71)
+│   └── feature_names_v3.pkl             # Full feature order incl. fingerprints (327)
 │
 app.py                                   # Streamlit application (feature engineering + inference)
 ```
@@ -48,19 +49,20 @@ app.py                                   # Streamlit application (feature engine
 1. **Input:** User provides SMILES for the aryl halide and the amine nucleophile
 2. **Validation:** SMILES syntax checking via RDKit
 3. **Product generation:** The coupling product is generated automatically from the two substrates using an RDKit reaction template (most-reactive-halide priority: I/Br over Cl)
-4. **Feature Generation:** Real molecular descriptors (MW, LogP, TPSA, aromaticity, H-bond donors/acceptors, etc.) computed for both the aryl halide and the predicted product, combined with one-hot encoded base/ligand/additive identity — 71 features total
-5. **Prediction:** Gradient Boosting model predicts yield for all 288 base × ligand × additive combinations, using the actual substrate structure
+4. **Feature Generation:** Real molecular descriptors (MW, LogP, TPSA, aromaticity, H-bond donors/acceptors, etc.) *and* 128-bit Morgan fingerprints computed for both the aryl halide and the predicted product, combined with one-hot encoded base/ligand/additive identity — 327 features total
+5. **Prediction:** XGBoost model predicts yield for all 288 base × ligand × additive combinations, using the actual substrate structure
 6. **Output:** Top 10 recommendations sorted by predicted yield
 7. **Export:** Results downloadable as CSV or PDF with molecular structures
 
 ## Model Performance
 
-- **Algorithm:** Gradient Boosting Regressor (also compared against Random Forest and XGBoost)
+- **Algorithm:** XGBoost Regressor (also compared against Random Forest and Gradient Boosting)
 - **Training Samples:** 4,312 reactions
-- **Features:** 71 (substrate molecular descriptors + reagent identity)
-- **Test R²:** **0.72**
+- **Features:** 327 (physicochemical descriptors + Morgan fingerprints + reagent identity)
+- **Test R²:** **0.93** (single 80/20 split)
+- **5-fold Cross-Validation R²:** **0.933 ± 0.005** — confirms the result is stable, not a lucky split
 
-## Debugging story: fixing a silently broken feature pipeline
+## Development story: from a silently broken pipeline to R² = 0.93
 
 An earlier version of this project reported a disappointing **Test R² = 0.30**. Investigating why turned up
 a real bug worth documenting rather than hiding: the descriptor-extraction function called two RDKit APIs
@@ -76,13 +78,18 @@ SMILES but never actually used them to compute prediction features, so the app r
 for every substrate. It also used a hardcoded 7-item "additive" list that mixed in unrelated base/salt names
 (e.g. Cs2CO3, K2CO3) that were never part of the 24 additives the model was actually trained on.
 
-**Fix:**
-- Corrected the two broken RDKit calls (plus two more of the same pattern found while rewriting: `NumHeterocycles`, which also doesn't exist, and a wrong `NumExplicitHs` call signature)
-- Rewired the Streamlit app to compute real descriptors from the user's input and from an RDKit-generated coupling product, instead of ignoring the substrate entirely
+**v2 — bug fixed:**
+- Corrected the two broken RDKit calls (plus two more of the same pattern found while rewriting)
+- Rewired the Streamlit app to compute real descriptors from the user's input and from an RDKit-generated coupling product
 - Replaced the incorrect additive list with the real 24-item trained set
-- Removed three dead stub files (`src/predictor.py`, `src/feature_engineering.py`, `src/app/app.py`) that were never imported by the real app and referenced undefined variables — leftover scaffolding from an earlier draft that never got connected
+- Removed three dead stub files (`src/predictor.py`, `src/feature_engineering.py`, `src/app/app.py`) that were never imported by the real app
+- **Result: Test R² improved from 0.30 to 0.72**, just from fixing the pipeline
 
-**Result: Test R² improved from 0.30 to 0.72** — with no new features invented, just by fixing the pipeline to actually use the chemistry that was already there. Feature importance now makes chemical sense too: substrate molecular weight and ligand/base identity dominate, consistent with the published literature on this dataset.
+**v3 — Morgan fingerprints added:**
+- The v2 descriptors are all *bulk* molecular properties (molecular weight, LogP, TPSA, etc.) — they summarize a molecule but don't encode its actual substructure
+- Added 128-bit Morgan fingerprints (radius 2) for both the aryl halide and the coupling product, giving the model direct access to structural fragment information
+- **Result: Test R² improved further to 0.93**, confirmed with 5-fold cross-validation (mean 0.933, std 0.005) rather than relying on a single train/test split
+- Feature importance now ranks specific fingerprint bits above every individual physicochemical descriptor — a sensible result, since substructure presence/absence is exactly what fingerprints are designed to capture
 
 ## Data Source
 
@@ -96,14 +103,16 @@ Dataset: Buchwald-Hartwig C-N Coupling Reactions (Doyle et al. / Ahneman et al.)
 **✅ Completed:**
 - Data cleaning & preprocessing (287 incomplete rows removed)
 - Feature engineering (RDKit descriptors + one-hot encoding) — bug found and fixed, R² 0.30 → 0.72
-- Model training and comparison (Random Forest, Gradient Boosting, XGBoost)
-- Streamlit app rewired to use real substrate descriptors end-to-end
+- Morgan fingerprints added on top of the fixed descriptors — R² 0.72 → 0.93, confirmed via 5-fold CV
+- Model comparison (Random Forest, Gradient Boosting, XGBoost) at each stage
+- Streamlit app rewired to use real substrate descriptors + fingerprints end-to-end
+- Visual refresh of the app UI
 - PDF/CSV export with molecular visualizations
 - Prediction history tracking
 
 **📋 Planned:**
-- Morgan fingerprints / MACCS keys as an additional feature-engineering step
-- Hyperparameter tuning
+- Hyperparameter tuning (GridSearch/RandomizedSearch)
+- MACCS keys as an additional fingerprint type
 - Reaction mechanism insights
 - Real-time model performance metrics dashboard
 
@@ -111,12 +120,12 @@ Dataset: Buchwald-Hartwig C-N Coupling Reactions (Doyle et al. / Ahneman et al.)
 
 This project demonstrates:
 
-- **Data Science:** Data cleaning, feature engineering, ML model training & evaluation
+- **Data Science:** Data cleaning, feature engineering, ML model training & evaluation, cross-validation
 - **Debugging:** Diagnosing a silent bug hidden behind a broad exception handler, verifying the root cause, and quantifying the fix's impact
-- **Python:** Pandas, NumPy, Scikit-learn, RDKit, Streamlit
+- **Cheminformatics:** Molecular descriptors, Morgan fingerprints, reaction-template-based product generation
+- **Python:** Pandas, NumPy, Scikit-learn, XGBoost, RDKit, Streamlit
 - **Web Development:** Interactive UI design, API integration (PubChem)
 - **Deployment:** Streamlit Cloud, Git/GitHub workflows
-- **Chemistry:** Buchwald-Hartwig reactions, SMILES notation, molecular descriptors, reaction-template-based product generation
 
 ## Usage
 ```bash
