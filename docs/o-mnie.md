@@ -95,7 +95,7 @@ A Streamlit prototype rebuilt into a full production system: hybrid dense+BM25 r
 
 ### 🔬 Scientific & Industry Experience
 
-- **Data Engineer – HSBC (2026)**
+- **Data Engineer – HSBC (Apr 2026 – May 2026)**
   ETL/ELT pipelines, BigQuery, Looker Studio dashboards
 
 - **Scientist II – Selvita (2024–2025)**
