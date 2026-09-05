@@ -4,6 +4,26 @@ Curated list of completed certifications and professional training programs, foc
 
 ## 🌟 Featured Programs
 
+### Work in AI: Become a Data Scientist from Scratch
+**gotoit.pl** | *Completed: November 25, 2025*
+
+A full, quarter-long program taking a beginner through the entire path to a Data Scientist / AI role, across 12 modules plus bonus material:
+
+1. Setup & Tools
+2. Thinking Like a Data Scientist
+3. Python Fundamentals
+4. Pandas & Data Wrangling
+5. SQL, Data Formats & Databases
+6. Overview of the Python Data/ML Ecosystem
+7. Building Your First AI Model
+8. AI in Practice
+9. AI Engineering
+10. Presenting Analysis & Findings
+11. Working in Teams
+12. Interview Preparation
+
+Plus bonus modules on monetizing AI skills and using an AI assistant in the job search, and live Q&A sessions.
+
 ### Practical Python Programming
 **praktycznypython.pl**, trainer: Krzysztof Mędrela | *Completed: February 16, 2025*
 
@@ -16,26 +36,6 @@ A standard, thorough core-Python course covering the language end to end — com
 
 The trainer, Krzysztof Mędrela, is an IT/Python consultant with 10+ years of experience who also delivers corporate Python and Machine Learning training (including for HSBC).
 
-### Pracuj w AI: Zostań Data Scientist od Zera
-**gotoit.pl** (branded "Work in AI") | *Completed: November 25, 2025*
-
-A full, quarter-long program taking a beginner through the entire path to a Data Scientist / AI role, across 12 modules plus bonus material:
-
-1. Przygotowanie i narzędzia (setup & tools)
-2. Myśleć jak Data Scientist (data science mindset)
-3. Python od podstaw (Python fundamentals)
-4. Pandas i praca z danymi (data wrangling)
-5. SQL, formaty i bazy danych (SQL & databases)
-6. Przegląd pakietów Pythona (the Python data/ML ecosystem)
-7. Budujemy pierwsze AI (building a first AI model)
-8. AI w praktyce (applied AI)
-9. Inżynieria AI (AI engineering)
-10. Jak prezentować wnioski i analizy (presenting analysis & findings)
-11. Jak pracować w zespołach (working in teams)
-12. Interview (interview preparation)
-
-Plus bonus modules on monetizing AI skills and using an AI assistant in the job search, and live Q&A sessions.
-
 ---
 
 ## All Certificates
@@ -45,13 +45,13 @@ Plus bonus modules on monetizing AI skills and using an AI assistant in the job 
 | 🔐 Cyber Security Awareness Academy Q1 2025 | Selvita S.A. / Proofpoint | Feb 6, 2025 |
 | 🐍 Practical Python Programming | praktycznypython.pl (Krzysztof Mędrela) | Feb 16, 2025 |
 | 📚 Machine Learning & Data Science | Udemy | 2025 |
-| 🤖 Pracuj w AI: Zostań Data Scientist od Zera | gotoit.pl | Nov 25, 2025 |
+| 🤖 Work in AI: Become a Data Scientist from Scratch | gotoit.pl | Nov 25, 2025 |
 | ☁️ Practical Data Science with Amazon SageMaker | Amazon Web Services (AWS) | Dec 24, 2025 |
 | 🔥 Spark and Python for Big Data with PySpark | Udemy | Jan 13, 2026 |
 | 🧠 TensorFlow 2: Deep Learning & Artificial Intelligence | Udemy | Feb 16, 2026 |
 | ☁️ Azure Data Factory — Data Engineering on Azure and Fabric | Udemy | Apr 9, 2026 |
 | 📊 Looker Studio – The Practical Masterclass | Udemy | Apr 20, 2026 |
-| 🦅 Warsztaty lokalne – Bielik w architekturach RAG | Eskadra Bielika (Bielik.AI · SpeakLeash · Google for Developers) | May 20, 2026 |
+| 🦅 Local Workshop – Bielik in RAG Architectures | Eskadra Bielika (Bielik.AI · SpeakLeash · Google for Developers) | May 20, 2026 |
 
 ---
 
@@ -146,8 +146,8 @@ Building interactive dashboards and reports with Looker Studio:
 
 ## 🦅 LLMs & Agentic AI
 
-### Warsztaty lokalne – Od modelu do systemu: Bielik w architekturach RAG
-**Eskadra Bielika**, partners: Bielik.AI, SpeakLeash, Google for Developers | *May 20, 2026*, Kraków
+### Local Workshop – From Model to System: Bielik in RAG Architectures
+**Eskadra Bielika**, partners: Bielik.AI, SpeakLeash, Google for Developers | *May 20, 2026*, Kraków, Poland
 
 Hands-on local workshop on building RAG systems around the Polish open-source **Bielik** LLM:
 
