@@ -42,7 +42,6 @@ The trainer, Krzysztof Mędrela, is an IT/Python consultant with 10+ years of ex
 
 | Certificate | Provider | Date |
 |---|---|---|
-| 🔐 Cyber Security Awareness Academy Q1 2025 | Selvita S.A. / Proofpoint | Feb 6, 2025 |
 | 🐍 Practical Python Programming | praktycznypython.pl (Krzysztof Mędrela) | Feb 16, 2025 |
 | 📚 Machine Learning & Data Science | Udemy | 2025 |
 | 🤖 Work in AI: Become a Data Scientist from Scratch | gotoit.pl | Nov 25, 2025 |
@@ -52,20 +51,7 @@ The trainer, Krzysztof Mędrela, is an IT/Python consultant with 10+ years of ex
 | ☁️ Azure Data Factory — Data Engineering on Azure and Fabric | Udemy | Apr 9, 2026 |
 | 📊 Looker Studio – The Practical Masterclass | Udemy | Apr 20, 2026 |
 | 🦅 Local Workshop – Bielik in RAG Architectures | Eskadra Bielika (Bielik.AI · SpeakLeash · Google for Developers) | May 20, 2026 |
-
----
-
-## 🔐 Security & Compliance
-
-### Cyber Security Awareness Academy Q1 2025
-**Selvita S.A. / Proofpoint** | *Completed: February 6, 2025*
-
-Corporate cybersecurity awareness training covering:
-
-- Secure data handling practices
-- Phishing and social engineering prevention
-- Security risks in digital environments
-- Compliance and best practices in enterprise IT security
+| 🔐 Cyber Security Awareness Academy Q1 2025 (mandatory corporate training) | Selvita S.A. / Proofpoint | Feb 6, 2025 |
 
 ---
 
