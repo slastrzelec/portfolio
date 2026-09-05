@@ -138,7 +138,7 @@ Building interactive dashboards and reports with Looker Studio:
 Hands-on local workshop on building RAG systems around the Polish open-source **Bielik** LLM:
 
 - From a standalone model to a full RAG system
-- Practical grounding directly applicable to the [Carbon Nanotubes RAG System](../13_RAG_raman/index.md) project
+- Practical grounding directly applicable to the [Carbon Nanotubes RAG System](13_RAG_raman/index.md) project
 
 ---
 
