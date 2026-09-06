@@ -1,4 +1,4 @@
-# ⚡ Energy Consumption Analysis - AWS + SQL + Time Series
+# 📊 Time Series Forecasting (AWS · SQL)
 
 ## Project Overview
 
@@ -23,7 +23,7 @@ This project demonstrates **end-to-end data engineering and analytics** using cl
 - **Period:** Jan 1 - Dec 31, 2013
 - **Features:** Electricity and gas consumption
 
-Source: [Kaggle Smart Meters Dataset](https://www.kaggle.com/datasets/jeanmidev/smart-meters-in-london)
+Source: [Low Carbon London smart meter data (refactored) — 4TU.ResearchData](https://data.4tu.nl/datasets/fbbe775b-48d8-469f-a39b-b64488bfd6fd)
 
 ---
 
