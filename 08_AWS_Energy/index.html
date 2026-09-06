@@ -1,0 +1,2308 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../15_TensorFlow/">
+      
+      
+        <link rel="next" href="../12_emotion-detection/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>📊 Time Series Forecasting (AWS · SQL) - Portfolio - Sławomir Strzelec</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#time-series-forecasting-aws-sql" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Portfolio - Sławomir Strzelec" class="md-header__button md-logo" aria-label="Portfolio - Sławomir Strzelec" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Portfolio - Sławomir Strzelec
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              📊 Time Series Forecasting (AWS · SQL)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../o-mnie/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About Me
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../13_RAG_raman/" class="md-tabs__link">
+          
+  
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../certificates/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Certificates
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Portfolio - Sławomir Strzelec" class="md-nav__button md-logo" aria-label="Portfolio - Sławomir Strzelec" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Portfolio - Sławomir Strzelec
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../o-mnie/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Me
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🌟 Featured Projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🌟 Featured Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13_RAG_raman/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💡 Carbon Nanotubes RAG System (FastAPI · Docker · FAISS · RAGAs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20_cuneiform-sign-classifier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🏺 Cuneiform Sign Classifier (PyTorch · Grad-CAM · HF Hub)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17_research-agent-langchain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🤖 Scientific Research Agent (LangChain · LangGraph · LangFuse)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18_cv-matching-openai-embeddings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎯 CV-Job Matching System (OpenAI API · REST API)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15_TensorFlow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🫁 Pneumonia Detection (TensorFlow · Keras)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📊 Time Series Forecasting (AWS · SQL)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📊 Time Series Forecasting (AWS · SQL)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#project-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dataset
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cloud-infrastructure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cloud Infrastructure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Findings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Findings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-data-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1️⃣ Data Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-meter-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2️⃣ Meter Segmentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-time-series-analysis-forecasting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3️⃣ Time Series Analysis &amp; Forecasting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-anomaly-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4️⃣ Anomaly Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technical Implementation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Technical Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws-sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS + SQL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#time-series-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Series (Python)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#business-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Business Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Business Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-demand-forecasting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Demand Forecasting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pricing-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Pricing Optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-anomaly-alerts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Anomaly Alerts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Segmentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Statistics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tools &amp; Technologies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-learnings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Learnings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-improvements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Future Improvements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#files-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Files &amp; Resources
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🖼️ Computer Vision
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🖼️ Computer Vision
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_emotion-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    😊 Emotion Recognition System (OpenCV · PyTorch)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16_person_counter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    👥 Person Counter (OpenCV · Streamlit)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_erytro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔬 Erythrocyte Analysis (NumPy · OpenCV)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧪 Cheminformatics & Scientific ML
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🧪 Cheminformatics & Scientific ML
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_reaction_opt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧪 Buchwald-Hartwig C-N Coupling Optimizer (RDKit · XGBoost)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_drug_solub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💊 Drug Solubility Predictor (RDKit · scikit-learn)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_logP%20Predictor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧬 logP Predictor (PyTorch)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_nanotubes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ⛓️ Carbon Nanotube Visualization Tool (NumPy · Matplotlib)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📚 Older Projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📚 Older Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_raman/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🌈 Raman Spectroscopy Analyzer (SciPy · LMFIT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_eda_chem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ⚛️ EDA – QM9 Dataset (RDKit · Pandas)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../certificates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Certificates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#project-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dataset
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cloud-infrastructure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cloud Infrastructure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Findings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Findings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-data-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1️⃣ Data Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-meter-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2️⃣ Meter Segmentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-time-series-analysis-forecasting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3️⃣ Time Series Analysis &amp; Forecasting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-anomaly-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4️⃣ Anomaly Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technical Implementation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Technical Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws-sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS + SQL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#time-series-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Series (Python)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#business-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Business Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Business Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-demand-forecasting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Demand Forecasting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pricing-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Pricing Optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-anomaly-alerts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Anomaly Alerts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Segmentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Statistics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tools &amp; Technologies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-learnings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Learnings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-improvements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Future Improvements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#files-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Files &amp; Resources
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="time-series-forecasting-aws-sql">📊 Time Series Forecasting (AWS · SQL)</h1>
+<h2 id="project-overview">Project Overview</h2>
+<p>This project demonstrates <strong>end-to-end data engineering and analytics</strong> using cloud infrastructure and advanced data science techniques. The analysis covers 4,443 smart meters from London (2013) with forecasting, anomaly detection, and segmentation.</p>
+<p><strong>Skills demonstrated:</strong>
+- ☁️ <strong>AWS Cloud:</strong> S3, Athena, serverless architecture
+- 📊 <strong>SQL:</strong> Complex queries, aggregations, filtering on 4.4M data points
+- 📈 <strong>Time Series:</strong> Prophet forecasting, decomposition, stationarity testing
+- 🔍 <strong>Anomaly Detection:</strong> Z-score and IQR methods
+- 📋 <strong>Data Segmentation:</strong> Clustering based on consumption patterns
+- 📉 <strong>Visualization:</strong> Interactive dashboards with Plotly</p>
+<hr />
+<h2 id="dataset">Dataset</h2>
+<p><strong>London Smart Meter Energy Data (2013)</strong>
+- <strong>Size:</strong> 587 MB (17,520 observations × 4,444 columns)
+- <strong>Meters:</strong> 4,443 smart meters
+- <strong>Frequency:</strong> 30-minute intervals
+- <strong>Period:</strong> Jan 1 - Dec 31, 2013
+- <strong>Features:</strong> Electricity and gas consumption</p>
+<p>Source: <a href="https://data.4tu.nl/datasets/fbbe775b-48d8-469f-a39b-b64488bfd6fd">Low Carbon London smart meter data (refactored) — 4TU.ResearchData</a></p>
+<hr />
+<h2 id="architecture">Architecture</h2>
+<h3 id="cloud-infrastructure">Cloud Infrastructure</h3>
+<pre><code>Raw Data (S3: 587MB)
+        ↓
+   Athena (SQL)
+        ↓
+Python Processing
+        ↓
+Visualization &amp; Dashboard
+</code></pre>
+<p><strong>AWS Services Used:</strong>
+- <strong>S3:</strong> Data storage (no preprocessing needed)
+- <strong>Athena:</strong> Serverless SQL queries (pay-per-query, no infrastructure)
+- <strong>No EC2:</strong> Fully managed, cost-effective solution</p>
+<h3 id="local-processing">Local Processing</h3>
+<ul>
+<li><strong>Python:</strong> pandas, numpy, statsmodels, prophet</li>
+<li><strong>Visualization:</strong> Plotly, matplotlib</li>
+<li><strong>Output:</strong> Interactive HTML dashboard</li>
+</ul>
+<hr />
+<h2 id="key-findings">Key Findings</h2>
+<h3 id="1-data-overview">1️⃣ Data Overview</h3>
+<p><img alt="Top 20 Consumers" src="images/top_20_meters.png" /></p>
+<p><strong>Statistics:</strong>
+- <strong>Total Meters:</strong> 4,443 (cleaned: 4,138 after removing &gt;20% missing data)
+- <strong>Average Consumption:</strong> 0.215 kWh per meter
+- <strong>Maximum Consumption:</strong> 36,994 kWh (MAC004179 - Industrial)
+- <strong>Minimum Consumption:</strong> 0 kWh (2 inactive meters)</p>
+<p><strong>Key Insight:</strong> Pareto principle evident - top 20 meters (0.45%) consume 15% of total energy. High inequality suggests market optimization opportunity.</p>
+<hr />
+<h3 id="2-meter-segmentation">2️⃣ Meter Segmentation</h3>
+<p><img alt="Segmentation Distribution" src="images/segmentation_count.png" /></p>
+<p><strong>Three Categories:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Segment</th>
+<th>Count</th>
+<th>Avg Consumption</th>
+<th>Peak</th>
+<th>Characteristics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Industrial</strong></td>
+<td>1,407 (34%)</td>
+<td>6,478 kWh</td>
+<td>5.79 kWh/day</td>
+<td>Factories, large facilities. High volatility, strong seasonality</td>
+</tr>
+<tr>
+<td><strong>Commercial</strong></td>
+<td>1,365 (33%)</td>
+<td>3,099 kWh</td>
+<td>0.31 kWh/day</td>
+<td>Offices, warehouses. Declining trend (efficiency gains)</td>
+</tr>
+<tr>
+<td><strong>Residential</strong></td>
+<td>1,364 (33%)</td>
+<td>1,549 kWh</td>
+<td>0.19 kWh/day</td>
+<td>Homes. Stable, low volatility, highly predictable</td>
+</tr>
+<tr>
+<td><strong>Inactive</strong></td>
+<td>2 (0.05%)</td>
+<td>0 kWh</td>
+<td>0 kWh</td>
+<td>No data collected</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Consumption by Segment" src="images/segmentation_consumption.png" /></p>
+<p><strong>Volatility Analysis:</strong></p>
+<pre><code>Residential:  1.191 (high variance relative to mean)
+Commercial:   1.015 (moderate variance)
+Industrial:   0.955 (more stable absolute values)
+</code></pre>
+<hr />
+<h3 id="3-time-series-analysis-forecasting">3️⃣ Time Series Analysis &amp; Forecasting</h3>
+<p><strong>Method:</strong> Prophet (Facebook's forecasting library)</p>
+<p><strong>Results:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Segment</th>
+<th>Meter</th>
+<th>Daily Avg</th>
+<th>Trend</th>
+<th>Seasonality</th>
+<th>Forecast MAE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Residential</strong></td>
+<td>MAC003008</td>
+<td>0.13 kWh</td>
+<td>↑ Increasing</td>
+<td>Low</td>
+<td><strong>0.0360</strong> ✅</td>
+</tr>
+<tr>
+<td><strong>Commercial</strong></td>
+<td>MAC004186</td>
+<td>0.23 kWh</td>
+<td>↓ Decreasing</td>
+<td>Moderate</td>
+<td>0.0702</td>
+</tr>
+<tr>
+<td><strong>Industrial</strong></td>
+<td>MAC004179</td>
+<td>2.11 kWh</td>
+<td>↑ Increasing</td>
+<td><strong>High</strong></td>
+<td>0.4946</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key Findings:</strong></p>
+<ol>
+<li><strong>Stationarity Test:</strong> ADF test p-value = 0.000441</li>
+<li>
+<p>Data is stationary → suitable for ARIMA/Prophet</p>
+</li>
+<li>
+<p><strong>Seasonality:</strong> Strong 365-day cycle</p>
+</li>
+<li>Winter (Jan-Mar): ~0.8 kWh/day</li>
+<li>Summer (Jun-Aug): ~0.3 kWh/day</li>
+<li>Residential: minimal seasonality</li>
+<li>
+<p>Industrial: amplitude 0.28 kWh</p>
+</li>
+<li>
+<p><strong>Forecast Accuracy:</strong></p>
+</li>
+<li>Residential meters are 10x more predictable than Industrial</li>
+<li>MAE increases with consumption volatility</li>
+<li>Useful for demand planning and pricing strategies</li>
+</ol>
+<hr />
+<h3 id="4-anomaly-detection">4️⃣ Anomaly Detection</h3>
+<p><img alt="Anomalies Detected" src="images/anomaly_detection.png" /></p>
+<p><strong>Methods:</strong>
+- <strong>Z-Score:</strong> Values &gt;2.5 standard deviations → 7 anomalies
+- <strong>IQR (Interquartile Range):</strong> Q1-1.5×IQR to Q3+1.5×IQR → 8 anomalies
+- <strong>Confidence:</strong> 87.5% agreement between methods</p>
+<p><strong>Top 5 Anomalous Days:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Consumption</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Feb 18, 2013</strong></td>
+<td>278.0 kWh</td>
+<td>Extreme cold snap - maximum heating demand</td>
+</tr>
+<tr>
+<td><strong>Nov 13, 2013</strong></td>
+<td>270.8 kWh</td>
+<td>Seasonal transition - heating season begins</td>
+</tr>
+<tr>
+<td><strong>Feb 17, 2013</strong></td>
+<td>234.4 kWh</td>
+<td>Cold weather continuation</td>
+</tr>
+<tr>
+<td><strong>Nov 14, 2013</strong></td>
+<td>201.8 kWh</td>
+<td>Winter approaching</td>
+</tr>
+<tr>
+<td><strong>Nov 12, 2013</strong></td>
+<td>191.8 kWh</td>
+<td>Heating systems activated</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pattern:</strong> Most anomalies are upward spikes caused by:
+- Extreme weather (cold snaps)
+- Seasonal transitions
+- Equipment failures or maintenance</p>
+<hr />
+<h2 id="technical-implementation">Technical Implementation</h2>
+<h3 id="aws-sql">AWS + SQL</h3>
+<p><strong>Athena Queries (Sample):</strong></p>
+<pre><code class="language-sql">-- Segment meters by consumption
+SELECT 
+    'MAC000002' as meter,
+    COUNT(*) as measurements,
+    AVG(MAC000002) as avg_consumption,
+    MAX(MAC000002) as peak,
+    STDDEV(MAC000002) as std_dev
+FROM lcl_2013
+WHERE MAC000002 IS NOT NULL
+</code></pre>
+<p><strong>Key SQL Features Used:</strong>
+- Aggregations: SUM, AVG, MAX, MIN, STDDEV, COUNT
+- String functions: SUBSTR for date parsing
+- Set operations: UNION ALL for combining results
+- Filtering: WHERE for NULL handling and data quality
+- Sorting: ORDER BY for ranking</p>
+<p><strong>Performance:</strong> Sub-second queries on 4.4M data points</p>
+<h3 id="time-series-python">Time Series (Python)</h3>
+<p><strong>Libraries:</strong></p>
+<pre><code class="language-python">from statsmodels.tsa.seasonal import seasonal_decompose
+from statsmodels.tsa.stattools import adfuller
+from prophet import Prophet
+from sklearn.metrics import mean_absolute_error
+</code></pre>
+<p><strong>Pipeline:</strong>
+1. <strong>Data Preparation:</strong> Aggregate to daily frequency
+2. <strong>Stationarity Test:</strong> ADF test (p-value = 0.000441)
+3. <strong>Decomposition:</strong> Trend + Seasonal + Residual
+4. <strong>Forecasting:</strong> Prophet model with yearly &amp; weekly seasonality
+5. <strong>Validation:</strong> 80/20 train-test split, MAE metric
+6. <strong>Anomaly Detection:</strong> Z-score &amp; IQR methods</p>
+<p><strong>Code Example:</strong></p>
+<pre><code class="language-python"># Train Prophet model
+model = Prophet(yearly_seasonality=True, weekly_seasonality=True)
+model.fit(train_data)
+
+# Make predictions
+future = model.make_future_dataframe(periods=365)
+forecast = model.predict(future)
+
+# Evaluate
+mae = mean_absolute_error(test_data, forecast['yhat'])
+</code></pre>
+<hr />
+<h2 id="dashboard">Dashboard</h2>
+<p><strong>Interactive HTML dashboard</strong> includes:
+- 📊 Data overview with top consumers
+- 📈 Segmentation analysis with charts
+- 🔮 Time series forecasting results
+- 🚨 Anomaly detection visualization
+- 💡 Business insights and recommendations</p>
+<p>👉 <strong><a href="dashboard.html">View Dashboard</a></strong> ⬅️</p>
+<hr />
+<h2 id="business-applications">Business Applications</h2>
+<h3 id="1-demand-forecasting">1. <strong>Demand Forecasting</strong></h3>
+<ul>
+<li>Use Prophet model to predict future consumption</li>
+<li>Residential (MAE: 0.036) highly accurate</li>
+<li>Useful for capacity planning</li>
+</ul>
+<h3 id="2-pricing-optimization">2. <strong>Pricing Optimization</strong></h3>
+<ul>
+<li>Different pricing tiers for each segment</li>
+<li>Fixed rates for Residential (predictable)</li>
+<li>Dynamic pricing for Industrial (volatile)</li>
+</ul>
+<h3 id="3-anomaly-alerts">3. <strong>Anomaly Alerts</strong></h3>
+<ul>
+<li>Real-time monitoring with automated alerts</li>
+<li>Detect equipment failures, unusual usage patterns</li>
+<li>8 anomalies in year = ~2% false alarm rate</li>
+</ul>
+<h3 id="4-segmentation">4. <strong>Segmentation</strong></h3>
+<ul>
+<li>Tailor services to segment needs</li>
+<li>Residential: simple plans</li>
+<li>Commercial/Industrial: complex contracts</li>
+</ul>
+<hr />
+<h2 id="project-statistics">Project Statistics</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data Points</td>
+<td>17,520 observations</td>
+</tr>
+<tr>
+<td>Meters Analyzed</td>
+<td>4,443</td>
+</tr>
+<tr>
+<td>Time Period</td>
+<td>1 year (2013)</td>
+</tr>
+<tr>
+<td>Data Cleaning</td>
+<td>Removed 305 meters (&gt;20% missing)</td>
+</tr>
+<tr>
+<td>SQL Queries</td>
+<td>10+ complex queries</td>
+</tr>
+<tr>
+<td>Forecasts Generated</td>
+<td>3 (one per segment)</td>
+</tr>
+<tr>
+<td>Anomalies Detected</td>
+<td>8 (2% of data)</td>
+</tr>
+<tr>
+<td>Average MAE</td>
+<td>0.19</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="tools-technologies">Tools &amp; Technologies</h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Tools</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cloud</strong></td>
+<td>AWS S3, AWS Athena</td>
+</tr>
+<tr>
+<td><strong>Data Processing</strong></td>
+<td>Python, pandas, numpy</td>
+</tr>
+<tr>
+<td><strong>Time Series</strong></td>
+<td>statsmodels, Prophet</td>
+</tr>
+<tr>
+<td><strong>Visualization</strong></td>
+<td>Plotly, matplotlib</td>
+</tr>
+<tr>
+<td><strong>Database</strong></td>
+<td>SQL (Presto/Trino)</td>
+</tr>
+<tr>
+<td><strong>Version Control</strong></td>
+<td>Git, GitHub</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="key-learnings">Key Learnings</h2>
+<p>✅ <strong>AWS Benefits:</strong>
+- No infrastructure management (S3 + Athena)
+- Cost-effective (pay per query)
+- Scalable to TB+ datasets
+- GDPR-compliant cloud storage</p>
+<p>✅ <strong>SQL Insights:</strong>
+- Complex queries on large datasets
+- Proper data cleaning (NULL handling)
+- Aggregations and ranking
+- Real-world data quality issues</p>
+<p>✅ <strong>Time Series Challenges:</strong>
+- Seasonality requires specialized models
+- Stationarity testing important
+- Forecast accuracy varies by segment
+- Anomaly detection needs multiple methods</p>
+<hr />
+<h2 id="future-improvements">Future Improvements</h2>
+<ol>
+<li><strong>Advanced Models:</strong></li>
+<li>SARIMA (Seasonal ARIMA)</li>
+<li>LSTM neural networks</li>
+<li>
+<p>Ensemble methods</p>
+</li>
+<li>
+<p><strong>Real-time Processing:</strong></p>
+</li>
+<li>AWS Lambda for streaming updates</li>
+<li>
+<p>Real-time alerts via SNS/SQS</p>
+</li>
+<li>
+<p><strong>ML Ops:</strong></p>
+</li>
+<li>Automated model retraining</li>
+<li>Model monitoring and versioning</li>
+<li>
+<p>A/B testing framework</p>
+</li>
+<li>
+<p><strong>Expanded Analysis:</strong></p>
+</li>
+<li>Weather correlation analysis</li>
+<li>Holiday/weekend patterns</li>
+<li>Customer segmentation (K-means)</li>
+</ol>
+<hr />
+<h2 id="files-resources">Files &amp; Resources</h2>
+<ul>
+<li><strong>Dashboard:</strong> <code>dashboard.html</code> (interactive Plotly visualizations)</li>
+<li><strong>Data:</strong> <code>data/meter_segmentation.csv</code>, <code>data/anomalies.csv</code></li>
+<li><strong>Images:</strong> PNG exports of all charts</li>
+<li><strong>Code:</strong> Python notebooks with full pipeline</li>
+</ul>
+<hr />
+<h2 id="conclusion">Conclusion</h2>
+<p>This project successfully demonstrates <strong>professional data engineering practices</strong> combining cloud infrastructure, SQL, and advanced analytics. The insights are actionable for energy companies in demand planning, pricing, and anomaly detection.</p>
+<p><strong>Impact:</strong> Analyzing 4,443 meters across 1 year of data to extract business-critical insights using modern cloud and data science tools.</p>
+<hr />
+<p><em>Last Updated: December 2025</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
