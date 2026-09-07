@@ -1,6 +1,113 @@
-# 📊 Time Series Forecasting (AWS · SQL)
+# ⚡ KDB+/Q vs SQL Benchmark & AWS Time Series Forecasting
 
 ## Project Overview
+
+A two-part energy analytics project built on the same London smart meter
+dataset. **Part 2** is a from-scratch performance benchmark comparing
+**KDB+/Q** against **SQL (DuckDB)** on ~46M raw meter readings, built to
+develop hands-on KDB+/Q skills for time-series/database engineering roles.
+**Part 1** demonstrates end-to-end **AWS cloud analytics** (S3 → Athena → SQL)
+with time-series forecasting, anomaly detection, and segmentation on the same
+dataset's aggregated form. Together they show the same data problem solved at
+two different layers: raw row-level performance engineering, and cloud-scale
+analytics/forecasting.
+
+- **📂 GitHub Repository** - <a href="https://github.com/slastrzelec/energy-forecasting-sql-vs-kdb" target="_blank">View on GitHub</a>
+
+---
+
+## Part 2 — KDB+/Q vs SQL (DuckDB) Benchmark
+
+**Skills demonstrated:**
+
+- 🗄️ **KDB+/Q:** table loading, q-SQL queries, joins, grouped attributes (`` `g# ``)
+- ⚙️ **Performance Engineering:** rigorous same-hardware benchmarking methodology
+- 🦆 **DuckDB / SQL:** columnar analytical SQL as the comparison baseline
+- 🔬 **Experimental Discipline:** hypothesis testing, including reporting a negative result honestly
+- 🧠 **Systems Thinking:** diagnosing and working around a real memory-ceiling limit
+
+### Setup
+
+Both engines run the **identical 5 queries** against the same raw half-hourly
+readings CSVs (`LCLid`, `tstp`, `energy(kWh/hh)`), entirely locally — **KDB-X
+5.0 Community Edition** (kdb+/q, via WSL2/Ubuntu) and **DuckDB** (Python), on
+the same machine, in the same WSL environment. No AWS involved in this half —
+Part 1 already covers cloud skills, so this is a deliberately local,
+apples-to-apples comparison.
+
+**Dataset:** "Smart meters in London" (Kaggle), long-format half-hourly
+readings, ~167M rows across 112 block files, plus a household → Acorn
+socioeconomic-group mapping table.
+
+### Headline Results
+
+**30 blocks / 45,948,372 rows, average of 3 runs (ms):**
+
+| Query | DuckDB | kdb+/q | Faster engine |
+|-------|-------:|-------:|----------------|
+| Q1 — full row count | 2.15 | 0.0007 | kdb+/q, **~3,220×** |
+| Q2 — point filter (1 household) | 2.36 | 0.048 | kdb+/q, **~49×** |
+| Q3 — group by household | 133.33 | 291.66 | DuckDB, ~2.2× |
+| Q4 — group by hour of day | 41.12 | 645.38 | DuckDB, ~15.7× |
+| Q5 — join + group by Acorn group | 226.80 | 404.89 | DuckDB, ~1.8× |
+
+![Main comparison](images/kdb_main_comparison.png)
+
+![Speedup factor per query](images/kdb_speedup_factor.png)
+
+**Takeaway:** kdb+/q wins decisively on narrow, selective operations (counts,
+point lookups), where its in-memory columnar design and attribute indexing
+shine — but loses to DuckDB's query optimizer on heavier grouping/join
+workloads. A genuinely mixed result, not a blanket "kdb+ is faster" story.
+
+### Optimization: the `` `g# `` grouped attribute
+
+Setting a grouped attribute on the filter column turned the point-filter query
+from a 10.79 ms linear scan into a 0.029 ms hash lookup — a **~375× speedup**
+— for a one-time indexing cost of under a second. Without it, kdb+/q actually
+*loses* the point-filter query to DuckDB.
+
+![Attribute impact](images/kdb_attribute_impact.png)
+
+### A negative result, reported honestly
+
+Hypothesized that the `` `tstp.hh `` temporal accessor was the bottleneck in
+the slow hour-of-day query (Q4), and tested an alternative extraction
+(`` (`int$`minute$tstp) div 60 ``) as a controlled comparison. Timings came
+back statistically identical (645.38 ms vs 649.71 ms) — hypothesis disproven.
+The real cost is the group-by-on-derived-column mechanism itself, not the
+extraction method. Worth including precisely *because* it didn't confirm the
+hypothesis — a benchmark is only credible if negative results get reported too.
+
+### A real infrastructure limit, not a bug
+
+kdb+/q successfully loaded the full 112-block dataset (167.8M rows, ~15.2 min)
+but the process was then OOM-killed by WSL2's memory ceiling while holding all
+112 intermediate block-tables in memory prior to concatenation. Rather than
+guess at an untested larger scale, 30 blocks (45.9M rows) was chosen as a
+safe, repeatable scale for the final benchmark — a deliberate scope decision,
+documented rather than hidden.
+
+### Data quality
+
+50 rows per block carry the literal string `"Null"` instead of a numeric
+reading in the energy column — converted to a proper null in both engines
+(`TRY_CAST` in DuckDB, `ssr` substitution in q) rather than erroring or
+silently dropping rows.
+
+### Tools & Technologies
+
+| Category | Tools |
+|----------|-------|
+| **Database** | KDB-X 5.0 Community Edition (kdb+/q), DuckDB |
+| **Environment** | WSL2 / Ubuntu |
+| **Language** | q, Python |
+| **Visualization** | matplotlib |
+| **Version Control** | Git, GitHub |
+
+---
+
+## Part 1 — AWS Time Series Forecasting
 
 This project demonstrates **end-to-end data engineering and analytics** using cloud infrastructure and advanced data science techniques. The analysis covers 4,443 smart meters from London (2013) with forecasting, anomaly detection, and segmentation.
 
@@ -12,9 +119,7 @@ This project demonstrates **end-to-end data engineering and analytics** using cl
 - 📋 **Data Segmentation:** Clustering based on consumption patterns
 - 📉 **Visualization:** Interactive dashboards with Plotly
 
----
-
-## Dataset
+### Dataset
 
 **London Smart Meter Energy Data (2013)**
 - **Size:** 587 MB (17,520 observations × 4,444 columns)
@@ -25,11 +130,9 @@ This project demonstrates **end-to-end data engineering and analytics** using cl
 
 Source: [Low Carbon London smart meter data (refactored) — 4TU.ResearchData](https://data.4tu.nl/datasets/fbbe775b-48d8-469f-a39b-b64488bfd6fd)
 
----
+### Architecture
 
-## Architecture
-
-### Cloud Infrastructure
+**Cloud Infrastructure**
 ```
 Raw Data (S3: 587MB)
         ↓
@@ -45,16 +148,14 @@ Visualization & Dashboard
 - **Athena:** Serverless SQL queries (pay-per-query, no infrastructure)
 - **No EC2:** Fully managed, cost-effective solution
 
-### Local Processing
+**Local Processing**
 - **Python:** pandas, numpy, statsmodels, prophet
 - **Visualization:** Plotly, matplotlib
 - **Output:** Interactive HTML dashboard
 
----
+### Key Findings
 
-## Key Findings
-
-### 1️⃣ Data Overview
+#### 1️⃣ Data Overview
 
 ![Top 20 Consumers](images/top_20_meters.png)
 
@@ -66,9 +167,7 @@ Visualization & Dashboard
 
 **Key Insight:** Pareto principle evident - top 20 meters (0.45%) consume 15% of total energy. High inequality suggests market optimization opportunity.
 
----
-
-### 2️⃣ Meter Segmentation
+#### 2️⃣ Meter Segmentation
 
 ![Segmentation Distribution](images/segmentation_count.png)
 
@@ -90,9 +189,7 @@ Commercial:   1.015 (moderate variance)
 Industrial:   0.955 (more stable absolute values)
 ```
 
----
-
-### 3️⃣ Time Series Analysis & Forecasting
+#### 3️⃣ Time Series Analysis & Forecasting
 
 **Method:** Prophet (Facebook's forecasting library)
 
@@ -108,21 +205,19 @@ Industrial:   0.955 (more stable absolute values)
 
 1. **Stationarity Test:** ADF test p-value = 0.000441
    - Data is stationary → suitable for ARIMA/Prophet
-   
+
 2. **Seasonality:** Strong 365-day cycle
    - Winter (Jan-Mar): ~0.8 kWh/day
    - Summer (Jun-Aug): ~0.3 kWh/day
    - Residential: minimal seasonality
    - Industrial: amplitude 0.28 kWh
-   
+
 3. **Forecast Accuracy:**
    - Residential meters are 10x more predictable than Industrial
    - MAE increases with consumption volatility
    - Useful for demand planning and pricing strategies
 
----
-
-### 4️⃣ Anomaly Detection
+#### 4️⃣ Anomaly Detection
 
 ![Anomalies Detected](images/anomaly_detection.png)
 
@@ -146,11 +241,9 @@ Industrial:   0.955 (more stable absolute values)
 - Seasonal transitions
 - Equipment failures or maintenance
 
----
+### Technical Implementation
 
-## Technical Implementation
-
-### AWS + SQL
+**AWS + SQL**
 
 **Athena Queries (Sample):**
 
@@ -175,7 +268,7 @@ WHERE MAC000002 IS NOT NULL
 
 **Performance:** Sub-second queries on 4.4M data points
 
-### Time Series (Python)
+**Time Series (Python)**
 
 **Libraries:**
 ```python
@@ -207,46 +300,29 @@ forecast = model.predict(future)
 mae = mean_absolute_error(test_data, forecast['yhat'])
 ```
 
----
+### Business Applications
 
-## Dashboard
-
-**Interactive HTML dashboard** includes:
-- 📊 Data overview with top consumers
-- 📈 Segmentation analysis with charts
-- 🔮 Time series forecasting results
-- 🚨 Anomaly detection visualization
-- 💡 Business insights and recommendations
-
-👉 **[View Dashboard](dashboard.html)** ⬅️
-
----
-
-## Business Applications
-
-### 1. **Demand Forecasting**
+**1. Demand Forecasting**
 - Use Prophet model to predict future consumption
 - Residential (MAE: 0.036) highly accurate
 - Useful for capacity planning
 
-### 2. **Pricing Optimization**
+**2. Pricing Optimization**
 - Different pricing tiers for each segment
 - Fixed rates for Residential (predictable)
 - Dynamic pricing for Industrial (volatile)
 
-### 3. **Anomaly Alerts**
+**3. Anomaly Alerts**
 - Real-time monitoring with automated alerts
 - Detect equipment failures, unusual usage patterns
 - 8 anomalies in year = ~2% false alarm rate
 
-### 4. **Segmentation**
+**4. Segmentation**
 - Tailor services to segment needs
 - Residential: simple plans
 - Commercial/Industrial: complex contracts
 
----
-
-## Project Statistics
+### Project Statistics
 
 | Metric | Value |
 |--------|-------|
@@ -259,9 +335,7 @@ mae = mean_absolute_error(test_data, forecast['yhat'])
 | Anomalies Detected | 8 (2% of data) |
 | Average MAE | 0.19 |
 
----
-
-## Tools & Technologies
+### Tools & Technologies
 
 | Category | Tools |
 |----------|-------|
@@ -272,9 +346,7 @@ mae = mean_absolute_error(test_data, forecast['yhat'])
 | **Database** | SQL (Presto/Trino) |
 | **Version Control** | Git, GitHub |
 
----
-
-## Key Learnings
+### Key Learnings
 
 ✅ **AWS Benefits:**
 - No infrastructure management (S3 + Athena)
@@ -294,9 +366,7 @@ mae = mean_absolute_error(test_data, forecast['yhat'])
 - Forecast accuracy varies by segment
 - Anomaly detection needs multiple methods
 
----
-
-## Future Improvements
+### Future Improvements
 
 1. **Advanced Models:**
    - SARIMA (Seasonal ARIMA)
@@ -317,11 +387,8 @@ mae = mean_absolute_error(test_data, forecast['yhat'])
    - Holiday/weekend patterns
    - Customer segmentation (K-means)
 
----
+### Files & Resources
 
-## Files & Resources
-
-- **Dashboard:** `dashboard.html` (interactive Plotly visualizations)
 - **Data:** `data/meter_segmentation.csv`, `data/anomalies.csv`
 - **Images:** PNG exports of all charts
 - **Code:** Python notebooks with full pipeline
@@ -330,10 +397,15 @@ mae = mean_absolute_error(test_data, forecast['yhat'])
 
 ## Conclusion
 
-This project successfully demonstrates **professional data engineering practices** combining cloud infrastructure, SQL, and advanced analytics. The insights are actionable for energy companies in demand planning, pricing, and anomaly detection.
-
-**Impact:** Analyzing 4,443 meters across 1 year of data to extract business-critical insights using modern cloud and data science tools.
+Together, these two parts demonstrate the same energy dataset worked at two
+different layers: **Part 2** shows raw row-level database performance
+engineering (KDB+/Q vs SQL, ~46M rows, with rigorous benchmarking
+methodology, a documented optimization, an honest negative result, and a
+real infrastructure limit worked around deliberately) and **Part 1** shows
+cloud-scale analytics and forecasting (AWS S3/Athena, Prophet, anomaly
+detection, segmentation) across 4,443 meters over a full year — actionable
+for energy companies in demand planning, pricing, and anomaly detection.
 
 ---
 
-*Last Updated: December 2025*
+*Last Updated: September 2026*
