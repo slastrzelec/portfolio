@@ -1,4 +1,7 @@
 site_name: Portfolio - Sławomir Strzelec
+extra_css:
+  - stylesheets/extra.css
+
 theme:
   name: material
   palette:
