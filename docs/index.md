@@ -14,7 +14,7 @@ In this portfolio, you'll find selected projects showcasing that mix of scientif
 * [🤖 Scientific Research Agent (LangChain · LangGraph · LangFuse)](17_research-agent-langchain/index.md)
 * [🎯 CV-Job Matching System (OpenAI API · REST API)](18_cv-matching-openai-embeddings/index.md)
 * [🫁 Pneumonia Detection (TensorFlow · Keras)](15_TensorFlow/index.md)
-* [📊 Time Series Forecasting (AWS · SQL)](08_AWS_Energy/index.md)
+* [⚡ KDB+/Q vs SQL Benchmark (kdb+/q · DuckDB · AWS · Prophet)](08_AWS_Energy/index.md)
 
 ## 🖼️ Computer Vision
 * [😊 Emotion Recognition System (OpenCV · PyTorch)](12_emotion-detection/index.md)
