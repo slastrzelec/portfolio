@@ -1,149 +1,55 @@
-# 🔬 Erythrocyte Analysis App
+# 🔬 Erythrocyte Shape Analyzer
 
-## 🧬 Project Overview
+**Quantitative, image-based analysis of red blood cell morphology — classical computer vision (OpenCV) wrapped in an interactive Streamlit app.**
 
-This project is an interactive **Streamlit web application** for the **automated analysis of erythrocyte (red blood cell) morphology**.
-Using computer vision (OpenCV) and scientific Python libraries, the app extracts key geometric parameters of red blood cells and identifies **shape anomalies**, which may indicate hematological disorders.
+**Live demo:** <a href="https://erythrocyte-shape-analyzer.streamlit.app" target="_blank">erythrocyte-shape-analyzer.streamlit.app</a> · <a href="https://github.com/slastrzelec/erythrocyte-shape-analyzer" target="_blank">GitHub Repository</a>
 
-The application allows you to:
+![Detected cells with per-cell shape classification and live statistics](detected_cells.png)
+*Green = normal, yellow = moderately elongated, red = highly elongated, magenta = anomaly — each cell is classified against a user-defined Shape Factor threshold.*
 
-* Upload your own microscope image or use a sample one
-* Automatically detect erythrocytes using contour analysis
-* Calculate Shape Factor, Ellipticity, Area, Perimeter, and axis lengths
-* Identify **normal vs. anomalous** erythrocytes
-* Apply **calibration** to convert pixel-size values into micrometers
-* Visualize data using multiple charts
-* Download results as **CSV** or **Excel** files
-* Download my associated **scientific publication** as a PDF
+## Why this project
 
----
+This was my first serious portfolio project, and it grew directly out of academic research: an investigation into the acute effects of functionalized carbon nanotubes (MWCNTs-Ni) on red blood cell function, where shape stability under toxic exposure is a key parameter. Rather than leaving the measurement pipeline as a one-off analysis script, I rebuilt it as a standalone, reusable tool — usable on any microscope image, not just the original research dataset.
 
-## 🎯 Key Features
+## What it does
 
-### 📥 Image Input
+The app automatically detects erythrocytes in a microscope image and measures their shape using contour detection and ellipse fitting. For every detected cell it computes:
 
-* Upload your own `.jpg/.jpeg/.png` image
-* Or load a default microscope image directly from GitHub
-* Automatic error handling for corrupted files
+* **Shape Factor** (major axis / minor axis) — a quantitative measure of elongation
+* Ellipticity, area, and perimeter, with optional pixel → micrometer calibration
+* An anomaly flag against a user-configurable Shape Factor threshold
 
----
+Results are exportable as CSV or Excel, and the app also serves the original research publication as a downloadable PDF with a highlighted abstract.
 
-### 🧪 Erythrocyte Shape Detection
+## Methodology
 
-The application performs:
+1. Convert the image to grayscale and binarize it with **Otsu's method** (automatic threshold selection, robust to uneven illumination).
+2. Detect external contours and filter out anything below a configurable minimum axis size (removes noise/debris).
+3. Fit an ellipse to each remaining contour (`cv2.fitEllipse`) and compute Shape Factor = major axis / minor axis.
+4. Classify each cell as normal or anomalous against the threshold, and compute area/perimeter/ellipticity alongside it.
 
-* **Grayscale conversion**
-* **Otsu’s thresholding** for automatic binarization
-* **Contour extraction** using OpenCV
-* **Ellipse fitting** for every detected erythrocyte
-* Calculation of:
+![Shape Factor vs Area scatter plot](shape_factor_vs_area.png)
+*Shape Factor vs. Area — anomalies (red) separate cleanly from the normal population.*
 
-  * **Shape Factor** (major/minor axis)
-  * **Ellipticity**
-  * **Area**
-  * **Perimeter**
-  * **Major and Minor Axis lengths**
+![Shape Factor distribution histogram](shape_factor_distribution.png)
+*Shape Factor distribution across the analyzed sample.*
 
-Cells are colour-coded:
+## Limitation, stated plainly
 
-* 🟢 Green — normal morphology
-* 🟡 Yellow — moderately elongated
-* 🔴 Red — highly elongated (potential anomaly)
-* 🟣 Magenta — anomaly detected
+Shape Factor is an elongation index. A perfectly spherical cell and a normal, healthy biconcave cell both yield Shape Factor ≈ 1, so this specific metric does not distinguish spherocytosis-type anomalies — it's built to detect elongation/elliptocytosis-type shape change, not roundness. This is a research/demonstration tool, **not a medical diagnostic device**.
 
----
+## Tech stack
 
-### 📏 Calibration Mode (µm Conversion)
+Python · Streamlit · OpenCV · NumPy · Pandas · Matplotlib · openpyxl
 
-Users can provide a **µm-per-pixel calibration factor**.
+## Research context
 
-When enabled, the app automatically adds:
+The methodology is based on a study investigating multi-walled carbon nanotubes with attached Ni²⁺ ions (MWCNTs-Ni) and their acute effects on red blood cell function. The low concentration tested didn't change red blood cell size or shape, but it did affect haemoglobin's states and its ability to reversibly bind oxygen — MWCNTs-Ni-treated cells showed an increased affinity for O₂, similar to red blood cells from essential hypertensive subjects, pointing to a potential risk that MWCNTs-Ni exposure could influence hypertension development. The full publication is downloadable from within the app.
 
-* Major Axis (µm)
-* Minor Axis (µm)
-* Perimeter (µm)
-* Area (µm²)
+## Revisiting a first project, honestly
 
-If calibration is disabled (value = 0), the measurements remain in **pixels**.
+Coming back to this after later, more production-oriented projects, the main gap versus something like the [cuneiform sign classifier](../20_cuneiform-sign-classifier/index.md) is testing and deployment discipline rather than the core CV logic itself — there's no automated test suite here, and the repo history reflects genuine early-stage churn (duplicate repos, unpinned dependencies) that I cleaned up rather than hid. I've kept it in the portfolio specifically *because* it's the starting point — the clearest before/after marker for how my engineering practices have matured.
 
----
+## Author's note
 
-### 📊 Data Visualization
-
-The app generates detailed scientific visualisations:
-
-* **Scatter plot:** Shape Factor vs. Area, with anomaly threshold
-* **Histogram:** Shape Factor distribution
-* **Histogram:** Area distribution (px² or µm²)
-* **Histogram:** Perimeter distribution
-* **Binary mask preview** used internally for segmentation
-* **Processed image** with detected cells and IDs
-
----
-
-### 📋 Data Export
-
-You can download all measurement results as:
-
-* **CSV (.csv)**
-* **Excel (.xlsx)**
-
-Both export functions use caching for performance.
-
----
-
-### 📖 Scientific Publication
-
-The app also includes a downloadable PDF of my related research publication:
-
-> *Functionalized carbon nanotubes and their acute effects on erythrocyte oxygen-binding properties.*
-
-A highlighted abstract is shown inside the app, together with a direct download button.
-
----
-
-## 🛠️ Tech Stack
-
-* **Python**
-* **Streamlit** — interactive UI
-* **OpenCV (cv2)** — image processing
-* **NumPy & Pandas** — scientific computing
-* **Matplotlib** — visualizations
-* **Requests** — loading remote files
-* **OpenPyXL** — Excel export
-
----
-
-## 🚀 Main Functional Flow
-
-1. Load or upload an image
-2. Preprocess & apply Otsu threshold
-3. Detect contours and fit ellipses
-4. Extract metrics for each detected erythrocyte
-5. Classify as normal or anomalous
-6. Apply calibration (optional)
-7. Display processed images
-8. Show statistics, charts, and tables
-9. Allow CSV / Excel export
-
----
-
-## 📁 Repository Structure (recommended)
-
-```
-📦 erythro-analysis-app
-│
-├── app.py                # Main Streamlit application
-├── README.md             # Project documentation
-├── publikacja.pdf        # Scientific publication
-├── requirements.txt      # Dependencies
-└── experimental_data/
-        └── C.jpg         # Example microscope image
-```
-
----
-
-## 🎉 Summary
-
-This project demonstrates how **computer vision, scientific analysis, and interactive UI** can be combined to support hematology research.
-It automates time-consuming manual image interpretation and helps detect early morphological anomalies in erythrocytes — potentially supporting diagnostic workflows.
+First serious project → recently revisited and cleaned up: fixed a real ellipse-drawing bug (minor axis wasn't perpendicular to the major axis), pinned dependencies, added a proper LICENSE, and rewrote the in-app science copy for accuracy.
