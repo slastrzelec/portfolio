@@ -29,7 +29,6 @@ In this portfolio, you'll find selected projects showcasing that mix of scientif
 
 ## 📚 Older Projects
 * [🌈 Raman Spectroscopy Analyzer (SciPy · LMFIT)](04_raman/index.md)
-* [⚛️ EDA – QM9 Dataset (RDKit · Pandas)](02_eda_chem/index.md)
 
 ## About Me
 

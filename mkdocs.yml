@@ -44,5 +44,4 @@ nav:
           - ⛓️ Carbon Nanotube Visualization Tool (NumPy · Matplotlib): 03_nanotubes/index.md
       - 📚 Older Projects:
           - 🌈 Raman Spectroscopy Analyzer (SciPy · LMFIT): 04_raman/index.md
-          - ⚛️ EDA – QM9 Dataset (RDKit · Pandas): 02_eda_chem/index.md
   - Certificates: certificates.md
