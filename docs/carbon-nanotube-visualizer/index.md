@@ -1,8 +1,8 @@
 # ⚛️ Carbon Nanotube Visualizer
 
-🚀 **Live Demo:** <a href="https://nanotubes.streamlit.app/" target="_blank">nanotubes.streamlit.app</a>
+🚀 **Live Demo:** <a href="https://carbon-nanotube-visualizer.streamlit.app/" target="_blank">carbon-nanotube-visualizer.streamlit.app</a>
 
-![Interactive 3D view of a (5,5) armchair carbon nanotube in the app](carbon-nanotube-visualizer.png)
+![Interactive 3D view of a (5,5) armchair carbon nanotube, with the computed structure panel (atoms, bonds, diameter, chiral angle, axial period)](carbon-nanotube-visualizer.png)
 
 ## 🎯 Project Goal
 
@@ -54,6 +54,8 @@ the chiral and translation vectors), and the resulting bands and density of
 states are plotted directly. The computed gap was validated against 10
 diverse (n, m) pairs, including armchair tubes — a case where a naively
 memorized "compact" gap formula turns out to give the wrong answer.
+
+![Computed band structure and density of states for a (5,5) armchair tube, correctly showing zero gap (metallic), with the numerical k-grid residual labeled as a resolution artifact rather than a real gap](band-structure-dos.png)
 
 ### 3. Interactive 3D rendering with real physical context
 

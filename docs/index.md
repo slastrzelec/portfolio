@@ -25,10 +25,12 @@ In this portfolio, you'll find selected projects showcasing that mix of scientif
 * [🧪 Buchwald-Hartwig C-N Coupling Optimizer (RDKit · XGBoost)](06_reaction_opt/index.md)
 * [💊 Drug Solubility Predictor (RDKit · scikit-learn)](05_drug_solub/index.md)
 * [🧬 logP Predictor (PyTorch)](07_logP Predictor/index.md)
-* [⛓️ Carbon Nanotube Visualizer (Plotly · ASE · Streamlit)](carbon-nanotube-visualizer/index.md)
 
 ## 📚 Older Projects
 * [🌈 Raman Spectroscopy Analyzer (SciPy · LMFIT)](04_raman/index.md)
+
+## 🔧 Other Projects
+* [⛓️ Carbon Nanotube Visualizer (Plotly · ASE · Streamlit)](carbon-nanotube-visualizer/index.md)
 
 ## About Me
 
