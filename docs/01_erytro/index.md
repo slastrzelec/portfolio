@@ -4,6 +4,8 @@
 
 **Live demo:** <a href="https://erythrocyte-shape-analyzer.streamlit.app" target="_blank">erythrocyte-shape-analyzer.streamlit.app</a> · <a href="https://github.com/slastrzelec/erythrocyte-shape-analyzer" target="_blank">GitHub Repository</a>
 
+[![Tests](https://github.com/slastrzelec/erythrocyte-shape-analyzer/actions/workflows/tests.yml/badge.svg)](https://github.com/slastrzelec/erythrocyte-shape-analyzer/actions/workflows/tests.yml)
+
 ![Detected cells with per-cell shape classification and live statistics](detected_cells.png)
 *Green = normal, yellow = moderately elongated, red = highly elongated, magenta = anomaly — each cell is classified against a user-defined Shape Factor threshold.*
 
@@ -48,8 +50,8 @@ The methodology is based on a study investigating multi-walled carbon nanotubes 
 
 ## Revisiting a first project, honestly
 
-Coming back to this after later, more production-oriented projects, the main gap versus something like the [cuneiform sign classifier](../20_cuneiform-sign-classifier/index.md) is testing and deployment discipline rather than the core CV logic itself — there's no automated test suite here, and the repo history reflects genuine early-stage churn (duplicate repos, unpinned dependencies) that I cleaned up rather than hid. I've kept it in the portfolio specifically *because* it's the starting point — the clearest before/after marker for how my engineering practices have matured.
+Coming back to this after later, more production-oriented projects, the original gap versus something like the [cuneiform sign classifier](../20_cuneiform-sign-classifier/index.md) was testing and deployment discipline rather than the core CV logic itself — the repo history reflects genuine early-stage churn (duplicate repos, unpinned dependencies) that I cleaned up rather than hid. I've since closed that specific gap: the core detection/shape-factor logic (`shape_analysis.py`) is now covered by a unit test suite run against synthetic images with known ground truth, executed automatically via GitHub Actions on every push and pull request. I've kept the project in the portfolio specifically *because* it's the starting point — the clearest before/after marker for how my engineering practices have matured.
 
 ## Author's note
 
-First serious project → recently revisited and cleaned up: fixed a real ellipse-drawing bug (minor axis wasn't perpendicular to the major axis), pinned dependencies, added a proper LICENSE, and rewrote the in-app science copy for accuracy.
+First serious project → recently revisited and cleaned up: fixed a real ellipse-drawing bug (minor axis wasn't perpendicular to the major axis), pinned dependencies, added a proper LICENSE, rewrote the in-app science copy for accuracy, and added a pytest unit test suite with GitHub Actions CI running on every push.
