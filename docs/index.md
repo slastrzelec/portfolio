@@ -27,7 +27,7 @@ In this portfolio, you'll find selected projects showcasing that mix of scientif
 * [🧬 logP Predictor (PyTorch)](07_logP Predictor/index.md)
 
 ## 📚 Older Projects
-* [🌈 Raman Spectroscopy Analyzer (SciPy · LMFIT)](04_raman/index.md)
+* [🌈 Raman Spectroscopy Analyzer (SciPy · Plotly)](raman-spectroscopy-analyzer/index.md)
 
 ## 🔧 Other Projects
 * [⛓️ Carbon Nanotube Visualizer (Plotly · ASE · Streamlit)](carbon-nanotube-visualizer/index.md)
