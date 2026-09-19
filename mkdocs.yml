@@ -36,7 +36,7 @@ nav:
       - 🖼️ Computer Vision:
           - 😊 Emotion Recognition System (OpenCV · PyTorch): 12_emotion-detection/index.md
           - 👥 Person Counter (OpenCV · Streamlit): 16_person_counter/index.md
-          - 🔬 Erythrocyte Analysis (OpenCV · Streamlit): 01_erytro/index.md
+          - 🔬 Erythrocyte Analysis (OpenCV · Streamlit): erythrocyte-shape-analyzer/index.md
       - 🧪 Cheminformatics & Scientific ML:
           - 🧪 Buchwald-Hartwig C-N Coupling Optimizer (RDKit · XGBoost): 06_reaction_opt/index.md
           - 💊 Drug Solubility Predictor (RDKit · scikit-learn): 05_drug_solub/index.md
