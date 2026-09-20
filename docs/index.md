@@ -26,10 +26,8 @@ In this portfolio, you'll find selected projects showcasing that mix of scientif
 * [💊 Drug Solubility Predictor (RDKit · scikit-learn)](05_drug_solub/index.md)
 * [🧬 logP Predictor (PyTorch)](07_logP Predictor/index.md)
 
-## 📚 Older Projects
-* [🌈 Raman Spectroscopy Analyzer (SciPy · Plotly)](raman-spectroscopy-analyzer/index.md)
-
 ## 🔧 Other Projects
+* [🌈 Raman Spectroscopy Analyzer (SciPy · Plotly)](raman-spectroscopy-analyzer/index.md)
 * [⛓️ Carbon Nanotube Visualizer (Plotly · ASE · Streamlit)](carbon-nanotube-visualizer/index.md)
 
 ## About Me
