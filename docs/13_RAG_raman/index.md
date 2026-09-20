@@ -63,4 +63,12 @@ Both the Streamlit UI and the FastAPI backend are thin interface layers over the
 - Live API deployment fits a 512MB free-tier container thanks to a CPU-only PyTorch build
 - Full REST API with `/query`, `/documents`, `/health` endpoints, input validation, and structured error responses
 
+## 🧬 Related Projects
+
+Part of the same carbon-nanotube work as the
+[Raman Spectroscopy Analyzer](../raman-spectroscopy-analyzer/index.md) (experimental
+spectral characterization of the CNT samples referenced in the corpus) and the
+[Carbon Nanotube Visualizer](../carbon-nanotube-visualizer/index.md) (structure and
+electronic-property modeling).
+
 *Note: the live API runs on a free-tier instance and spins down after 15 minutes of inactivity — the first request after idle time may take 30–60 seconds to respond (cold start).*
