@@ -23,7 +23,7 @@ In this portfolio, you'll find selected projects showcasing that mix of scientif
 
 ## 🧪 Cheminformatics & Scientific ML
 * [🧪 Buchwald-Hartwig C-N Coupling Optimizer (RDKit · XGBoost)](06_reaction_opt/index.md)
-* [💊 Drug Solubility Predictor (RDKit · scikit-learn)](05_drug_solub/index.md)
+* [💊 Drug Solubility Predictor (RDKit · scikit-learn)](drug-solubility-prediction/index.md)
 * [🧬 logP Predictor (PyTorch)](07_logP Predictor/index.md)
 
 ## 🔧 Other Projects
