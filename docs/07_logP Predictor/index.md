@@ -40,7 +40,9 @@ The parity plots demonstrate that predictions align closely with the "Perfect Pr
 - ✅ Cheminformatics (SMILES, Morgan fingerprints, molecular descriptors)
 - ✅ Honest evaluation (train/val/test gap reported and explained, not hidden)
 
-**Related project:** [Drug Solubility Predictor](../drug-solubility-prediction/index.md) — same task family (single-molecule physicochemical property prediction from SMILES via RDKit descriptors/fingerprints), different target property and model (Random Forest) and features (Morgan fingerprints).
+**Related projects:**
+- [Drug Solubility Predictor](../drug-solubility-prediction/index.md) — same task family (single-molecule physicochemical property prediction from SMILES via RDKit descriptors/fingerprints), different target property and model (Random Forest) and features (Morgan fingerprints).
+- [Buchwald-Hartwig C-N Coupling Optimizer](../buchwald-hartwig-optimizer/index.md) — same cheminformatics toolkit (RDKit, Morgan fingerprints), different task: reaction-yield optimization rather than a single-molecule property.
 
 ### 🔗 Links
 <a href="https://molecular-lipophilicity-ai.streamlit.app/" target="_blank">Live Demo on Streamlit</a> | <a href="https://github.com/slastrzelec/molecular-lipophilicity-ai" target="_blank">Source Code</a>

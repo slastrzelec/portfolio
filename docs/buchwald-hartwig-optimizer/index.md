@@ -144,6 +144,10 @@ streamlit run app.py
 # Open http://localhost:8501
 ```
 
+**Related projects:**
+- [Drug Solubility Predictor](../drug-solubility-prediction/index.md) — same cheminformatics toolkit (RDKit descriptors + Morgan fingerprints), different task: single-molecule solubility prediction rather than reaction-yield optimization.
+- [logP Predictor](../07_logP Predictor/index.md) — same cheminformatics toolkit, different task: single-molecule lipophilicity prediction (PyTorch neural network) rather than reaction-yield optimization.
+
 ## Disclaimer
 
 ⚠️ This tool is for research and educational purposes. Predicted yields should always be validated

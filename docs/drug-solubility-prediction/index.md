@@ -108,7 +108,9 @@ Every prediction ships with:
 - ✅ API development and containerization (FastAPI, Docker)
 - ✅ Automated testing and CI (pytest, GitHub Actions)
 
-**Related project:** [logP Predictor](../07_logP Predictor/index.md) — same task family (single-molecule physicochemical property prediction from SMILES via RDKit descriptors/fingerprints), different target property and model (PyTorch neural network).
+**Related projects:**
+- [logP Predictor](../07_logP Predictor/index.md) — same task family (single-molecule physicochemical property prediction from SMILES via RDKit descriptors/fingerprints), different target property and model (PyTorch neural network).
+- [Buchwald-Hartwig C-N Coupling Optimizer](../buchwald-hartwig-optimizer/index.md) — same cheminformatics toolkit (RDKit descriptors + Morgan fingerprints, XGBoost), different task: reaction-condition/yield optimization across substrate pairs rather than a single-molecule property.
 
 ## 🌟 Contributions and Impact
 
