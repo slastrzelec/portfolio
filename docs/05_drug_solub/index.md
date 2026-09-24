@@ -57,6 +57,8 @@ Every prediction ships with:
 - **A 90% prediction interval** (split conformal, calibrated on the test set's residuals)
 - **An applicability-domain flag** — Tanimoto similarity to the nearest training compound; below 0.40 similarity, the app warns the prediction is extrapolation
 
+![Database examples tab: precomputed predictions for common drugs](screenshot_examples.png)
+
 ## 💡 Key Features and Workflow
 
 ### Data Pipeline
@@ -71,6 +73,9 @@ Every prediction ships with:
 - **Result**: XGBoost (`n_estimators=400, max_depth=4, learning_rate=0.05`), CV R² = 0.893
 
 ## 🧪 Example Predictions
+
+![Prediction example: aspirin in the Streamlit app](screenshot_prediction.png)
+
 
 | Drug | log(Solubility) | Category | Solubility (mol/L) |
 |------|-----------------|----------|-------------------|
@@ -118,7 +123,7 @@ Every prediction ships with:
 
 ## 🔗 Project Links
 
-- **📂 GitHub Repository** - <a href="https://github.com/slastrzelec/05_Drug-Solubility-Prediction-using-Machine-Learning-" target="_blank">View on GitHub</a>
+- **📂 GitHub Repository** - <a href="https://github.com/slastrzelec/drug-solubility-prediction" target="_blank">View on GitHub</a>
 - **🚀 Web App** - <a href="https://drug-solubility-prediction.streamlit.app/" target="_blank">Streamlit App</a>
 - **📊 Full Analysis** - See the repository's README and SPEC.md for methodology, results, and the data-leakage guardrails followed throughout
 
