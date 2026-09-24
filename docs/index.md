@@ -22,7 +22,7 @@ In this portfolio, you'll find selected projects showcasing that mix of scientif
 * [🔬 Erythrocyte Analysis (OpenCV · Streamlit)](erythrocyte-shape-analyzer/index.md)
 
 ## 🧪 Cheminformatics & Scientific ML
-* [🧪 Buchwald-Hartwig C-N Coupling Optimizer (RDKit · XGBoost)](06_reaction_opt/index.md)
+* [🧪 Buchwald-Hartwig C-N Coupling Optimizer (RDKit · XGBoost)](buchwald-hartwig-optimizer/index.md)
 * [💊 Drug Solubility Predictor (RDKit · scikit-learn)](drug-solubility-prediction/index.md)
 * [🧬 logP Predictor (PyTorch)](07_logP Predictor/index.md)
 

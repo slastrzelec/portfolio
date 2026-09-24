@@ -13,7 +13,7 @@
 An **interactive ML-powered web application** that predicts optimal reaction conditions for Buchwald-Hartwig C-N cross-coupling reactions. Users input substrate SMILES strings and receive AI-generated recommendations for base, ligand, and additive combinations, with the coupling product generated automatically and its real molecular structure (descriptors + Morgan fingerprints) used in the prediction.
 
 - **🚀 Live Demo** - <a href="https://buchwald-hartwig-optimizer.streamlit.app/" target="_blank">View Live App</a>
-- **📂 GitHub Repository** - <a href="https://github.com/slastrzelec/06_reaction_opt" target="_blank">View on GitHub</a>
+- **📂 GitHub Repository** - <a href="https://github.com/slastrzelec/buchwald-hartwig-optimizer" target="_blank">View on GitHub</a>
 
 ## Tech Stack
 
@@ -132,8 +132,8 @@ This project demonstrates:
 ## Usage
 ```bash
 # Clone repository
-git clone https://github.com/slastrzelec/06_reaction_opt.git
-cd 06_reaction_opt
+git clone https://github.com/slastrzelec/buchwald-hartwig-optimizer.git
+cd buchwald-hartwig-optimizer
 
 # Install dependencies
 pip install -r requirements.txt
