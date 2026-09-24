@@ -24,15 +24,23 @@ The model underwent rigorous training on over 11,000 molecules to ensure reliabi
 
 * **Loss Convergence:** Smooth decrease in Mean Squared Error (MSE), with validation loss stabilizing at a low level, confirming robust learning.
 * **High Precision Benchmarks:**
-    * **Training R^2:** 0.9948
-    * **Validation R^$:** 0.9093
-    * **Test R^2:** 0.9007 (Consistent performance on unseen molecules)
+    * **Training R²:** 0.9948
+    * **Validation R²:** 0.9093
+    * **Test R²:** 0.9007 (Consistent performance on unseen molecules)
 * **Error Metrics:** Achieved a **Mean Absolute Error (MAE) of 0.61**, ensuring high accuracy for pharmacological assessment.
+* **Regularization:** The train/test R² gap (0.99 vs 0.90) is the expected signature of a ~1.2M-parameter model on ~11,600 molecules — controlled with dropout, batch normalization and early stopping (training halted at epoch 72/100, before the gap widened further) rather than chased away with more model capacity.
 
 #### **Visualizing Accuracy**
 The parity plots demonstrate that predictions align closely with the "Perfect Prediction" line across a wide range of logP values (from -10 to +10).
 
 ![Model Training Results](7.png)
+
+**Skills Demonstrated:**
+- ✅ Deep learning (PyTorch, MLP architecture, regularization, early stopping)
+- ✅ Cheminformatics (SMILES, Morgan fingerprints, molecular descriptors)
+- ✅ Honest evaluation (train/val/test gap reported and explained, not hidden)
+
+**Related project:** [Drug Solubility Predictor](../drug-solubility-prediction/index.md) — same task family (single-molecule physicochemical property prediction from SMILES via RDKit descriptors/fingerprints), different target property and model (Random Forest) and features (Morgan fingerprints).
 
 ### 🔗 Links
 <a href="https://molecular-lipophilicity-ai.streamlit.app/" target="_blank">Live Demo on Streamlit</a> | <a href="https://github.com/slastrzelec/molecular-lipophilicity-ai" target="_blank">Source Code</a>

@@ -108,6 +108,8 @@ Every prediction ships with:
 - ✅ API development and containerization (FastAPI, Docker)
 - ✅ Automated testing and CI (pytest, GitHub Actions)
 
+**Related project:** [logP Predictor](../07_logP Predictor/index.md) — same task family (single-molecule physicochemical property prediction from SMILES via RDKit descriptors/fingerprints), different target property and model (PyTorch neural network).
+
 ## 🌟 Contributions and Impact
 
 **Research Applications:**
