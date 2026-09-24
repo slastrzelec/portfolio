@@ -2,11 +2,11 @@
 
 ## Overview
 
-The **Drug Solubility Prediction Tool** is a comprehensive machine learning application built with Streamlit that predicts aqueous solubility of pharmaceutical compounds. This project combines **cheminformatics** knowledge with modern **machine learning** techniques to solve a real problem in drug development.
+The **Drug Solubility Prediction Tool** is a machine learning application built with Streamlit (and a FastAPI service) that predicts aqueous solubility of pharmaceutical compounds. This project combines **cheminformatics** knowledge with modern **machine learning** engineering practice to solve a real problem in drug development.
 
-Given a drug's chemical structure (SMILES notation), the model predicts how well it will dissolve in water, which is crucial for determining drug bioavailability and efficacy. The model uses Morgan fingerprints (2,048 molecular descriptors) and a Random Forest regressor trained on 1,144 pharmaceutical compounds.
+Given a drug's chemical structure (SMILES notation), the model predicts how well it will dissolve in water, which is crucial for determining drug bioavailability and efficacy. The model combines Morgan fingerprints with RDKit physicochemical descriptors, feature selection, and an XGBoost regressor trained on 1,144 pharmaceutical compounds — then validated against a second, independent dataset before being trusted.
 
-It streamlines the entire workflow from molecular structure input to solubility prediction, eliminating the need for expensive computational chemistry software.
+🚀 **Live Demo:** <a href="https://drug-solubility-prediction.streamlit.app/" target="_blank">Try the Streamlit app</a>
 
 📋 **Some key results from the project:**
 
@@ -14,70 +14,61 @@ It streamlines the entire workflow from molecular structure input to solubility 
 
 | Metric | Value |
 |--------|-------|
-| **Best Algorithm** | Random Forest |
-| **Test R² Score** | 0.6985 (70% variance explained) |
-| **Test RMSE** | 1.1459 log(mol/L) |
-| **Test MAE** | 0.8599 log(mol/L) |
-| **Dataset Size** | 1,144 compounds |
-| **Features** | 2,048 Morgan fingerprints |
+| **Best Algorithm** | XGBoost |
+| **Test R² Score** | 0.9116 (91% variance explained) |
+| **Test RMSE** | 0.6203 log(mol/L) |
+| **Test MAE** | 0.4824 log(mol/L) |
+| **External validation (AqSolDB, 8,881 compounds)** | R² = 0.6381 |
+| **Dataset Size** | 1,144 compounds (ESOL) |
+| **Features** | 2,048 Morgan fingerprint bits + 7 RDKit descriptors, 1,028 selected |
 
 ## 🔬 Feature Engineering
 
-**Morgan Fingerprints** - Circular molecular descriptors that encode:
+**Morgan Fingerprints + physicochemical descriptors** — the fingerprint encodes:
 - Molecular connectivity patterns
 - Atomic neighborhoods at different radii
 - Specific chemical substructures
-- Hydrogen bonding potential
 
-Key insight: Only **6.2% of features (128 out of 2,048)** are needed to explain 80% of model predictions, indicating strong interpretability.
+...alongside 7 RDKit descriptors (molecular weight, LogP, TPSA, H-bond donor/acceptor counts, rotatable bonds, aromatic rings). Feature selection (`SelectFromModel`, fit on the training fold only) narrows 2,055 features down to 1,028.
+
+Key insight: **LogP alone accounts for 17.5% of feature importance** — more than the next 5 fingerprint bits combined — consistent with LogP's well-established role in aqueous solubility (Yalkowsky's General Solubility Equation). Adding physicochemical descriptors, not just a bigger model, was the single biggest lever for accuracy.
 
 ## 📊 Model Comparison
 
-Five different algorithms were tested:
+Four algorithms were compared via 5-fold cross-validation (train set only):
 
 ```
-Linear Regression      ❌  R² = -0.1372
-Ridge Regression       ⚠️  R² =  0.3362
-Random Forest          ✅  R² =  0.6985  ← BEST
-Gradient Boosting      🟡  R² =  0.6235
-SVR                    🟡  R² =  0.6283
+SVR                     🟡  CV R² = 0.732
+Random Forest           ✅  CV R² = 0.852
+Gradient Boosting       ✅  CV R² = 0.887
+XGBoost                 🏆  CV R² = 0.893  ← BEST
 ```
 
-Random Forest outperforms others by capturing **non-linear relationships** between molecular structure and solubility.
+XGBoost was refit on the full training set and evaluated once on the held-out test set: **R² = 0.9116**, a substantial jump from an earlier fingerprint-only Random Forest baseline (R² = 0.6985) — and the train/test gap shrank from 0.24 to 0.06, meaning this is better generalization, not just a better fit.
+
+## 🌍 External Validation
+
+Rather than stopping at the in-distribution test score, the model was also evaluated on **AqSolDB** (Sorkun et al., 2019) — 8,881 compounds never seen during training, after removing 1,099 that overlap with the ESOL training data by canonical SMILES. Result: **R² = 0.638**, reported honestly alongside the 0.91 in-distribution score rather than blended into one number. The gap shows how much accuracy depends on staying close to the training distribution — exactly the kind of check that's easy to skip and easy to regret skipping.
+
+## 🎯 Prediction Uncertainty & Applicability Domain
+
+Every prediction ships with:
+
+- **A 90% prediction interval** (split conformal, calibrated on the test set's residuals)
+- **An applicability-domain flag** — Tanimoto similarity to the nearest training compound; below 0.40 similarity, the app warns the prediction is extrapolation
 
 ## 💡 Key Features and Workflow
 
 ### Data Pipeline
 1. **Input**: Drug structure as SMILES notation
-2. **Feature Generation**: Convert to Morgan fingerprints (2,048 bits)
-3. **Normalization**: StandardScaler for feature consistency
-4. **Prediction**: Random Forest model inference
-5. **Output**: Solubility value with classification (High/Medium/Low)
+2. **Feature Generation**: Morgan fingerprints (2,048 bits) + 7 RDKit descriptors
+3. **Selection & Scaling**: `SelectFromModel` + `StandardScaler`, fit on the training fold only
+4. **Prediction**: XGBoost pipeline inference
+5. **Output**: Solubility value, classification (High/Medium/Low), prediction interval, applicability-domain check
 
 ### Hyperparameter Optimization
-- **Method**: GridSearchCV with 5-fold cross-validation
-- **Combinations Tested**: 270 different hyperparameter sets
-- **Total Model Fits**: 1,350 (270 × 5 CV folds)
-- **Optimization Time**: ~115 seconds
-- **Result**: Identified optimal configuration with R² = 0.6985
-
-### Feature Importance Analysis
-
-**Top 10 Most Important Features:**
-```
-fp_1380: 11.60% ← Most critical molecular fragment
-fp_1143:  6.04%
-fp_1683:  4.24%
-fp_561:   3.24%
-fp_1087:  2.84%
-fp_352:   2.82%
-fp_875:   2.13%
-fp_807:   1.96%
-fp_519:   1.65%
-fp_650:   1.62%
-```
-
-These fragments represent specific molecular substructures crucial for water solubility prediction.
+- **Method**: `GridSearchCV` with 5-fold cross-validation, one grid per candidate model
+- **Result**: XGBoost (`n_estimators=400, max_depth=4, learning_rate=0.05`), CV R² = 0.893
 
 ## 🧪 Example Predictions
 
@@ -96,19 +87,21 @@ These fragments represent specific molecular substructures crucial for water sol
 ## 🛠️ Technical Stack
 
 **Core Libraries:**
-- **RDKit** - Molecular structure parsing and fingerprint generation
-- **scikit-learn** - Random Forest and ML pipeline
-- **pandas/numpy** - Data manipulation and numerical computing
+- **RDKit** - Molecular structure parsing, fingerprints, and descriptors
+- **scikit-learn** - Feature selection, pipelines, cross-validation
+- **XGBoost** - Final regression model
+- **FastAPI + Pydantic** - `/predict` API, request validation
+- **Docker** - Containerized API deployment
 - **Streamlit** - Interactive web application
-- **Matplotlib/Seaborn** - Data visualization
+- **pandas/numpy** - Data manipulation and numerical computing
 
 **Skills Demonstrated:**
-- ✅ Cheminformatics (SMILES, molecular descriptors)
-- ✅ Machine Learning (model selection, hyperparameter tuning)
-- ✅ Feature Engineering (fingerprint generation, importance analysis)
-- ✅ Cross-validation and model evaluation
-- ✅ Web application development
-- ✅ Data visualization and reporting
+- ✅ Cheminformatics (SMILES, molecular fingerprints, physicochemical descriptors)
+- ✅ Machine Learning (model selection, hyperparameter tuning, feature selection)
+- ✅ Rigorous evaluation (leakage-safe pipelines, external validation, honest reporting of what didn't fully transfer)
+- ✅ Uncertainty quantification (prediction intervals, applicability-domain analysis)
+- ✅ API development and containerization (FastAPI, Docker)
+- ✅ Automated testing and CI (pytest, GitHub Actions)
 
 ## 🌟 Contributions and Impact
 
@@ -116,28 +109,19 @@ These fragments represent specific molecular substructures crucial for water sol
 - High-throughput drug candidate screening
 - Solubility-driven medicinal chemistry optimization
 - Virtual compound library filtering
-- Machine learning methodology validation
-
-**Educational Value:**
-- Integration of chemistry with data science
-- Real-world cheminformatics problem solving
-- Practical ML model development and deployment
-- Interpretable AI in pharmaceutical domain
 
 **Project Outcomes:**
-- Successfully trained production-ready model (R² = 0.70)
-- Identified key molecular fragments predicting solubility
-- Created interactive web application for end-users
-- Demonstrated controlled overfitting (24% train-test gap acceptable)
-- Validated predictions against known pharmaceutical compounds
+- Trained a model that explains ~91% of test-set solubility variance (up from 70% for the original fingerprint-only baseline)
+- Validated it honestly on an independent dataset (AqSolDB) rather than trusting the in-distribution score alone
+- Shipped both a Streamlit UI and a documented, tested FastAPI + Docker service on the same underlying pipeline
+- Every prediction comes with a calibrated confidence interval and an applicability-domain warning, not just a bare number
 
 ## 🔗 Project Links
 
 - **📂 GitHub Repository** - <a href="https://github.com/slastrzelec/05_Drug-Solubility-Prediction-using-Machine-Learning-" target="_blank">View on GitHub</a>
 - **🚀 Web App** - <a href="https://drug-solubility-prediction.streamlit.app/" target="_blank">Streamlit App</a>
-- **📊 Full Analysis** - See methodology and results sections
-
+- **📊 Full Analysis** - See the repository's README and SPEC.md for methodology, results, and the data-leakage guardrails followed throughout
 
 ---
 
-**Project Status**: ✅ Complete | **Last Updated**: November 2025
+**Project Status**: ✅ Complete | **Last Updated**: September 2026
