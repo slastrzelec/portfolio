@@ -43,7 +43,6 @@ nav:
           - ⚡ KDB+/Q vs SQL Benchmark (kdb+/q · DuckDB · AWS · Prophet): energy-forecasting-sql-vs-kdb/index.md
       - 🖼️ Computer Vision:
           - 😊 Emotion Recognition System (OpenCV · PyTorch): 12_emotion-detection/index.md
-          - 👥 Person Counter (OpenCV · Streamlit): 16_person_counter/index.md
           - 🔬 Erythrocyte Analysis (OpenCV · Streamlit): erythrocyte-shape-analyzer/index.md
       - 🧪 Cheminformatics & Scientific ML:
           - 🧪 Buchwald-Hartwig C-N Coupling Optimizer (RDKit · XGBoost): buchwald-hartwig-optimizer/index.md
