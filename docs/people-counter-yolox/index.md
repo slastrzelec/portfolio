@@ -16,7 +16,7 @@
 
 The portfolio previously had a "Person Counter" that was actually a Haar-Cascade **face** counter mislabeled as a person counter — it couldn't count anyone facing away from the camera, and wasn't a real detector at all. I rebuilt it from scratch as an actual person detector (YOLOX-nano, deep learning) with multi-object tracking, instead of quietly patching the old one.
 
-Together with the [Erythrocyte Shape Analyzer](../erythrocyte-shape-analyzer/index.md), this shows two different ends of my computer vision work: classical image processing there (Otsu thresholding, contour detection, ellipse fitting), versus a modern deep-learning object detector plus a multi-object tracker here.
+Together with the [Erythrocyte Shape Analyzer](../erythrocyte-shape-analyzer/index.md), this shows two different ends of my computer vision work: classical image processing there (Otsu thresholding, contour detection, ellipse fitting), versus a modern deep-learning object detector plus a multi-object tracker here. It's also a useful contrast with the [Cuneiform Sign Classifier](../20_cuneiform-sign-classifier/index.md): that project classifies an already-cropped image, while this one has to first find and localize every person in the frame before anything else can happen.
 
 ## What it does
 

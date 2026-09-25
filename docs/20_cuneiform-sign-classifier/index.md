@@ -56,6 +56,8 @@ The model wasn't told about paleography — it discovered a real historical fact
 - **Testing:** pytest (8 dataset-integrity tests), GitHub Actions CI
 - **Deployment:** Streamlit Community Cloud + Hugging Face Hub (model hosting)
 
+**Related:** for a project on *detecting and localizing* objects — not just classifying an already-cropped one — see [People Counter](../people-counter-yolox/index.md), which uses YOLOX-nano object detection plus multi-object tracking.
+
 ## Data quality issue encountered
 
 The metadata CSV's filename field didn't match the actual filenames in the published image archive (a dataset-versioning artifact). Solved by parsing filenames directly from disk and mapping each sign's transliteration to its class name via a separate lookup table built from the metadata (923 unique readings, only 18 ambiguous, resolved by majority vote).
