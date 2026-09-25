@@ -17,7 +17,6 @@ In this portfolio, you'll find selected projects showcasing that mix of scientif
 * [⚡ KDB+/Q vs SQL Benchmark (kdb+/q · DuckDB · AWS · Prophet)](energy-forecasting-sql-vs-kdb/index.md)
 
 ## 🖼️ Computer Vision
-* [😊 Emotion Recognition System (OpenCV · PyTorch)](12_emotion-detection/index.md)
 * [🔬 Erythrocyte Analysis (OpenCV · Streamlit)](erythrocyte-shape-analyzer/index.md)
 * [🚶 People Counter (YOLOX-nano · ONNX Runtime · ByteTrack)](people-counter-yolox/index.md)
 
