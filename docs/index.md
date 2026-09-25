@@ -19,6 +19,7 @@ In this portfolio, you'll find selected projects showcasing that mix of scientif
 ## 🖼️ Computer Vision
 * [😊 Emotion Recognition System (OpenCV · PyTorch)](12_emotion-detection/index.md)
 * [🔬 Erythrocyte Analysis (OpenCV · Streamlit)](erythrocyte-shape-analyzer/index.md)
+* [🚶 People Counter (YOLOX-nano · ONNX Runtime · ByteTrack)](people-counter-yolox/index.md)
 
 ## 🧪 Cheminformatics & Scientific ML
 * [🧪 Buchwald-Hartwig C-N Coupling Optimizer (RDKit · XGBoost)](buchwald-hartwig-optimizer/index.md)
