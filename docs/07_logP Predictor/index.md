@@ -39,6 +39,7 @@ The parity plots demonstrate that predictions align closely with the "Perfect Pr
 - ✅ Deep learning (PyTorch, MLP architecture, regularization, early stopping)
 - ✅ Cheminformatics (SMILES, Morgan fingerprints, molecular descriptors)
 - ✅ Honest evaluation (train/val/test gap reported and explained, not hidden)
+- ✅ Test coverage & CI (pytest unit + regression tests, GitHub Actions)
 
 **Related projects:**
 - [Drug Solubility Predictor](../drug-solubility-prediction/index.md) — same task family (single-molecule physicochemical property prediction from SMILES via RDKit descriptors/fingerprints), different target property and model (Random Forest) and features (Morgan fingerprints).
