@@ -300,28 +300,6 @@ forecast = model.predict(future)
 mae = mean_absolute_error(test_data, forecast['yhat'])
 ```
 
-### Business Applications
-
-**1. Demand Forecasting**
-- Use Prophet model to predict future consumption
-- Residential (MAE: 0.036) highly accurate
-- Useful for capacity planning
-
-**2. Pricing Optimization**
-- Different pricing tiers for each segment
-- Fixed rates for Residential (predictable)
-- Dynamic pricing for Industrial (volatile)
-
-**3. Anomaly Alerts**
-- Real-time monitoring with automated alerts
-- Detect equipment failures, unusual usage patterns
-- 8 anomalies in year = ~2% false alarm rate
-
-**4. Segmentation**
-- Tailor services to segment needs
-- Residential: simple plans
-- Commercial/Industrial: complex contracts
-
 ### Project Statistics
 
 | Metric | Value |
@@ -333,7 +311,7 @@ mae = mean_absolute_error(test_data, forecast['yhat'])
 | SQL Queries | 10+ complex queries |
 | Forecasts Generated | 3 (one per segment) |
 | Anomalies Detected | 8 (2% of data) |
-| Average MAE | 0.19 |
+| Average MAE | 0.20 |
 
 ### Tools & Technologies
 
@@ -345,47 +323,6 @@ mae = mean_absolute_error(test_data, forecast['yhat'])
 | **Visualization** | Plotly, matplotlib |
 | **Database** | SQL (Presto/Trino) |
 | **Version Control** | Git, GitHub |
-
-### Key Learnings
-
-✅ **AWS Benefits:**
-- No infrastructure management (S3 + Athena)
-- Cost-effective (pay per query)
-- Scalable to TB+ datasets
-- GDPR-compliant cloud storage
-
-✅ **SQL Insights:**
-- Complex queries on large datasets
-- Proper data cleaning (NULL handling)
-- Aggregations and ranking
-- Real-world data quality issues
-
-✅ **Time Series Challenges:**
-- Seasonality requires specialized models
-- Stationarity testing important
-- Forecast accuracy varies by segment
-- Anomaly detection needs multiple methods
-
-### Future Improvements
-
-1. **Advanced Models:**
-   - SARIMA (Seasonal ARIMA)
-   - LSTM neural networks
-   - Ensemble methods
-
-2. **Real-time Processing:**
-   - AWS Lambda for streaming updates
-   - Real-time alerts via SNS/SQS
-
-3. **ML Ops:**
-   - Automated model retraining
-   - Model monitoring and versioning
-   - A/B testing framework
-
-4. **Expanded Analysis:**
-   - Weather correlation analysis
-   - Holiday/weekend patterns
-   - Customer segmentation (K-means)
 
 ### Files & Resources
 
