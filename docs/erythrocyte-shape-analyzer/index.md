@@ -44,7 +44,7 @@ Shape Factor is an elongation index. A perfectly spherical cell and a normal, he
 
 Python · Streamlit · OpenCV · NumPy · Pandas · Matplotlib · openpyxl
 
-**Related:** for a contrasting computer-vision approach on the same broad problem (detecting and characterizing objects in images) — a modern deep-learning object detector plus multi-object tracking, instead of classical contour/ellipse fitting — see the [People Counter](../people-counter-yolox/index.md) project.
+**Related:** for a contrasting computer-vision approach on the same broad problem (detecting and characterizing objects in images) — a modern deep-learning object detector plus multi-object tracking, instead of classical contour/ellipse fitting — see the [People Counter](../people-counter-yolox/index.md) project. For a learned (rather than hand-engineered) approach to analyzing image content, see [Emotion Recognition](../emotion-recognition-cv/index.md), a fine-tuned ResNet18 classifying facial expressions.
 
 ## Research context
 

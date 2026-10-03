@@ -43,6 +43,12 @@ A casual photo, outside the FER-2013 distribution. The model predicts **Neutral 
 
 Transfer learning beats the best from-scratch CNN by about 4.9 points of accuracy and 13 points of macro F1. Happy and Surprise are recognized well; Fear is the weakest class (recall 0.44).
 
+## Related projects
+
+- [Cuneiform Sign Classifier](../20_cuneiform-sign-classifier/index.md) — the same ResNet18 transfer-learning approach on a very different image domain.
+- [People Counter](../people-counter-yolox/index.md) — modern object detection and tracking; this project keeps a classical Haar Cascade for the face-detection step and puts the effort into the classifier.
+- [Erythrocyte Shape Analyzer](../erythrocyte-shape-analyzer/index.md) — classical image processing (thresholding, contours, ellipse fitting) instead of a learned model.
+
 ## Limitations, stated plainly
 
 - The 68–72% target I set in the spec was **not reached** — the ResNet ends at 67.96%.
