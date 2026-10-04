@@ -9,7 +9,7 @@ In this portfolio, you'll find selected projects showcasing that mix of scientif
 
 
 ## 🌟 Featured Projects
-* [💡 Carbon Nanotubes RAG System (FastAPI · Docker · FAISS · RAGAs)](13_RAG_raman/index.md)
+* [💡 Carbon Nanotubes RAG System (FastAPI · Docker · FAISS · RAGAs)](carbon-nanotubes-rag/index.md)
 * [🏺 Cuneiform Sign Classifier (PyTorch · Grad-CAM · HF Hub)](20_cuneiform-sign-classifier/index.md)
 * [🤖 Scientific Research Agent (LangChain · LangGraph · LangFuse)](17_research-agent-langchain/index.md)
 * [🎯 CV-Job Matching System (OpenAI API · REST API)](18_cv-matching-openai-embeddings/index.md)

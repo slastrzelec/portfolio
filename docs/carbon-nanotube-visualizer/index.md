@@ -105,5 +105,5 @@ Dresselhaus, *Physical Properties of Carbon Nanotubes*; Iijima, *Nature*, 1991).
 Part of the same carbon-nanotube work as the
 [Raman Spectroscopy Analyzer](../raman-spectroscopy-analyzer/index.md) (experimental
 spectral characterization of CNT samples) and the
-[Carbon Nanotubes RAG System](../13_RAG_raman/index.md) (literature Q&A over the
+[Carbon Nanotubes RAG System](../carbon-nanotubes-rag/index.md) (literature Q&A over the
 underlying research papers).

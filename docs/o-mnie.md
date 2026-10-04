@@ -29,11 +29,11 @@ I combine a rigorous scientific foundation with modern software engineering prac
 
 **Carbon Nanotubes RAG System — Production RAG**
 
-A Streamlit prototype rebuilt into a full production system: hybrid dense+BM25 retrieval, a validated REST API, 21 automated tests (CI via GitHub Actions), Docker containers, and a live public deployment.
+A Streamlit prototype rebuilt into a full production system: hybrid dense+BM25 retrieval, a validated REST API, 31 automated tests (CI via GitHub Actions), Docker containers, and a live public deployment.
 
 - **Faithfulness ≈ 0.80–0.82** (RAGAs evaluation, 14-question domain set)
-- **21/21 tests passing**, enforced automatically on every push
-- 🔌 <a href="https://rag-raman-api.onrender.com/docs" target="_blank">Live REST API</a> · 💻 <a href="https://carbon-nanotubes-rag.streamlit.app/" target="_blank">Live Demo</a> · 📦 <a href="https://github.com/slastrzelec/13_RAG_raman_carbon_nanotubes" target="_blank">Repository</a>
+- **31/31 tests passing**, enforced automatically on every push
+- 🔌 <a href="https://rag-raman-api.onrender.com/docs" target="_blank">Live REST API</a> · 💻 <a href="https://carbon-nanotubes-raman-rag.streamlit.app/" target="_blank">Live Demo</a> · 📦 <a href="https://github.com/slastrzelec/carbon-nanotubes-rag" target="_blank">Repository</a>
 
 ---
 

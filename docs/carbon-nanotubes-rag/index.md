@@ -4,9 +4,9 @@
 
 ## 🎯 Overview
 
-A full RAG system for semantic search and Q&A over 25 scientific papers on Raman spectroscopy of carbon nanotubes. What started as a simple Streamlit demo was rebuilt in six deliberate phases into a system with correct retrieval math, hybrid search, a validated REST API, structured logging, Docker containers, automated CI testing, and a live public deployment.
+A full RAG system for semantic search and Q&A over 24 scientific papers on Raman spectroscopy of carbon nanotubes. What started as a simple Streamlit demo was rebuilt in six deliberate phases into a system with correct retrieval math, hybrid search, a validated REST API, structured logging, Docker containers, automated CI testing, and a live public deployment.
 
-![Streamlit demo](zdi1.png)
+![Streamlit demo](demo.png)
 
 ## 🚀 What This Project Demonstrates
 
@@ -15,10 +15,11 @@ This isn't just a working demo — it's built and documented the way a productio
 - **Correct retrieval math** — `IndexFlatIP` with L2-normalized embeddings for true cosine similarity, hybrid dense + BM25 search, sentence-aware chunking, content-hash deduplication of source documents
 - **Measured quality** — evaluated with [RAGAs](https://github.com/explodinggradients/ragas) (faithfulness ≈ 0.80–0.82 across 14 domain questions, including a deliberate out-of-scope question as a hallucination check)
 - **A real REST API** (FastAPI), not just a UI — request validation, proper HTTP error handling, auto-generated interactive docs, and its own test suite
-- **21 automated tests**, running on every push via GitHub Actions (green build badge on the repo)
+- **31 automated tests**, running on every push via GitHub Actions (green build badge on the repo)
 - **Structured JSON logging** — every request logged with method, path, status, and duration
 - **Dockerized** — separate containers for the API and the UI, orchestrated with docker-compose, optimized to fit a 512MB free-tier deployment
 - **Live deployment** — the API runs publicly on Render, not just on localhost
+- **Protected public demo** — per-client rate limit, global daily query cap, question-length limit and a cached default answer keep the free demo from burning API budget
 
 ## 🛠️ Tech Stack
 
@@ -26,7 +27,7 @@ This isn't just a working demo — it's built and documented the way a productio
 - **Generation**: OpenAI API (`gpt-4o-mini`)
 - **API**: FastAPI, Pydantic validation
 - **UI**: Streamlit
-- **Testing**: pytest (21 tests), RAGAs (answer quality evaluation)
+- **Testing**: pytest (31 tests), RAGAs (answer quality evaluation)
 - **Infra**: Docker, docker-compose, GitHub Actions (CI), Render (deployment)
 
 ## 📊 How It Works
@@ -51,13 +52,13 @@ Both the Streamlit UI and the FastAPI backend are thin interface layers over the
 
 ## 🔗 Links
 
-- <a href="https://carbon-nanotubes-rag.streamlit.app" target="_blank">Live Streamlit Demo</a>
+- <a href="https://carbon-nanotubes-raman-rag.streamlit.app" target="_blank">Live Streamlit Demo</a>
 - <a href="https://rag-raman-api.onrender.com/docs" target="_blank">Live REST API (interactive Swagger docs)</a>
-- <a href="https://github.com/slastrzelec/13_RAG_raman_carbon_nanotubes" target="_blank">GitHub Repository</a> — full commit history across all 6 development phases
+- <a href="https://github.com/slastrzelec/carbon-nanotubes-rag" target="_blank">GitHub Repository</a> — full commit history across all 6 development phases
 
 ## 📈 Results
 
-- **21/21 tests passing**, enforced automatically on every push
+- **31/31 tests passing**, enforced automatically on every push
 - **Faithfulness ≈ 0.80–0.82** (RAGAs, 14-question domain eval set)
 - Duplicate source detection caught real data-quality issues (same paper saved under two filenames)
 - Live API deployment fits a 512MB free-tier container thanks to a CPU-only PyTorch build

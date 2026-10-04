@@ -81,6 +81,6 @@ This project showcases expertise in:
 Part of the same carbon-nanotube work as the
 [Carbon Nanotube Visualizer](../carbon-nanotube-visualizer/index.md) (structure and
 electronic-property modeling) and the
-[Carbon Nanotubes RAG System](../13_RAG_raman/index.md) (literature Q&A over the
+[Carbon Nanotubes RAG System](../carbon-nanotubes-rag/index.md) (literature Q&A over the
 underlying research papers).
 
