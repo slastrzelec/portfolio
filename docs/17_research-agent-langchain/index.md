@@ -16,7 +16,7 @@
 
 The project demonstrates a complete **LLM Agent pipeline**, covering tool selection, ReAct reasoning loop, conversation memory, observability, and interactive deployment as a web application, hardened for a public demo (safe calculator, HTML escaping, usage limits, per-session data).
 
-It was designed as an **end-to-end portfolio project** showing LLM engineering with tool-using agents, observability and security basics for a public LLM app. Answer quality is not formally evaluated.
+It was designed as an **end-to-end portfolio project** showing LLM engineering with tool-using agents, observability and security basics for a public LLM app. Answer quality is only partly measured (tool choice, calculator, safety, sources on a small dev set); free-text factual quality is not.
 
 ---
 
@@ -42,7 +42,7 @@ It was designed as an **end-to-end portfolio project** showing LLM engineering w
 - **Pattern**: ReAct (Reasoning + Acting)
 - **Framework**: LangChain + LangGraph
 - **LLM**: OpenAI GPT-4o-mini
-- **Observability**: LangFuse
+- **Observability**: LangFuse (optional, when keys are configured)
 
 ### ReAct Loop
 ```
@@ -65,8 +65,8 @@ When LangFuse keys are configured, every step is traced there.
 
 | Tool | Source | Use Case |
 |---|---|---|
-| Wikipedia | `langchain-community` | General scientific concepts |
-| ArXiv | `langchain-community` | Recent research papers |
+| Wikipedia | MediaWiki API (own client) | General scientific concepts |
+| ArXiv | arXiv Atom API (own client) | Recent research papers |
 | PubMed | NCBI E-utilities API | Biomedical & clinical research |
 | Calculator | Custom `@tool` | Mathematical calculations |
 
@@ -95,6 +95,8 @@ When LangFuse keys are configured, every step is traced there.
 - **UI:** Streamlit `AppTest` checks rendering, limits and that one visitor never sees another's history.
 
 **Evaluation harness:** 32 hand-written questions split into `dev` (for tuning) and `test` (run once per configuration, enforced by the runner), scored on tool choice, calculator correctness, safety behaviour and source coverage, with 95 % confidence intervals. A test also checks that no evaluation question leaks into the prompt or code. Results are published only after a real run.
+
+**Dev-set results (16 cases, gpt-4o-mini, one real run):** tool choice 14/14 (95 % CI 0.79–1.00), calculator 3/3, safety 2/2, sources 10/10; about 1,000 tokens and 5.5 s per question. The `test` split has not been run yet, and with 16 cases the intervals are wide — treat these as a smoke check, not a benchmark.
 
 **Not covered (stated honestly):** real calls to OpenAI and the search APIs are verified by hand on the live demo, and the factual quality of free-text answers is not measured automatically.
 
@@ -145,6 +147,7 @@ Data Scientist | Machine Learning Practitioner
 ✅ Completed & Deployed  
 
 🔧 Potential extensions:
+
 - Persistent database (PostgreSQL / Supabase)
 - LangFuse evaluations and scoring
 - Multi-agent pipeline (LangGraph multi-node)
