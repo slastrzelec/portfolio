@@ -84,6 +84,22 @@ When LangFuse keys are configured, every step is traced there.
 
 ---
 
+## 🧪 Testing & Evaluation
+
+**Automated tests — 95 tests, run on every push (GitHub Actions) with lint and a dependency audit.** The suite needs no API key and no network, so it runs in seconds.
+
+- **Security:** the calculator rejects code injection and resource-exhaustion input (a test proves a malicious expression never touches the file system); HTML in questions and answers is escaped; Markdown images are stripped from model output; CSV export is protected against formula injection.
+- **Agent logic:** the real LangGraph agent is driven by a scripted fake model — tool calls, token counting, source collection, recursion limit, history truncation.
+- **Resilience:** Wikipedia / ArXiv / PubMed clients are tested against timeouts, HTTP errors, malformed JSON/XML and XML-bomb input; they never crash the agent.
+- **Cost control & privacy:** per-session and daily budgets, per-session data isolation, SQL-injection strings stay inert, schema migration and 30-day retention.
+- **UI:** Streamlit `AppTest` checks rendering, limits and that one visitor never sees another's history.
+
+**Evaluation harness:** 32 hand-written questions split into `dev` (for tuning) and `test` (run once per configuration, enforced by the runner), scored on tool choice, calculator correctness, safety behaviour and source coverage, with 95 % confidence intervals. A test also checks that no evaluation question leaks into the prompt or code. Results are published only after a real run.
+
+**Not covered (stated honestly):** real calls to OpenAI and the search APIs are verified by hand on the live demo, and the factual quality of free-text answers is not measured automatically.
+
+---
+
 ## 🧰 Tech Stack
 
 - **Python 3.11**
