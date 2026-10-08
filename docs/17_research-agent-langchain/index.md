@@ -24,7 +24,9 @@ It was designed as an **end-to-end portfolio project** showing LLM engineering w
 
 - 🔍 **4 research tools**: Wikipedia, ArXiv, PubMed, Calculator (AST-based, no `eval`)
 - 🛡️ **Cost and safety limits** — question length, per-session and daily token budgets, recursion limit, escaped HTML
-- ✅ **Tests and CI** — pytest suite (no API key needed) run by GitHub Actions
+- 📚 **Sources** — links to the pages and papers the tools actually retrieved, shown under each answer
+- 🧪 **Evaluation harness** — 32 hand-written cases with a dev/test split, scored on tool choice, calculator correctness, safety and source coverage (results published only after a real run)
+- ✅ **Tests and CI** — pytest suite with a scripted fake model (no API key needed), ruff lint and dependency audit in GitHub Actions
 - 🧠 **Autonomous tool selection** — agent decides which tool fits the question
 - 💬 **Short-term memory** — the last 6 messages of the session are passed back to the model
 - 🗄️ **SQLite logging** — queries saved with tokens used and tools called, visible only to the session that made them, kept 30 days
