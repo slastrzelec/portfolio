@@ -56,7 +56,7 @@ The model wasn't told about paleography — it discovered a real historical fact
 - **Testing:** pytest (8 dataset-integrity tests), GitHub Actions CI
 - **Deployment:** Streamlit Community Cloud + Hugging Face Hub (model hosting)
 
-**Related:** for a project on *detecting and localizing* objects — not just classifying an already-cropped one — see [People Counter](../people-counter-yolox/index.md), which uses YOLOX-nano object detection plus multi-object tracking. Another ResNet18 transfer-learning classifier is [Emotion Recognition](../emotion-recognition-cv/index.md): there the label noise and class imbalance of FER-2013 are the main difficulty, and the result is compared honestly against a from-scratch CNN baseline.
+**Related:** for the same leakage-aware thinking on microscopy images (near-duplicate clusters instead of tablets, plus an information-bar shortcut test and calibration), see the [SEM Nanostructure Classifier](../sem-nanostructure-classifier/index.md). For a project on *detecting and localizing* objects — not just classifying an already-cropped one — see [People Counter](../people-counter-yolox/index.md), which uses YOLOX-nano object detection plus multi-object tracking. Another ResNet18 transfer-learning classifier is [Emotion Recognition](../emotion-recognition-cv/index.md): there the label noise and class imbalance of FER-2013 are the main difficulty, and the result is compared honestly against a from-scratch CNN baseline.
 
 ## Data quality issue encountered
 
