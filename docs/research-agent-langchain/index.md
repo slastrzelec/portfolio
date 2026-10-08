@@ -146,7 +146,7 @@ Data Scientist | Machine Learning Practitioner
 
 - 📍 Kraków, Poland  
 - 💼 <a href="https://www.linkedin.com/in/sławomir-strzelec" target="_blank">LinkedIn</a>  
-- 💻 <a href="https://github.com/slastrzelec" target="_blank">GitHub</a>  
+- 💻 <a href="https://github.com/slastrzelec/research-agent-langchain" target="_blank">GitHub</a>  
 
 ---
 
