@@ -14,22 +14,24 @@
 
 **Scientific Research Agent** is an AI-powered research assistant that autonomously answers scientific questions by selecting and calling the most appropriate external tool.
 
-The project demonstrates a complete **LLM Agent pipeline**, covering tool selection, ReAct reasoning loop, conversation memory, observability, and interactive deployment as a web application.
+The project demonstrates a complete **LLM Agent pipeline**, covering tool selection, ReAct reasoning loop, conversation memory, observability, and interactive deployment as a web application, hardened for a public demo (safe calculator, HTML escaping, usage limits, per-session data).
 
-It was designed as an **end-to-end portfolio project**, showcasing expertise in LLM engineering, agentic systems, and production-grade AI application development.
+It was designed as an **end-to-end portfolio project** showing LLM engineering with tool-using agents, observability and security basics for a public LLM app. Answer quality is not formally evaluated.
 
 ---
 
 ## 🎯 Features
 
-- 🔍 **4 research tools**: Wikipedia, ArXiv, PubMed, Calculator
+- 🔍 **4 research tools**: Wikipedia, ArXiv, PubMed, Calculator (AST-based, no `eval`)
+- 🛡️ **Cost and safety limits** — question length, per-session and daily token budgets, recursion limit, escaped HTML
+- ✅ **Tests and CI** — pytest suite (no API key needed) run by GitHub Actions
 - 🧠 **Autonomous tool selection** — agent decides which tool fits the question
-- 💬 **Conversation memory** — context preserved within a session
-- 🗄️ **SQLite logging** — every query saved with tokens used and tools called
+- 💬 **Short-term memory** — the last 6 messages of the session are passed back to the model
+- 🗄️ **SQLite logging** — queries saved with tokens used and tools called, visible only to the session that made them, kept 30 days
 - 📊 **Tool usage statistics** — interactive bar chart in sidebar
-- 📡 **LangFuse observability** — full trace monitoring, latency, and cost tracking
-- ⬇️ **CSV export** — download full conversation history
-- ⚙️ **GPT model selector** — switch between gpt-4o-mini, gpt-3.5-turbo, gpt-4o
+- 📡 **LangFuse observability** (optional) — trace monitoring, latency and cost tracking when keys are configured
+- ⬇️ **CSV export** — download your own session history (formula-injection safe)
+- ⚙️ **GPT model selector** — switch between gpt-4o-mini and gpt-4o
 
 ---
 
@@ -53,7 +55,7 @@ LLM observes the result
 Final Answer
 ```
 
-Every step is traced in LangFuse for full production observability.
+When LangFuse keys are configured, every step is traced there.
 
 ---
 
