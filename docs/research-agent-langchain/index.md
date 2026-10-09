@@ -135,7 +135,7 @@ When LangFuse keys are configured, every step is traced there.
 ### Related projects
 
 - [Carbon Nanotubes RAG System](../carbon-nanotubes-rag/index.md) — retrieval-augmented generation with evaluation (RAGAs)
-- [CV-Job Matching System](../18_cv-matching-openai-embeddings/index.md) — OpenAI embeddings + REST API
+- [CV-Job Matching System](../18_cv-matching-openai-embeddings/index.md) — OpenAI embeddings and semantic ranking, with a Streamlit app
 
 ---
 

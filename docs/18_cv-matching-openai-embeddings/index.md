@@ -1,98 +1,93 @@
 # 🎯 CV Job Matcher
 
-**AI-Powered CV Matching with OpenAI Embeddings, Streamlit**
+**Embedding-based CV to job-offer matching with OpenAI and Streamlit — with a privacy-first data flow and a test suite that needs no API key**
 
 ---
-![App View](18screen.png)
+![Ranked offers with match scores](18screen.png)
+*Ranking of the bundled fictional sample offers for one CV. Scores are cosine similarities of OpenAI embeddings; the bands are heuristic.*
 
 ## 🚀 Live Demo
 
-[▶️ Open Live App](https://cv-matching-openai-embeddings.streamlit.app/)
+[▶️ Open Live App](https://cv-matching-openai-embeddings.streamlit.app/) (Streamlit Community Cloud; the app sleeps when idle and wakes up with one click)
 
 ---
 
 ## 📌 Project Overview
 
-**CV Job Matcher** is an AI-powered web application that semantically matches a candidate's CV to real job offers using OpenAI embeddings and cosine similarity.
+**CV Job Matcher** ranks job offers against a CV. An LLM (`gpt-4o-mini`) condenses the CV into a short list of technical skills; the skills and the offers are embedded with `text-embedding-3-small/large`; offers are ranked by cosine similarity. Offers come from The Muse public API.
 
-The project was built as an **end-to-end portfolio project**, covering the full pipeline from PDF text extraction, through LLM-based skills condensation, semantic vector matching, to cloud deployment on Azure — demonstrating practical skills in AI integration, cloud storage, and production deployment.
+It is a **demonstration of an embedding pipeline, not a validated recommender**: there is no labelled relevance data, so match quality has not been measured, and the 60/50/40 % score bands are heuristic. The value of the project is the engineering around it: batching, caching, failure handling, privacy, and tests.
 
-It was designed bottom-up: starting with **3 exploratory Jupyter notebooks** to empirically validate each component before assembling the final Streamlit application.
-
----
-
-## 🎯 Features
-
-- 📄 **PDF CV extraction** — dual-library support: pdfplumber (default) and PyPDF2
-- 🤖 **AI skills extraction** — GPT-4o-mini condenses full CV into a concise skills summary before embedding
-- 🧠 **Semantic matching** — OpenAI `text-embedding-3-small` (1536-dim vectors) + cosine similarity
-- ☁️ **Azure Blob Storage** — uploaded CVs persisted to `cv-uploads` container with timestamp naming
-- 🔄 **Live job data** — real-time offers from The Muse API (ML, DS, Python, AI, Deep Learning categories)
-- 📊 **CSV export** — download ranked match results
-- ⚡ **Cache TTL=1h** — minimizes API token costs across user sessions
+It was built bottom-up: three exploratory notebooks to try each component, then the Streamlit application, then a hardening release (privacy, correctness, tests, CI) driven by a written specification.
 
 ---
 
-## 🧠 Pipeline Architecture
+## 🔒 What happens to your CV
+
+| Step | What happens |
+|---|---|
+| Upload | PDF read **in memory** (max 5 MB, first 10 pages); never written to disk |
+| Skills extraction | CV text (max 20,000 characters) is **sent to OpenAI**; the UI says so |
+| Matching | only the short skills summary is embedded |
+| Storage | **nothing is stored.** The app has no storage code and no cloud-storage dependency |
+
+An earlier version could store uploaded CVs in cloud storage and listed recent file names to all visitors. That code was removed entirely in the hardening release because it exposed other people's data.
+
+---
+
+## 🧠 Pipeline
 
 ```
-[Upload PDF]
+[Upload PDF] → in-memory text extraction (pdfplumber / pypdf)
       ↓
-[pdfplumber → raw text ~9 600 chars]
+[gpt-4o-mini] → skills summary (~400 characters)
       ↓
-[GPT-4o-mini → skills condensation ~400 chars]
-  "Python, PyTorch, scikit-learn, Azure,
-   time series, ETL pipelines, OpenAI API..."
+[text-embedding-3-small] → CV vector (1536-dim)
       ↓
-[text-embedding-3-small → vector 1536-dim]
-CV skills → [−0.023, −0.008, 0.003, ...]
+[The Muse API / cached file / bundled sample offers]
       ↓
-[The Muse API → live job offers]
-  deduplicated by job.id, cached TTL=1h
+[batched embeddings, up to 100 texts per request, cached 1 h]
       ↓
-[text-embedding-3-small → job vectors]
-  title + description + requirements → vector
-      ↓
-[cosine_similarity (scikit-learn)]
-  sim(cv_vector, job_vector) → score 0.0–1.0
-      ↓
-[Ranked results + CSV export]
-      ↓
-[Azure Blob Storage]
-  CV saved as {timestamp}_{filename}
+[cosine similarity (NumPy)] → ranked offers + CSV export
 ```
 
 ---
 
 ## 💡 Key Design Decisions
 
-**Why GPT-4o-mini before embedding?**
-Full CV contains ~9 600 characters of noise — dates, formatting, project descriptions. Embedding raw CV produces noisier vectors. GPT-4o-mini reduces it to ~400 characters of pure skills signal, significantly improving matching quality. Validated empirically in notebook `02_embeddings_test.ipynb`.
+**Why condense the CV before embedding?** A full CV contains dates, formatting and project prose that dilute the vector. In a small exploratory comparison on 5 fictional offers the condensed version ranked the expected role first; this is an observation, not a proven effect.
 
-**Why cosine similarity over dot product?**
-OpenAI embeddings are L2-normalized (vector norm = 1.0), so cosine similarity is equivalent to dot product — but cosine similarity is robust to text length differences between CV and job descriptions.
+**Why is a failed embedding request fatal?** The first version skipped an offer whose embedding failed but kept it in the list, so `zip(jobs, similarities)` attached scores to the wrong offers — a silent wrong ranking. Embedding is now all-or-nothing: on failure the app shows an error and no ranking. `rank_jobs` also raises if the two lists differ in length.
 
-**Why Azure Blob Storage?**
-Azure Web App is stateless — files written to local disk are lost on restart. Blob Storage ensures CV persistence across deployments and provides an audit trail of uploaded files.
+**Why batching and caching?** One request per offer meant 100+ API calls per click. Offers are now embedded in batches of up to 100 and cached for an hour per offer set.
 
-**Why cache TTL=1h on job offers?**
-Each embedding call costs tokens. Caching prevents redundant API calls when multiple users refresh the app within the same hour window.
+**Why does the first start never call the network?** It uses the cached file or the bundled **fictional** sample offers (and says so in the UI); the network is used only on *Refresh DB*.
+
+**Why treat external data as untrusted?** Job titles and links come from a third party: only `http(s)` links are rendered and CSV cells that start with `=`, `+`, `-`, `@` are neutralised (spreadsheet formula injection).
 
 ---
 
-## 🔧 Notebooks (Research Phase)
+## 🧪 Testing
 
-| Notebook | Purpose | Key Finding |
-|---|---|---|
-| `01_pdf_extraction.ipynb` | Compared PyPDF2 vs pdfplumber | pdfplumber produces cleaner text (fewer formatting artifacts) |
-| `02_embeddings_test.ipynb` | Tested embedding strategies | Skills-only embedding outperforms full CV embedding; validated norm=1.0 |
-| `03_justjoin_api.ipynb` | Tested job data sources | The Muse API chosen; deduplication by job.id implemented |
+**38 automated tests run on every push and pull request** (GitHub Actions, Python 3.11, plus `ruff`). They need no API key and no network: OpenAI is replaced by a deterministic fake client.
+
+- **Ranking:** ordering, length mismatch raises, input not mutated, rating thresholds.
+- **Embeddings:** batching (calls = ceil(n/100)), row *i* belongs to text *i* even when the API returns items out of order, a failed request raises instead of returning partial results, long and empty texts.
+- **PDF:** text extraction from generated PDFs with both libraries, garbage input, page limit.
+- **Job data:** HTML stripping, payload formatting, de-duplication, network errors, `javascript:` links dropped, cache/sample fallback.
+- **Privacy rules:** no "Recent CVs" in the UI, no storage option, and no storage module or cloud-storage dependency in code, requirements, workflows or settings.
+- **App:** Streamlit `AppTest` runs the whole script, including matching end to end and "no ranking on embedding failure".
+- **Repository hygiene:** no `.env`, PDF or generated files tracked; no e-mail address or phone number in tracked notebook outputs.
+
+Mutation checks (re-introducing the length-mismatch bug, swallowing a failed embedding batch, removing the CSV neutralisation, bringing back the CV list, adding cloud-storage code) each make the suite fail.
+
+**Not covered:** the real OpenAI and The Muse APIs, match quality (no ground truth), and uploading a file through the browser widget.
 
 ---
 
-## 📊 Results
+## 📊 Illustration on sample offers
 
-Match scores from notebook validation (CV vs sample job offers):
+Scores from the exploratory notebook (a CV against 5 **fictional** sample offers). This shows that the pipeline runs and ranks plausibly, not how good it is on real data:
 
 | Rank | Job Title | Match Score |
 |---|---|---|
@@ -102,50 +97,40 @@ Match scores from notebook validation (CV vs sample job offers):
 | 4 | Python Backend Developer | 49.10% |
 | 5 | Junior Python Developer | 44.70% |
 
-> **Note:** Scores of 60%+ indicate strong semantic alignment. Cosine similarity between embedding vectors does not reach 90%+ for typical text pairs — the model correctly ranked the most relevant role first.
+> `text-embedding-3` similarities are compressed (rarely above 0.7), so the percentages are relative and the bands are heuristic.
 
 ---
 
 ## 🧰 Tech Stack
 
-- **Python 3.11**
-- **Streamlit** — web frontend and deployment UI
-- **OpenAI API** — `GPT-4o-mini` (skills extraction) + `text-embedding-3-small` (embeddings)
-- **scikit-learn** — `cosine_similarity` for vector matching
-- **Azure Blob Storage** — CV file persistence (SDK v12)
-- **Azure Web App** — production deployment (App Service)
-- **pdfplumber / PyPDF2** — PDF text extraction
+- **Python 3.11**, **Streamlit**
+- **OpenAI API** — `gpt-4o-mini` (skills extraction), `text-embedding-3-small/large` (embeddings)
+- **NumPy** — cosine similarity; **pandas** — CSV export
+- **pdfplumber / pypdf** — PDF text extraction
 - **The Muse API** — live job listings
-- **python-dotenv** — environment configuration
-- **Pandas** — results export to CSV
+- **pytest, ruff, GitHub Actions, Dependabot** — tests, lint, CI, dependency updates
 
 ---
 
-## 🚀 Use Cases
+## 🔗 Related Projects
 
-- Job seekers wanting to quickly assess CV fit before applying
-- AI/ML similarity search reference implementation
-- Azure cloud + OpenAI integration portfolio showcase
-- Semantic search demo with real-world data
-- Technical interviews for AI Engineer / Data Engineer roles
+- [Scientific Research Agent](../research-agent-langchain/index.md) — another OpenAI-based application, tested with a scripted fake model and no API key; it also carries a measured evaluation, which this project lacks.
+- [Carbon Nanotubes RAG System](../carbon-nanotubes-rag/index.md) — embeddings and semantic search with a measured retrieval quality (RAGAs).
 
 ---
 
-## 🔧 Potential Extensions
+## ⚠️ Limitations
 
-- **Pre-computed job embeddings** stored in Azure AI Search — eliminates per-session embedding cost
-- **Azure Key Vault** — replace `.env` secrets with managed identity
-- **GitHub Actions CI/CD** — automated deployment pipeline
-- **Hybrid search** — combine cosine similarity with BM25 keyword matching
-- **Azure Application Insights** — monitor match distributions and API usage
-- **FastAPI backend** — decouple embedding logic from Streamlit frontend
+- Match quality is unmeasured and the notebook comparison is based on 5 fictional offers.
+- The Muse API returns mostly US-centric offers and only the first page (20) per search term.
+- The CV text is processed by a third party (OpenAI); this is stated in the UI.
 
 ---
 
 ## 📂 Repository
 
+🔗 <a href="https://github.com/slastrzelec/azure-cv-matching-openai-embeddings" target="_blank">GitHub Repository</a>
 
-🔗 <a href="https://github.com/slastrzelec/-azure-cv-matching-openai-embeddings" target="_blank">GitHub Repository</a>
 ---
 
 ## 👨‍💻 Author
@@ -161,10 +146,9 @@ Data Scientist | Machine Learning Practitioner
 
 ## 📌 Project Status
 
-✅ Completed & Deployed on Azure Web App
+✅ Hardened and tested; live demo on Streamlit Community Cloud.
 
-🔧 Potential next steps:
-- Pre-computed embeddings in Azure AI Search
-- Key Vault + Managed Identity for secrets
-- CI/CD via GitHub Actions
+🔧 Possible next steps:
+- A small labelled set of CV/offer pairs to measure ranking quality
+- Pre-computed offer embeddings in a vector store
 - Hybrid search (cosine + BM25)
