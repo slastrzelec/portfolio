@@ -10,6 +10,14 @@ Most data-validation tutorials end with a rule such as `p < 0.05` or `PSI > 0.2`
 
 The checks compared are the `L-inf` and `L1` distances from Breck et al., "Data Validation for Machine Learning" (SysML 2019), chi-square, KL, JS, PSI, Kolmogorov-Smirnov and a schema validator. It is an independent implementation and evaluation, not a copy of TensorFlow Data Validation. The same code is also a small library and a command-line tool that can run as a CI step.
 
+## Explore the results
+
+Start with one of the five examples, or pick any dataset, batch size, fault and dose. A check is useful when it flags faulty batches (filled dot) far more often than clean data (diamond).
+
+<iframe src="explorer.html" title="Interactive explorer of the benchmark results" loading="lazy" style="width:100%; height:1750px; border:1px solid #dfe3e7; border-radius:8px;"></iframe>
+
+The explorer is a single static file built from the published result files; it computes nothing and loads nothing from the network. <a href="explorer.html" target="_blank" rel="noopener noreferrer">Open it in its own tab</a>.
+
 ## Results at a glance
 
 Six runs from one commit: UCI Covertype (581,012 rows), UCI Online News Popularity (39,644 rows), UCI Beijing air quality (412,029 hourly rows, against a static and a rolling reference), a synthetic i.i.d. table and a synthetic time series. Per run and batch size: 1,000 calibration batches, 1,000 clean evaluation batches, 100 faulty batches per fault and severity. Brackets are 95% intervals.
@@ -68,7 +76,7 @@ Every command exits with 0 (clean), 1 (anomaly) or 2 (unreadable input) and prin
 
 ## Testing
 
-672 tests; no network, no API key and no data download needed. `ruff`, `pytest` with a 95% coverage threshold and `pip-audit` run on Python 3.11 and 3.12 in GitHub Actions; Dependabot watches the dependencies.
+690 tests; no network, no API key and no data download needed. `ruff`, `pytest` with a 95% coverage threshold and `pip-audit` run on Python 3.11 and 3.12 in GitHub Actions; Dependabot watches the dependencies.
 
 **What is verified**
 
@@ -79,13 +87,15 @@ Every command exits with 0 (clean), 1 (anomaly) or 2 (unreadable input) and prin
 - **Privacy:** with hashed or omitted domains no category value appears in a schema file or a report; cell values are not printed unless asked for.
 - **Command line:** exit codes, JSON output and the walk-through in the examples, which is executed command by command.
 - **Hygiene:** no socket can be opened during tests; no data, secret or large file is tracked.
-- **The tests themselves:** a script re-introduces 90 hand-written bugs one at a time (for example, thresholds calibrated on the evaluation split, or exit code 0 despite anomalies) and requires the suite to fail for each. This is targeted, not exhaustive, mutation testing.
+- **The results explorer:** every cell of every published result file appears in it with the same rate and interval, cells that were not scored stay empty, and a stale page fails the suite.
+- **The tests themselves:** a script re-introduces 95 hand-written bugs one at a time (for example, thresholds calibrated on the evaluation split, or exit code 0 despite anomalies) and requires the suite to fail for each. This is targeted, not exhaustive, mutation testing.
 
 **Not covered**
 
 - The published numbers themselves: tests cover the code on small synthetic runs; the full runs were made on one machine.
 - The loaders on the real files (CI has no network; they are tested on hand-made archives of the same format) and the download script.
 - Whether the synthetic faults resemble real incidents.
+- How the explorer renders: no JavaScript test in CI; it was stepped through all 559 combinations in one browser engine.
 - pandas nullable and Arrow-backed dtypes, Parquet input, and tables above 20,000 rows for validation and the skew check.
 
 ## Limitations
