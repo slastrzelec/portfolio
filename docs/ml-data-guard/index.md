@@ -4,6 +4,9 @@
 
 <a href="https://github.com/slastrzelec/ml-data-guard" target="_blank" rel="noopener noreferrer">GitHub Repository</a> · <a href="https://github.com/slastrzelec/ml-data-guard/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">Specification</a> · <a href="https://github.com/slastrzelec/ml-data-guard/tree/main/benchmarks/results" target="_blank" rel="noopener noreferrer">Full result tables</a>
 
+![Recall against dose for two faults: the schema finds a unit change at any dose and a mean shift never; the distances do the opposite](schema_and_distances.png)
+*Two faults on the same data. The schema flags a unit change in 0.1% of the rows every time and never sees a small mean shift; the distribution distances do the opposite.*
+
 ## Why this project
 
 Most data-validation tutorials end with a rule such as `p < 0.05` or `PSI > 0.2` and never ask how often that rule is wrong. This project measures it. Twelve kinds of data faults (a feature pinned to `-1`, a dropped column, a unit change, a distribution shift, a feature computed with future information) are injected into public datasets, and every check is scored on two numbers: the share of faulty batches it flags and the share of clean batches it flags.
@@ -23,6 +26,8 @@ The explorer is a single static file built from the published result files; it c
 Six runs from one commit: UCI Covertype (581,012 rows), UCI Online News Popularity (39,644 rows), UCI Beijing air quality (412,029 hourly rows, against a static and a rolling reference), a synthetic i.i.d. table and a synthetic time series. Per run and batch size: 1,000 calibration batches, 1,000 clean evaluation batches, 100 faulty batches per fault and severity. Brackets are 95% intervals.
 
 **False alarms on clean data** (share of clean feature-batch pairs that raise an alarm; nothing was injected):
+
+![False alarms of fixed thresholds, calibrated distances and the inferred schema on clean data of five datasets](false_alarms.png)
 
 | Rule | Covertype, 10,000 rows | News, 1,000 rows | Beijing, 10,000 rows |
 |---|---|---|---|
@@ -54,6 +59,8 @@ With 100 batches per cell a recall of 0.50 has an interval of about +/- 0.10; di
 - **The schema is not free either.** Unedited, it rejects 19% of clean News batches and 40% of clean Beijing batches, because new extremes exceed ranges learned from the past.
 - **Time travel passes every single-table check.** A feature shifted forward in time keeps its distribution: on the synthetic series the best distance flags 1 - 5% of the faulty batches (its false-alarm level) while model accuracy moves by -5.1 [-6.8, -3.4] to +7.0 [+4.8, +9.3] points. What finds it is a row-by-row comparison of training and serving features (`mlguard skew`): 1,999 of 2,000 rows flagged in a test on the same fault.
 
+![Recall of every check stays near zero for a feature shifted into the future while model accuracy changes by several points](time_travel.png)
+
 ## Methodology
 
 - **Specification first.** `SPEC.md` fixes the fault catalogue, the severity units, the data-security rules and eight evaluation-leakage rules before the code; every change of scope is logged there, and each phase ends with an audit against its acceptance criteria.
@@ -76,7 +83,7 @@ Every command exits with 0 (clean), 1 (anomaly) or 2 (unreadable input) and prin
 
 ## Testing
 
-690 tests; no network, no API key and no data download needed. `ruff`, `pytest` with a 95% coverage threshold and `pip-audit` run on Python 3.11 and 3.12 in GitHub Actions; Dependabot watches the dependencies.
+699 tests; no network, no API key and no data download needed. `ruff`, `pytest` with a 95% coverage threshold and `pip-audit` run on Python 3.11 and 3.12 in GitHub Actions; Dependabot watches the dependencies.
 
 **What is verified**
 
@@ -109,4 +116,4 @@ Every command exits with 0 (clean), 1 (anomaly) or 2 (unreadable input) and prin
 
 **Tech stack:** Python, NumPy, pandas, SciPy, scikit-learn, pytest, Hypothesis, ruff, GitHub Actions.
 
-**Related:** the same specification-first approach and written leakage rules, applied to image data, are in the [SEM Nanostructure Classifier](../sem-nanostructure-classifier/index.md). Another measurement-first comparison is the [KDB+/Q vs SQL Benchmark](../energy-forecasting-sql-vs-kdb/index.md). A tested service with CI is the [Carbon Nanotubes RAG System](../carbon-nanotubes-rag/index.md).
+**Related:** the same specification-first approach and written leakage rules, applied to image data, are in the <a href="../sem-nanostructure-classifier/" target="_blank" rel="noopener noreferrer">SEM Nanostructure Classifier</a>. Another measurement-first comparison is the <a href="../energy-forecasting-sql-vs-kdb/" target="_blank" rel="noopener noreferrer">KDB+/Q vs SQL Benchmark</a>. A tested service with CI is the <a href="../carbon-nanotubes-rag/" target="_blank" rel="noopener noreferrer">Carbon Nanotubes RAG System</a>.
