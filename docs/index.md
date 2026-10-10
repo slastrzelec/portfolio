@@ -10,6 +10,7 @@ In this portfolio, you'll find selected projects showcasing that mix of scientif
 
 ## 🌟 Featured Projects
 * [💡 Carbon Nanotubes RAG System (FastAPI · Docker · FAISS · RAGAs)](carbon-nanotubes-rag/index.md)
+* [🛡️ ML Data Guard (Data validation · Fault-injection benchmark · CI)](ml-data-guard/index.md)
 * [🔍 SEM Nanostructure Classifier (PyTorch · ConvNeXt · Leakage-free evaluation)](sem-nanostructure-classifier/index.md)
 * [🏺 Cuneiform Sign Classifier (PyTorch · Grad-CAM · HF Hub)](20_cuneiform-sign-classifier/index.md)
 * [🤖 Scientific Research Agent (LangChain · LangGraph · LangFuse)](research-agent-langchain/index.md)
