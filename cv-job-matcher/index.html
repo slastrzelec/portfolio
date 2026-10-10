@@ -1,0 +1,1725 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../research-agent-langchain/">
+      
+      
+        <link rel="next" href="../energy-forecasting-sql-vs-kdb/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>🎯 CV-Job Matching System (OpenAI embeddings · Streamlit) - Portfolio - Sławomir Strzelec</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cv-job-matcher" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Portfolio - Sławomir Strzelec" class="md-header__button md-logo" aria-label="Portfolio - Sławomir Strzelec" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Portfolio - Sławomir Strzelec
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              🎯 CV-Job Matching System (OpenAI embeddings · Streamlit)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../o-mnie/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About Me
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../carbon-nanotubes-rag/" class="md-tabs__link">
+          
+  
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../certificates/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Certificates
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Portfolio - Sławomir Strzelec" class="md-nav__button md-logo" aria-label="Portfolio - Sławomir Strzelec" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Portfolio - Sławomir Strzelec
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../o-mnie/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Me
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🌟 Featured Projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🌟 Featured Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../carbon-nanotubes-rag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💡 Carbon Nanotubes RAG System (FastAPI · Docker · FAISS · RAGAs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ml-data-guard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🛡️ ML Data Guard (Data validation · Fault-injection benchmark · CI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sem-nanostructure-classifier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔍 SEM Nanostructure Classifier (PyTorch · ConvNeXt · Leakage-free evaluation)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20_cuneiform-sign-classifier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🏺 Cuneiform Sign Classifier (PyTorch · Grad-CAM · HF Hub)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research-agent-langchain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🤖 Scientific Research Agent (LangChain · LangGraph · LangFuse)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎯 CV-Job Matching System (OpenAI embeddings · Streamlit)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎯 CV-Job Matching System (OpenAI embeddings · Streamlit)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#live-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 Live Demo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📌 Project Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-happens-to-your-cv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔒 What happens to your CV
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-design-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 Key Design Decisions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 Testing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#illustration-on-sample-offers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 Illustration on sample offers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tech-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧰 Tech Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 Related Projects
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Limitations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📂 Repository
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#author" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        👨‍💻 Author
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📌 Project Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../energy-forecasting-sql-vs-kdb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ⚡ KDB+/Q vs SQL Benchmark (kdb+/q · DuckDB · AWS · Prophet)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🖼️ Computer Vision
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🖼️ Computer Vision
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../erythrocyte-shape-analyzer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔬 Erythrocyte Analysis (OpenCV · Streamlit)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../people-counter-yolox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚶 People Counter (YOLOX-nano · ONNX Runtime · ByteTrack)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../emotion-recognition-cv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    😊 Emotion Recognition (PyTorch · ResNet18 · OpenCV · Streamlit)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧪 Cheminformatics & Scientific ML
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🧪 Cheminformatics & Scientific ML
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../buchwald-hartwig-optimizer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧪 Buchwald-Hartwig C-N Coupling Optimizer (RDKit · XGBoost)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../drug-solubility-prediction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💊 Drug Solubility Predictor (RDKit · scikit-learn)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../molecular-lipophilicity-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧬 logP Predictor (PyTorch)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔧 Other Projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🔧 Other Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../raman-spectroscopy-analyzer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🌈 Raman Spectroscopy Analyzer (SciPy · Plotly)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../carbon-nanotube-visualizer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ⛓️ Carbon Nanotube Visualizer (Plotly · ASE · Streamlit)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../certificates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Certificates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#live-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 Live Demo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📌 Project Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-happens-to-your-cv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔒 What happens to your CV
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-design-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 Key Design Decisions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 Testing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#illustration-on-sample-offers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 Illustration on sample offers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tech-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧰 Tech Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 Related Projects
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Limitations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📂 Repository
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#author" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        👨‍💻 Author
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📌 Project Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="cv-job-matcher">🎯 CV Job Matcher</h1>
+<p><strong>Embedding-based CV to job-offer matching with OpenAI and Streamlit — with a privacy-first data flow and a test suite that needs no API key</strong></p>
+<hr />
+<p><img alt="Ranked offers with match scores" src="app_results.png" />
+<em>Ranking of the bundled fictional sample offers for one CV. Scores are cosine similarities of OpenAI embeddings; the bands are heuristic.</em></p>
+<h2 id="live-demo">🚀 Live Demo</h2>
+<p><a href="https://cv-matching-openai-embeddings.streamlit.app/">▶️ Open Live App</a> (Streamlit Community Cloud; the app sleeps when idle and wakes up with one click)</p>
+<hr />
+<h2 id="project-overview">📌 Project Overview</h2>
+<p><strong>CV Job Matcher</strong> ranks job offers against a CV. An LLM (<code>gpt-4o-mini</code>) condenses the CV into a short list of technical skills; the skills and the offers are embedded with <code>text-embedding-3-small/large</code>; offers are ranked by cosine similarity. Offers come from The Muse public API.</p>
+<p>It is a <strong>demonstration of an embedding pipeline, not a validated recommender</strong>: there is no labelled relevance data, so match quality has not been measured, and the 60/50/40 % score bands are heuristic. The value of the project is the engineering around it: batching, caching, failure handling, privacy, and tests.</p>
+<p>It was built bottom-up: three exploratory notebooks to try each component, then the Streamlit application, then a hardening release (privacy, correctness, tests, CI) driven by a written specification.</p>
+<hr />
+<h2 id="what-happens-to-your-cv">🔒 What happens to your CV</h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Upload</td>
+<td>PDF read <strong>in memory</strong> (max 5 MB, first 10 pages); never written to disk</td>
+</tr>
+<tr>
+<td>Skills extraction</td>
+<td>CV text (max 20,000 characters) is <strong>sent to OpenAI</strong>; the UI says so</td>
+</tr>
+<tr>
+<td>Matching</td>
+<td>only the short skills summary is embedded</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td><strong>nothing is stored.</strong> The app has no storage code and no cloud-storage dependency</td>
+</tr>
+</tbody>
+</table>
+<p>An earlier version could store uploaded CVs in cloud storage and listed recent file names to all visitors. That code was removed entirely in the hardening release because it exposed other people's data.</p>
+<hr />
+<h2 id="pipeline">🧠 Pipeline</h2>
+<pre><code>[Upload PDF] → in-memory text extraction (pdfplumber / pypdf)
+      ↓
+[gpt-4o-mini] → skills summary (~400 characters)
+      ↓
+[text-embedding-3-small] → CV vector (1536-dim)
+      ↓
+[The Muse API / cached file / bundled sample offers]
+      ↓
+[batched embeddings, up to 100 texts per request, cached 1 h]
+      ↓
+[cosine similarity (NumPy)] → ranked offers + CSV export
+</code></pre>
+<hr />
+<h2 id="key-design-decisions">💡 Key Design Decisions</h2>
+<p><strong>Why condense the CV before embedding?</strong> A full CV contains dates, formatting and project prose that dilute the vector. In a small exploratory comparison on 5 fictional offers the condensed version ranked the expected role first; this is an observation, not a proven effect.</p>
+<p><strong>Why is a failed embedding request fatal?</strong> The first version skipped an offer whose embedding failed but kept it in the list, so <code>zip(jobs, similarities)</code> attached scores to the wrong offers — a silent wrong ranking. Embedding is now all-or-nothing: on failure the app shows an error and no ranking. <code>rank_jobs</code> also raises if the two lists differ in length.</p>
+<p><strong>Why batching and caching?</strong> One request per offer meant 100+ API calls per click. Offers are now embedded in batches of up to 100 and cached for an hour per offer set.</p>
+<p><strong>Why does the first start never call the network?</strong> It uses the cached file or the bundled <strong>fictional</strong> sample offers (and says so in the UI); the network is used only on <em>Refresh DB</em>.</p>
+<p><strong>Why treat external data as untrusted?</strong> Job titles and links come from a third party: only <code>http(s)</code> links are rendered and CSV cells that start with <code>=</code>, <code>+</code>, <code>-</code>, <code>@</code> are neutralised (spreadsheet formula injection).</p>
+<hr />
+<h2 id="testing">🧪 Testing</h2>
+<p><strong>38 automated tests run on every push and pull request</strong> (GitHub Actions, Python 3.11, plus <code>ruff</code>). They need no API key and no network: OpenAI is replaced by a deterministic fake client.</p>
+<ul>
+<li><strong>Ranking:</strong> ordering, length mismatch raises, input not mutated, rating thresholds.</li>
+<li><strong>Embeddings:</strong> batching (calls = ceil(n/100)), row <em>i</em> belongs to text <em>i</em> even when the API returns items out of order, a failed request raises instead of returning partial results, long and empty texts.</li>
+<li><strong>PDF:</strong> text extraction from generated PDFs with both libraries, garbage input, page limit.</li>
+<li><strong>Job data:</strong> HTML stripping, payload formatting, de-duplication, network errors, <code>javascript:</code> links dropped, cache/sample fallback.</li>
+<li><strong>Privacy rules:</strong> no "Recent CVs" in the UI, no storage option, and no storage module or cloud-storage dependency in code, requirements, workflows or settings.</li>
+<li><strong>App:</strong> Streamlit <code>AppTest</code> runs the whole script, including matching end to end and "no ranking on embedding failure".</li>
+<li><strong>Repository hygiene:</strong> no <code>.env</code>, PDF or generated files tracked; no e-mail address or phone number in tracked notebook outputs.</li>
+</ul>
+<p>Mutation checks (re-introducing the length-mismatch bug, swallowing a failed embedding batch, removing the CSV neutralisation, bringing back the CV list, adding cloud-storage code) each make the suite fail.</p>
+<p><strong>Not covered:</strong> the real OpenAI and The Muse APIs, match quality (no ground truth), and uploading a file through the browser widget.</p>
+<hr />
+<h2 id="illustration-on-sample-offers">📊 Illustration on sample offers</h2>
+<p>Scores from the exploratory notebook (a CV against 5 <strong>fictional</strong> sample offers). This shows that the pipeline runs and ranks plausibly, not how good it is on real data:</p>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Job Title</th>
+<th>Match Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🥇</td>
+<td>Senior Machine Learning Engineer</td>
+<td>61.37%</td>
+</tr>
+<tr>
+<td>🥈</td>
+<td>AI Research Engineer</td>
+<td>49.76%</td>
+</tr>
+<tr>
+<td>🥉</td>
+<td>Data Scientist</td>
+<td>49.53%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Python Backend Developer</td>
+<td>49.10%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Junior Python Developer</td>
+<td>44.70%</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><code>text-embedding-3</code> similarities are compressed (rarely above 0.7), so the percentages are relative and the bands are heuristic.</p>
+</blockquote>
+<hr />
+<h2 id="tech-stack">🧰 Tech Stack</h2>
+<ul>
+<li><strong>Python 3.11</strong>, <strong>Streamlit</strong></li>
+<li><strong>OpenAI API</strong> — <code>gpt-4o-mini</code> (skills extraction), <code>text-embedding-3-small/large</code> (embeddings)</li>
+<li><strong>NumPy</strong> — cosine similarity; <strong>pandas</strong> — CSV export</li>
+<li><strong>pdfplumber / pypdf</strong> — PDF text extraction</li>
+<li><strong>The Muse API</strong> — live job listings</li>
+<li><strong>pytest, ruff, GitHub Actions, Dependabot</strong> — tests, lint, CI, dependency updates</li>
+</ul>
+<hr />
+<h2 id="related-projects">🔗 Related Projects</h2>
+<ul>
+<li><a href="../research-agent-langchain/">Scientific Research Agent</a> — another OpenAI-based application, tested with a scripted fake model and no API key; it also carries a measured evaluation, which this project lacks.</li>
+<li><a href="../carbon-nanotubes-rag/">Carbon Nanotubes RAG System</a> — embeddings and semantic search with a measured retrieval quality (RAGAs).</li>
+</ul>
+<hr />
+<h2 id="limitations">⚠️ Limitations</h2>
+<ul>
+<li>Match quality is unmeasured and the notebook comparison is based on 5 fictional offers.</li>
+<li>The Muse API returns mostly US-centric offers and only the first page (20) per search term.</li>
+<li>The CV text is processed by a third party (OpenAI); this is stated in the UI.</li>
+</ul>
+<hr />
+<h2 id="repository">📂 Repository</h2>
+<p>🔗 <a href="https://github.com/slastrzelec/azure-cv-matching-openai-embeddings" target="_blank">GitHub Repository</a></p>
+<hr />
+<h2 id="author">👨‍💻 Author</h2>
+<p><strong>Sławomir Strzelec</strong><br />
+Data Scientist | Machine Learning Practitioner</p>
+<ul>
+<li>📍 Kraków, Poland</li>
+<li>💼 <a href="https://www.linkedin.com/in/sławomir-strzelec">LinkedIn</a></li>
+<li>💻 <a href="https://github.com/slastrzelec">GitHub</a></li>
+</ul>
+<hr />
+<h2 id="project-status">📌 Project Status</h2>
+<p>✅ Hardened and tested; live demo on Streamlit Community Cloud.</p>
+<p>🔧 Possible next steps:
+- A small labelled set of CV/offer pairs to measure ranking quality
+- Pre-computed offer embeddings in a vector store
+- Hybrid search (cosine + BM25)</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1654 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../carbon-nanotubes-rag/">
+      
+      
+        <link rel="next" href="../sem-nanostructure-classifier/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>🛡️ ML Data Guard (Data validation · Fault-injection benchmark · CI) - Portfolio - Sławomir Strzelec</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ml-data-guard" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Portfolio - Sławomir Strzelec" class="md-header__button md-logo" aria-label="Portfolio - Sławomir Strzelec" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Portfolio - Sławomir Strzelec
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              🛡️ ML Data Guard (Data validation · Fault-injection benchmark · CI)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../o-mnie/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About Me
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../carbon-nanotubes-rag/" class="md-tabs__link">
+          
+  
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../certificates/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Certificates
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Portfolio - Sławomir Strzelec" class="md-nav__button md-logo" aria-label="Portfolio - Sławomir Strzelec" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Portfolio - Sławomir Strzelec
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../o-mnie/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Me
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🌟 Featured Projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🌟 Featured Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../carbon-nanotubes-rag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💡 Carbon Nanotubes RAG System (FastAPI · Docker · FAISS · RAGAs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🛡️ ML Data Guard (Data validation · Fault-injection benchmark · CI)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🛡️ ML Data Guard (Data validation · Fault-injection benchmark · CI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this project
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#explore-the-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explore the results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results at a glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-evaluation-showed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the evaluation showed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methodology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methodology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-library-and-command-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The library and command line
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sem-nanostructure-classifier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔍 SEM Nanostructure Classifier (PyTorch · ConvNeXt · Leakage-free evaluation)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20_cuneiform-sign-classifier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🏺 Cuneiform Sign Classifier (PyTorch · Grad-CAM · HF Hub)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research-agent-langchain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🤖 Scientific Research Agent (LangChain · LangGraph · LangFuse)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cv-job-matcher/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎯 CV-Job Matching System (OpenAI embeddings · Streamlit)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../energy-forecasting-sql-vs-kdb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ⚡ KDB+/Q vs SQL Benchmark (kdb+/q · DuckDB · AWS · Prophet)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🖼️ Computer Vision
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🖼️ Computer Vision
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../erythrocyte-shape-analyzer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔬 Erythrocyte Analysis (OpenCV · Streamlit)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../people-counter-yolox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚶 People Counter (YOLOX-nano · ONNX Runtime · ByteTrack)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../emotion-recognition-cv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    😊 Emotion Recognition (PyTorch · ResNet18 · OpenCV · Streamlit)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧪 Cheminformatics & Scientific ML
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🧪 Cheminformatics & Scientific ML
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../buchwald-hartwig-optimizer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧪 Buchwald-Hartwig C-N Coupling Optimizer (RDKit · XGBoost)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../drug-solubility-prediction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💊 Drug Solubility Predictor (RDKit · scikit-learn)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../molecular-lipophilicity-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧬 logP Predictor (PyTorch)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔧 Other Projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🔧 Other Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../raman-spectroscopy-analyzer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🌈 Raman Spectroscopy Analyzer (SciPy · Plotly)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../carbon-nanotube-visualizer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ⛓️ Carbon Nanotube Visualizer (Plotly · ASE · Streamlit)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../certificates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Certificates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this project
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#explore-the-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explore the results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results at a glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-evaluation-showed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the evaluation showed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methodology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methodology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-library-and-command-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The library and command line
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ml-data-guard">🛡️ ML Data Guard</h1>
+<p><strong>Data validation for ML pipelines, built around one question: when a known data fault is injected, which check actually finds it, and how many false alarms does that check raise on clean data?</strong></p>
+<p><a href="https://github.com/slastrzelec/ml-data-guard" target="_blank" rel="noopener noreferrer">GitHub Repository</a> · <a href="https://github.com/slastrzelec/ml-data-guard/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">Specification</a> · <a href="https://github.com/slastrzelec/ml-data-guard/tree/main/benchmarks/results" target="_blank" rel="noopener noreferrer">Full result tables</a></p>
+<p><img alt="Recall against dose for two faults: the schema finds a unit change at any dose and a mean shift never; the distances do the opposite" src="schema_and_distances.png" />
+<em>Two faults on the same data. The schema flags a unit change in 0.1% of the rows every time and never sees a small mean shift; the distribution distances do the opposite.</em></p>
+<h2 id="why-this-project">Why this project</h2>
+<p>Most data-validation tutorials end with a rule such as <code>p &lt; 0.05</code> or <code>PSI &gt; 0.2</code> and never ask how often that rule is wrong. This project measures it. Twelve kinds of data faults (a feature pinned to <code>-1</code>, a dropped column, a unit change, a distribution shift, a feature computed with future information) are injected into public datasets, and every check is scored on two numbers: the share of faulty batches it flags and the share of clean batches it flags.</p>
+<p>The checks compared are the <code>L-inf</code> and <code>L1</code> distances from Breck et al., "Data Validation for Machine Learning" (SysML 2019), chi-square, KL, JS, PSI, Kolmogorov-Smirnov and a schema validator. It is an independent implementation and evaluation, not a copy of TensorFlow Data Validation. The same code is also a small library and a command-line tool that can run as a CI step.</p>
+<h2 id="explore-the-results">Explore the results</h2>
+<p>Start with one of the five examples, or pick any dataset, batch size, fault and dose. A check is useful when it flags faulty batches (filled dot) far more often than clean data (diamond).</p>
+<iframe src="explorer.html" title="Interactive explorer of the benchmark results" loading="lazy" style="width:100%; height:1750px; border:1px solid #dfe3e7; border-radius:8px;"></iframe>
+
+<p>The explorer is a single static file built from the published result files; it computes nothing and loads nothing from the network. <a href="explorer.html" target="_blank" rel="noopener noreferrer">Open it in its own tab</a>.</p>
+<h2 id="results-at-a-glance">Results at a glance</h2>
+<p>Six runs from one commit: UCI Covertype (581,012 rows), UCI Online News Popularity (39,644 rows), UCI Beijing air quality (412,029 hourly rows, against a static and a rolling reference), a synthetic i.i.d. table and a synthetic time series. Per run and batch size: 1,000 calibration batches, 1,000 clean evaluation batches, 100 faulty batches per fault and severity. Brackets are 95% intervals.</p>
+<p><strong>False alarms on clean data</strong> (share of clean feature-batch pairs that raise an alarm; nothing was injected):</p>
+<p><img alt="False alarms of fixed thresholds, calibrated distances and the inferred schema on clean data of five datasets" src="false_alarms.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Covertype, 10,000 rows</th>
+<th>News, 1,000 rows</th>
+<th>Beijing, 10,000 rows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>chi-square <code>p &lt; 0.05</code></td>
+<td>0.049 [0.045, 0.053]</td>
+<td>0.041 [0.039, 0.043]</td>
+<td>0.921 [0.917, 0.926]</td>
+</tr>
+<tr>
+<td><code>L-inf &gt; 0.01</code></td>
+<td>0.014 [0.012, 0.016]</td>
+<td>0.934 [0.931, 0.936]</td>
+<td>0.917 [0.913, 0.922]</td>
+</tr>
+<tr>
+<td><code>PSI &gt; 0.2</code></td>
+<td>0.000 [0.000, 0.000]</td>
+<td>0.000 [0.000, 0.000]</td>
+<td>0.691 [0.684, 0.699]</td>
+</tr>
+<tr>
+<td>Distances, calibrated to 1%</td>
+<td>0.009 - 0.013</td>
+<td>0.012 - 0.015</td>
+<td>0.075 - 0.102</td>
+</tr>
+<tr>
+<td>Inferred schema</td>
+<td>0.000 [0.000, 0.000]</td>
+<td>0.004 [0.004, 0.005]</td>
+<td>0.048 [0.044, 0.051]</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recall on Covertype, 10,000 rows per batch</strong> (share of 100 faulty batches flagged; distances calibrated to a 1% false-positive target):</p>
+<table>
+<thead>
+<tr>
+<th>Fault</th>
+<th>Rows affected</th>
+<th><code>L-inf</code></th>
+<th>chi-square</th>
+<th>KS</th>
+<th><code>PSI &gt; 0.2</code></th>
+<th>Schema</th>
+<th>Model accuracy loss (pp)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit change (x1000)</td>
+<td>0.1%</td>
+<td>0.01</td>
+<td>0.03</td>
+<td>0.01</td>
+<td>0.00</td>
+<td>1.00</td>
+<td>+0.02 [+0.02, +0.03]</td>
+</tr>
+<tr>
+<td>Unit change (x1000)</td>
+<td>5%</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>0.00</td>
+<td>1.00</td>
+<td>+1.09 [+0.95, +1.23]</td>
+</tr>
+<tr>
+<td>New category</td>
+<td>0.1%</td>
+<td>0.01</td>
+<td>1.00</td>
+<td>n/a</td>
+<td>0.00</td>
+<td>1.00</td>
+<td>+0.00 [+0.00, +0.01]</td>
+</tr>
+<tr>
+<td>Missing values</td>
+<td>20%</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>0.02</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>+0.98 [+0.73, +1.27]</td>
+</tr>
+<tr>
+<td>Mean shift, 0.05 sigma</td>
+<td>all</td>
+<td>0.96</td>
+<td>0.97</td>
+<td>1.00</td>
+<td>0.19</td>
+<td>0.00</td>
+<td>+0.16 [+0.11, +0.20]</td>
+</tr>
+<tr>
+<td>Tiny noise (control)</td>
+<td>0.01%</td>
+<td>0.01</td>
+<td>0.01</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>+0.00 [+0.00, +0.00]</td>
+</tr>
+</tbody>
+</table>
+<p>With 100 batches per cell a recall of 0.50 has an interval of about +/- 0.10; differences of a few points between two rules are not established.</p>
+<h2 id="what-the-evaluation-showed">What the evaluation showed</h2>
+<ul>
+<li><strong>A schema check and a distribution check find different faults.</strong> The inferred schema flags a unit change, a new category or a missing value in 0.1% of the rows in every batch; the distances need about 5% of the rows. A mean shift of 0.05 sigma is found by every distance (0.96 - 1.00) and never by the schema. Neither replaces the other.</li>
+<li><strong>Tutorial thresholds are wrong in both directions.</strong> <code>p &lt; 0.05</code> is a per-feature promise: with 12 features chi-square flags 44% of clean Covertype batches, with 46 features 83% of clean News batches. <code>PSI &gt; 0.2</code> is quiet for the wrong reason: it misses a unit change in 5% of the rows in all 100 batches, a fault that costs the model 1.09 points of accuracy.</li>
+<li><strong>On non-stationary data, comparing distributions is close to useless.</strong> On Beijing air quality, thresholds calibrated on one year give 7.5 - 10.2% false alarms per feature on the next (target: 1%), and a unit change in every fifth row is flagged in 2 of 100 batches of 1,000 rows.</li>
+<li><strong>A hypothesis that failed.</strong> I expected a rolling reference (compare each batch with the 17 days before it) to fix this. On synthetic seasonal data it raises recall from at most 0.6 to at least 0.9; on the real Beijing data it left recall where it was. The result is reported as it came out.</li>
+<li><strong>The schema is not free either.</strong> Unedited, it rejects 19% of clean News batches and 40% of clean Beijing batches, because new extremes exceed ranges learned from the past.</li>
+<li><strong>Time travel passes every single-table check.</strong> A feature shifted forward in time keeps its distribution: on the synthetic series the best distance flags 1 - 5% of the faulty batches (its false-alarm level) while model accuracy moves by -5.1 [-6.8, -3.4] to +7.0 [+4.8, +9.3] points. What finds it is a row-by-row comparison of training and serving features (<code>mlguard skew</code>): 1,999 of 2,000 rows flagged in a test on the same fault.</li>
+</ul>
+<p><img alt="Recall of every check stays near zero for a feature shifted into the future while model accuracy changes by several points" src="time_travel.png" /></p>
+<h2 id="methodology">Methodology</h2>
+<ul>
+<li><strong>Specification first.</strong> <code>SPEC.md</code> fixes the fault catalogue, the severity units, the data-security rules and eight evaluation-leakage rules before the code; every change of scope is logged there, and each phase ends with an audit against its acceptance criteria.</li>
+<li><strong>Four disjoint splits.</strong> Reference 40% (bins, vocabularies, model training), calibration 25% (thresholds), evaluation 25% (clean and faulty batches), held-out 10% (model impact). Time-ordered data is split in contiguous blocks.</li>
+<li><strong>Bins come from the reference only.</strong> Quantile edges and vocabularies never depend on the batch under test; unseen categories, missing values and out-of-range values each get a bucket.</li>
+<li><strong>Calibrated versus fixed rules.</strong> Each distance gets a threshold at the 99th percentile of its values on clean calibration batches, and is measured next to the fixed rules people copy from tutorials.</li>
+<li><strong>Faults are pure, seeded functions</strong> with documented severity units; changes at a small severity are a subset of those at a larger one.</li>
+<li><strong>Model impact is measured, not assumed.</strong> A gradient-boosting model trained on the reference split is scored on held-out data with the same fault, with a bootstrap interval.</li>
+<li><strong>Reproducible.</strong> The same config gives a byte-identical JSON file; the published tables come from stored configs at one commit.</li>
+</ul>
+<h2 id="the-library-and-command-line">The library and command line</h2>
+<ul>
+<li><code>mlguard infer</code> writes a JSON schema from reference data (type, presence, range, allowed categories). It holds statistics, never rows; category values can be hashed or left out.</li>
+<li><code>mlguard validate</code> checks a batch against the schema and explains each finding with the observed number, the limit and a suggested schema change.</li>
+<li><code>mlguard compare</code> measures distribution shift with a limit calibrated for the size of the batch.</li>
+<li><code>mlguard skew</code> joins training and serving logs on a key and compares the same feature of the same row.</li>
+<li><code>run_model_test</code> feeds rows the schema allows, including its edges, to feature or prediction code and returns a single row that breaks it.</li>
+</ul>
+<p>Every command exits with 0 (clean), 1 (anomaly) or 2 (unreadable input) and prints text or JSON.</p>
+<h2 id="testing">Testing</h2>
+<p>699 tests; no network, no API key and no data download needed. <code>ruff</code>, <code>pytest</code> with a 95% coverage threshold and <code>pip-audit</code> run on Python 3.11 and 3.12 in GitHub Actions; Dependabot watches the dependencies.</p>
+<p><strong>What is verified</strong></p>
+<ul>
+<li><strong>Distances:</strong> hand-computed values, agreement with SciPy as an independent oracle, and property-based checks (identity, symmetry, bounds, <code>L-inf &lt;= L1 / 2</code>, Pinsker's inequality, the data-processing inequality).</li>
+<li><strong>Fault injectors:</strong> the input is never modified, the same seed gives the same output, zero severity changes nothing, and each fault does exactly what its definition says (for example, time travel reads only future rows and never crosses a group).</li>
+<li><strong>Evaluation leakage:</strong> the four splits are disjoint and complete; thresholds and reference statistics stay identical when the evaluation and held-out rows are replaced by garbage.</li>
+<li><strong>The validator's limits:</strong> it catches six of the twelve faults; the other six are asserted to be missed, so the blind spot is documented by a test.</li>
+<li><strong>Privacy:</strong> with hashed or omitted domains no category value appears in a schema file or a report; cell values are not printed unless asked for.</li>
+<li><strong>Command line:</strong> exit codes, JSON output and the walk-through in the examples, which is executed command by command.</li>
+<li><strong>Hygiene:</strong> no socket can be opened during tests; no data, secret or large file is tracked.</li>
+<li><strong>The results explorer:</strong> every cell of every published result file appears in it with the same rate and interval, cells that were not scored stay empty, and a stale page fails the suite.</li>
+<li><strong>The tests themselves:</strong> a script re-introduces 95 hand-written bugs one at a time (for example, thresholds calibrated on the evaluation split, or exit code 0 despite anomalies) and requires the suite to fail for each. This is targeted, not exhaustive, mutation testing.</li>
+</ul>
+<p><strong>Not covered</strong></p>
+<ul>
+<li>The published numbers themselves: tests cover the code on small synthetic runs; the full runs were made on one machine.</li>
+<li>The loaders on the real files (CI has no network; they are tested on hand-made archives of the same format) and the download script.</li>
+<li>Whether the synthetic faults resemble real incidents.</li>
+<li>How the explorer renders: no JavaScript test in CI; it was stepped through all 559 combinations in one browser engine.</li>
+<li>pandas nullable and Arrow-backed dtypes, Parquet input, and tables above 20,000 rows for validation and the skew check.</li>
+</ul>
+<h2 id="limitations">Limitations</h2>
+<ul>
+<li>Faults are synthetic and injected one at a time; one model family, accuracy only.</li>
+<li>The schema rule is the default inference, never edited by hand. A maintained schema would raise fewer false alarms and might find less; that trade-off was not measured.</li>
+<li>Sample size matters more than the choice of distance: a unit change in 1% of the rows is found by <code>L-inf</code> in 1% of the batches at 1,000 rows and in 99% at 100,000.</li>
+<li>Features recorded on a coarse grid inflate recall for tiny shifts; the per-feature counts are published next to the tables.</li>
+<li>There is no working drift check for non-stationary data here. The results show the problem; they do not solve it.</li>
+<li>The planned comparison with TFDV and Evidently was dropped; the reason is recorded in the specification.</li>
+</ul>
+<p><strong>Tech stack:</strong> Python, NumPy, pandas, SciPy, scikit-learn, pytest, Hypothesis, ruff, GitHub Actions.</p>
+<p><strong>Related:</strong> the same specification-first approach and written leakage rules, applied to image data, are in the <a href="../sem-nanostructure-classifier/" target="_blank" rel="noopener noreferrer">SEM Nanostructure Classifier</a>. Another measurement-first comparison is the <a href="../energy-forecasting-sql-vs-kdb/" target="_blank" rel="noopener noreferrer">KDB+/Q vs SQL Benchmark</a>. A tested service with CI is the <a href="../carbon-nanotubes-rag/" target="_blank" rel="noopener noreferrer">Carbon Nanotubes RAG System</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

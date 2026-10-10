@@ -1,0 +1,6 @@
+/* Justify body text across the site */
+.md-typeset p,
+.md-typeset li {
+  text-align: justify;
+  text-justify: inter-word;
+}

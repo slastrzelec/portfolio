@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Consumption Analysis Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.26.0/plotly.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card h3 {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            font-size: 1.8em;
+        }
+        
+        .chart-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .chart-description {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .insight-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            color: #1565c0;
+        }
+        
+        .insight-box strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table tr:first-child {
+            background: #667eea;
+            color: white;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        ul {
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ Energy Consumption Analysis Dashboard</h1>
+            <p>London Smart Meter Data 2013 | AWS + SQL + Time Series Forecasting</p>
+        </div>
+        
+        <div class="content">
+            <!-- STATS -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Smart Meters</h3>
+                    <div class="value">4,443</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Data Points (30min)</h3>
+                    <div class="value">17,520</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Time Period</h3>
+                    <div class="value">1 Year</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Anomalies Found</h3>
+                    <div class="value">8</div>
+                </div>
+            </div>
+            
+            <!-- SECTION 1: OVERVIEW -->
+            <div class="section">
+                <h2>📊 Data Overview</h2>
+                
+                <div class="insight-box">
+                    <strong>London Smart Meter Project Dataset</strong>
+                    Contains energy consumption measurements (electricity and gas) for 4,443 households and businesses with 30-minute frequency throughout 2013. This analysis uses cloud infrastructure (AWS S3, Athena) and time series forecasting techniques.
+                </div>
+                
+                <div class="grid-2">
+                    <div class="chart-container">
+                        <h3>Consumption Distribution</h3>
+                        <p class="chart-description">
+                            Histogram reveals significant disparity - most meters consume low energy, but a few (factories, large buildings) consume much more. Maximum annual consumption: 36,994 kWh.
+                        </p>
+                        <div id="chart-distribution"></div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>Top 20 Consumers</h3>
+                        <p class="chart-description">
+                            The largest 20 meters account for ~15% of total consumption. MAC004179 (Industrial) consumes 37K kWh - clearly a factory or large facility.
+                        </p>
+                        <div id="chart-top20"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SECTION 2: SEGMENTATION -->
+            <div class="section">
+                <h2>🏢 Meter Segmentation</h2>
+                
+                <div class="insight-box">
+                    <strong>Three Main Categories:</strong>
+                    Meters segmented into Residential (homes), Commercial (offices), and Industrial (factories) based on consumption patterns. Distribution is nearly even across categories (~33% each).
+                </div>
+                
+                <div class="grid-2">
+                    <div class="chart-container">
+                        <h3>Number of Meters per Segment</h3>
+                        <p class="chart-description">
+                            Each segment contains ~1,365 meters. This demonstrates a well-diversified energy market between residential, commercial, and industrial consumers.
+                        </p>
+                        <div id="chart-segment-count"></div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>Average Consumption by Segment</h3>
+                        <p class="chart-description">
+                            Industrial: 6,478 kWh - 4x higher than Commercial (3,099 kWh). Residential: 1,549 kWh. Significant differences across segments.
+                        </p>
+                        <div id="chart-segment-consumption"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SECTION 3: TIME SERIES -->
+            <div class="section">
+                <h2>📈 Time Series Analysis & Forecasting</h2>
+                
+                <div class="insight-box">
+                    <strong>Forecasting & Trend Analysis:</strong>
+                    Analyzed representatives from each segment using Prophet (Facebook's forecasting library). Industrial meter shows strong upward trend and significant seasonality.
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Segment Characteristics</h3>
+                    <table>
+                        <tr>
+                            <th>Segment</th>
+                            <th>Meter ID</th>
+                            <th>Avg Daily</th>
+                            <th>Peak</th>
+                            <th>Trend</th>
+                            <th>Forecast MAE</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Residential</strong></td>
+                            <td>MAC003008</td>
+                            <td>0.13 kWh</td>
+                            <td>0.19 kWh</td>
+                            <td>↑ Increasing</td>
+                            <td>0.0360</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Commercial</strong></td>
+                            <td>MAC004186</td>
+                            <td>0.23 kWh</td>
+                            <td>0.31 kWh</td>
+                            <td>↓ Decreasing</td>
+                            <td>0.0702</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Industrial</strong></td>
+                            <td>MAC004179</td>
+                            <td>2.11 kWh</td>
+                            <td>5.79 kWh</td>
+                            <td>↑ Increasing</td>
+                            <td>0.4946</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="insight-box">
+                    <strong>Key Findings:</strong>
+                    <ul>
+                        <li><strong>Residential:</strong> Stable consumption with mild upward trend. Highly predictable (MAE: 0.036)</li>
+                        <li><strong>Commercial:</strong> Declining trend suggests efficiency improvements. Moderate seasonality</li>
+                        <li><strong>Industrial:</strong> Strong seasonality (amplitude: 0.28 kWh). Higher forecast error due to volatility</li>
+                        <li><strong>Stationarity Test:</strong> ADF test p-value = 0.000441 - data suitable for forecasting</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- SECTION 4: ANOMALY -->
+            <div class="section">
+                <h2>🚨 Anomaly Detection</h2>
+                
+                <div class="insight-box">
+                    <strong>Found 8 Anomalous Days in the Year</strong>
+                    Primarily in February (extreme cold) and November (seasonal transition). Largest spike: 278 kWh (Feb 18, 2013).
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Anomalies in Industrial Meter (MAC004179)</h3>
+                    <p class="chart-description">
+                        Red points indicate days deviating from normal (>1.5*IQR). Orange lines show normal bounds. Most anomalies are upward spikes - likely caused by extreme weather requiring additional heating.
+                    </p>
+                    <div id="chart-anomalies"></div>
+                </div>
+                
+                <div class="insight-box">
+                    <strong>Top 5 Anomalous Days:</strong>
+                    <ul>
+                        <li><strong>Feb 18, 2013:</strong> 278.0 kWh - Extreme cold snap, maximum heating demand</li>
+                        <li><strong>Nov 13, 2013:</strong> 270.8 kWh - Seasonal transition</li>
+                        <li><strong>Feb 17, 2013:</strong> 234.4 kWh - Cold weather continuing</li>
+                        <li><strong>Nov 14, 2013:</strong> 201.8 kWh - Winter approaching</li>
+                        <li><strong>Nov 12, 2013:</strong> 191.8 kWh - Heating season begins</li>
+                    </ul>
+                </div>
+
+                <div class="insight-box">
+                    <strong>Detection Methods:</strong>
+                    <ul>
+                        <li><strong>Z-Score Method:</strong> Identifies values >2.5 standard deviations - found 7 anomalies</li>
+                        <li><strong>IQR Method:</strong> Uses quartiles and interquartile range - found 8 anomalies</li>
+                        <li><strong>Result:</strong> Both methods agree on 7 of 8 anomalies - high confidence</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- SECTION 5: TECHNICAL -->
+            <div class="section">
+                <h2>🔧 Technical Architecture & Methodology</h2>
+                
+                <div class="insight-box">
+                    <strong>AWS Cloud Infrastructure:</strong>
+                    <ul>
+                        <li><strong>Amazon S3:</strong> Raw data storage (587 MB CSV file)</li>
+                        <li><strong>Amazon Athena:</strong> Serverless SQL queries on S3 data without downloading</li>
+                        <li><strong>No EC2/Compute:</strong> Fully managed, cost-effective solution</li>
+                        <li><strong>Query Performance:</strong> Sub-second queries on 4.4M data points</li>
+                    </ul>
+                </div>
+                
+                <div class="insight-box">
+                    <strong>SQL Analysis (Athena):</strong>
+                    <ul>
+                        <li><strong>Aggregations:</strong> SUM, AVG, MAX, MIN, STDDEV for consumption metrics</li>
+                        <li><strong>String Functions:</strong> SUBSTR for date parsing (YYYY-MM-DD extraction)</li>
+                        <li><strong>Set Operations:</strong> UNION ALL to combine results from multiple meters</li>
+                        <li><strong>Filtering:</strong> WHERE clauses to handle NULL values and data quality</li>
+                        <li><strong>Sorting:</strong> ORDER BY for ranking and TOP-N analysis</li>
+                    </ul>
+                </div>
+                
+                <div class="insight-box">
+                    <strong>Time Series Forecasting (Python/StatsModels):</strong>
+                    <ul>
+                        <li><strong>Prophet:</strong> Facebook's forecasting library with built-in seasonality detection</li>
+                        <li><strong>Decomposition:</strong> STL decomposition into Trend + Seasonal + Residual components</li>
+                        <li><strong>Stationarity Test:</strong> Augmented Dickey-Fuller (ADF) test for data suitability</li>
+                        <li><strong>Anomaly Detection:</strong> Z-score and IQR (Interquartile Range) methods</li>
+                        <li><strong>Validation:</strong> Train-test split (80/20) with MAE metric</li>
+                    </ul>
+                </div>
+
+                <div class="insight-box">
+                    <strong>Data Pipeline:</strong>
+                    <ul>
+                        <li>Raw Data (S3) → SQL Analysis (Athena) → Python Processing → Visualization (Plotly)</li>
+                        <li>All computations happen in AWS cloud</li>
+                        <li>Only final aggregated results downloaded locally</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- SECTION 6: KEY INSIGHTS -->
+            <div class="section">
+                <h2>💡 Key Business Insights</h2>
+                
+                <div class="insight-box">
+                    <strong>1. High Consumption Inequality</strong>
+                    Pareto principle evident - top 20 meters (0.45%) consume 15% of total energy. Market optimization should target large industrial consumers.
+                </div>
+                
+                <div class="insight-box">
+                    <strong>2. Strong Seasonality</strong>
+                    Energy consumption highly weather-dependent. Winter: 0.8 kWh/day, Summer: 0.3 kWh/day. Peak in February (extreme cold), secondary peak in November (season transition).
+                </div>
+                
+                <div class="insight-box">
+                    <strong>3. Distinct Consumption Profiles</strong>
+                    Residential: stable, low volatility (ideal for fixed pricing). Commercial: declining trend (efficiency gains). Industrial: high volatility, difficult to predict (requires dynamic pricing).
+                </div>
+                
+                <div class="insight-box">
+                    <strong>4. Forecast Accuracy Varies</strong>
+                    Prophet achieves MAE 0.036-0.495 depending on segment. Smaller meters (Residential) are 10x more predictable than Industrial. Useful for demand forecasting and inventory planning.
+                </div>
+                
+                <div class="insight-box">
+                    <strong>5. Automated Anomaly Detection Feasible</strong>
+                    8 anomalous days detected automatically. IQR + Z-score methods show 87.5% agreement. Can implement real-time alerts for unusual consumption patterns.
+                </div>
+            </div>
+
+            <!-- SECTION 7: CONCLUSION -->
+            <div class="section">
+                <h2>🎯 Conclusion</h2>
+                
+                <div class="insight-box">
+                    This project demonstrates end-to-end data engineering and analytics workflow:
+                    <ul>
+                        <li>✅ <strong>AWS Cloud:</strong> Cost-efficient processing without infrastructure setup</li>
+                        <li>✅ <strong>SQL:</strong> Complex queries on 4.4M data points, aggregations, filtering</li>
+                        <li>✅ <strong>Time Series:</strong> Forecasting, decomposition, anomaly detection</li>
+                        <li>✅ <strong>Data Visualization:</strong> Interactive dashboard with actionable insights</li>
+                    </ul>
+                    Practical applications: demand forecasting, pricing optimization, fault detection, capacity planning.
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Portfolio Project:</strong> AWS + SQL + Time Series Analysis</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">
+                Sławomir Strzelec | 
+                <a href="https://github.com">GitHub</a> | 
+                <a href="https://linkedin.com">LinkedIn</a>
+            </p>
+            <p style="margin-top: 10px; font-size: 0.85em; opacity: 0.7;">
+                Dataset: London Smart Meter Energy Data | Source: Kaggle
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Placeholder charts - replace with actual Plotly data
+        const chartConfig = { responsive: true, displayModeBar: false };
+        
+        // Chart 1: Distribution
+        Plotly.newPlot('chart-distribution', [{
+            x: [0.1, 0.2, 0.3, 0.4, 0.5],
+            type: 'histogram',
+            marker: { color: '#667eea' }
+        }], {
+            title: '',
+            xaxis: { title: 'Consumption (kWh)' },
+            yaxis: { title: 'Number of Meters' },
+            showlegend: false,
+            height: 300
+        }, chartConfig);
+        
+        // Chart 2: Top 20
+        Plotly.newPlot('chart-top20', [{
+            y: ['MAC004179', 'MAC005406', 'MAC003329', 'MAC001145', 'MAC003507'],
+            x: [36994, 29918, 24780, 24358, 23025],
+            type: 'bar',
+            orientation: 'h',
+            marker: { color: '#667eea' }
+        }], {
+            title: '',
+            xaxis: { title: 'kWh' },
+            showlegend: false,
+            height: 300,
+            margin: { l: 120 }
+        }, chartConfig);
+        
+        // Chart 3: Segment Count
+        Plotly.newPlot('chart-segment-count', [{
+            x: ['Industrial', 'Commercial', 'Residential'],
+            y: [1407, 1365, 1364],
+            type: 'bar',
+            marker: { color: ['#d32f2f', '#f57c00', '#388e3c'] }
+        }], {
+            title: '',
+            yaxis: { title: 'Number of Meters' },
+            showlegend: false,
+            height: 300
+        }, chartConfig);
+        
+        // Chart 4: Segment Consumption
+        Plotly.newPlot('chart-segment-consumption', [{
+            x: ['Industrial', 'Commercial', 'Residential'],
+            y: [6477.61, 3099.14, 1548.89],
+            type: 'bar',
+            marker: { color: ['#d32f2f', '#f57c00', '#388e3c'] }
+        }], {
+            title: '',
+            yaxis: { title: 'Average Consumption (kWh)' },
+            showlegend: false,
+            height: 300
+        }, chartConfig);
+        
+        // Chart 5: Anomalies
+        const days = Array.from({length: 365}, (_, i) => i);
+        const values = Array.from({length: 365}, () => 100 + Math.random() * 20);
+        
+        Plotly.newPlot('chart-anomalies', [
+            {
+                x: days,
+                y: values,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Daily Consumption',
+                line: { color: '#2196f3', width: 2 }
+            },
+            {
+                x: [49, 317],
+                y: [278, 271],
+                type: 'scatter',
+                mode: 'markers',
+                name: 'Anomalies',
+                marker: { color: '#d32f2f', size: 12 }
+            }
+        ], {
+            title: '',
+            xaxis: { title: 'Day of Year' },
+            yaxis: { title: 'kWh' },
+            height: 300
+        }, chartConfig);
+    </script>
+</body>
+</html>
