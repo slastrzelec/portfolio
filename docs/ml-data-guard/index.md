@@ -133,7 +133,7 @@ docker build -t mlguard-api . && docker run -p 7860:7860 mlguard-api
 
 **Not covered**
 
-- The release workflow outside an actual release: it runs only on a version tag and has run once.
+- The release workflow outside an actual release: it runs only on a version tag and has run twice (v0.1.0 and v0.2.0).
 - The published numbers themselves: tests cover the code on small synthetic runs; the full runs were made on one machine.
 - The loaders on the real files (CI has no network; they are tested on hand-made archives of the same format) and the download script.
 - Whether the synthetic faults resemble real incidents.
