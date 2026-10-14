@@ -2,7 +2,7 @@
 
 **Data validation for ML pipelines, built around one question: when a known data fault is injected, which check actually finds it, and how many false alarms does that check raise on clean data?**
 
-<a href="https://github.com/slastrzelec/ml-data-guard" target="_blank" rel="noopener noreferrer">GitHub Repository</a> · <a href="https://github.com/slastrzelec/ml-data-guard/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">Specification</a> · <a href="https://github.com/slastrzelec/ml-data-guard/tree/main/benchmarks/results" target="_blank" rel="noopener noreferrer">Full result tables</a>
+<a href="https://github.com/slastrzelec/ml-data-guard" target="_blank" rel="noopener noreferrer">GitHub Repository</a> · <a href="https://github.com/slastrzelec/ml-data-guard/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">Specification</a> · <a href="https://github.com/slastrzelec/ml-data-guard/tree/main/benchmarks/results" target="_blank" rel="noopener noreferrer">Full result tables</a> · <a href="https://pypi.org/project/ml-data-guard/" target="_blank" rel="noopener noreferrer">PyPI package</a>
 
 ![Recall against dose for two faults: the schema finds a unit change at any dose and a mean shift never; the distances do the opposite](schema_and_distances.png)
 *Two faults on the same data. The schema flags a unit change in 0.1% of the rows every time and never sees a small mean shift; the distribution distances do the opposite.*
@@ -73,6 +73,22 @@ With 100 batches per cell a recall of 0.50 has an interval of about +/- 0.10; di
 
 ## The library and command line
 
+```bash
+pip install ml-data-guard
+```
+
+As a step in GitHub Actions, failing the job on any anomaly:
+
+```yaml
+- uses: slastrzelec/ml-data-guard@v0.1.0
+  with:
+    batch: data/batch.csv
+    schema: schema.json
+    reference: data/reference.csv   # optional: also check for distribution shift
+```
+
+The package is published from a tagged commit by a GitHub Actions workflow with trusted publishing, so no PyPI token exists anywhere. The action itself runs in the project's CI: it must pass a clean example batch and reject a broken one.
+
 - `mlguard infer` writes a JSON schema from reference data (type, presence, range, allowed categories). It holds statistics, never rows; category values can be hashed or left out.
 - `mlguard validate` checks a batch against the schema and explains each finding with the observed number, the limit and a suggested schema change.
 - `mlguard compare` measures distribution shift with a limit calibrated for the size of the batch.
@@ -99,6 +115,7 @@ Every command exits with 0 (clean), 1 (anomaly) or 2 (unreadable input) and prin
 
 **Not covered**
 
+- The release workflow outside an actual release: it runs only on a version tag and has run once.
 - The published numbers themselves: tests cover the code on small synthetic runs; the full runs were made on one machine.
 - The loaders on the real files (CI has no network; they are tested on hand-made archives of the same format) and the download script.
 - Whether the synthetic faults resemble real incidents.
