@@ -1,86 +1,65 @@
-# 🔬 Raman Spectroscopy Analysis Tool
+# 🌈 Raman Spectroscopy Analyzer
 
-🚀 **Live Demo:** <a href="https://raman-spectroscopy-analyzer.streamlit.app/" target="_blank">raman-spectroscopy-analyzer.streamlit.app</a>
+A Streamlit app that takes a raw Raman spectrum through baseline correction, normalisation, smoothing, peak detection and peak fitting, and exports the results, with a focus on carbon materials such as carbon nanotubes and graphene.
 
-## ✨ Overview
+<a href="https://github.com/slastrzelec/raman-spectroscopy-analyzer" target="_blank" rel="noopener noreferrer">GitHub Repository</a> · <a href="https://raman-spectroscopy-analyzer.streamlit.app/" target="_blank" rel="noopener noreferrer">Live demo (Streamlit)</a>
 
-The **Raman Spectroscopy Analysis Tool** is a comprehensive web application built with Streamlit and scientific Python libraries (Pandas, NumPy, SciPy), designed for chemists, materials scientists, and engineers to quickly and accurately process, analyze, and characterize Raman spectroscopy data, particularly focusing on **carbonaceous materials** (e.g., graphene, carbon nanotubes).
+![Data overview tab with the raw spectrum](data-overview.png)
 
-It streamlines the entire workflow from raw data import to quantitative material property extraction, eliminating the need for complex desktop software.
+## Why this project
 
-📈 Screenshots from the application:
+Analysing a Raman spectrum of a carbon material means a baseline, a normalisation, a peak table and then the ratio of the D and G bands as a measure of defects. Each step involves a choice that changes the final number. This tool puts the whole chain in one app, shows the result of every step on a plot, and applies the same settings to many files at once.
 
-![Screen from app](data-overview.png)
+## Results at a glance
 
-#### 📊 Data Overview
-The **"Data Overview"** tab is the analysis starting point. It displays **metadata** for the loaded file (e.g., CNT-COOH_a.txt), including the **number of data points** (7070), the **Wavenumber Range** (603–3400 cm⁻¹), and the intensity range, alongside a plot of the raw spectrum.
+The tool does not produce a model score. What it gives is a processed spectrum and a table:
 
-![Screen from app](baseline-correction.png)
+| Step | Options |
+|---|---|
+| Baseline | Linear (endpoints), Asymmetric Least Squares |
+| Normalisation | Min-Max, maximum intensity, area, vector (L2) |
+| Smoothing | Savitzky-Golay (optional) |
+| Peak fitting | Lorentzian, Gaussian, Pseudo-Voigt (bounded least squares with parameter uncertainties from the covariance matrix) |
+| Quantities | I<sub>D</sub>/I<sub>G</sub>, I<sub>2D</sub>/I<sub>G</sub>, crystallite size La from the Tuinstra-Koenig relation |
+| Export | CSV (spectrum, peaks, fit), XLSX, a TXT report, and a ZIP for batch runs |
 
-#### 🧹 Baseline Correction
-The **"Preprocessing"** tab shows the raw spectrum with the fitted baseline overlaid (here, the **Linear (Endpoints)** method), and the resulting baseline-corrected spectrum below it — the three characteristic carbon-nanotube bands (D, G, 2D) are clearly resolved once the fluorescence background is removed.
+![Baseline correction](baseline-correction.png)
 
-![Screen from app](normalization-comparison.png)
+Example: a sample CNT-COOH spectrum of 7,070 points between 603 and 3,400 cm⁻¹; on another sample spectrum, automatic peak detection (minimum height 0.15, prominence 0.08) finds 11 peaks.
 
-#### 📈 Spectrum Normalization Comparison
-The same tab lets you apply a normalization method afterwards. The screenshot shows a comparison of the original spectrum (left, blue) with the normalized spectrum (right, green) using the **Min-Max** method, which scales intensities to the range [0, 1] for cross-sample comparison.
+![Peak detection](peak-detection.png)
 
-![Screen from app](peak-detection.png)
+## What the tool shows
 
-#### 🔍 Peak Detection Visualization
-The **"Peak Detection"** tab displays the results of automatic peak identification within a Raman spectrum (example for CNT-COOH_c.txt). The overlaid interactive Plotly chart visualizes 11 detected peaks (marked with a red 'X'), based on defined parameters such as Minimum height (0.15) and Prominence (0.08).
+- **Background removal exposes the carbon bands.** On the sample spectrum the D, G and 2D bands are clearly resolved once the fluorescence background is subtracted; the app plots the raw spectrum with the fitted baseline and the corrected spectrum below it.
+- **The excitation wavelength enters the crystallite size.** The Tuinstra-Koenig relation depends on the laser wavelength (458–785 nm), so it is a parameter of the app and not a hardcoded constant.
 
+## Methodology
 
-## 🛠️ Key Features and Workflow
+- **Specification first.** `SPEC.md` describes the architecture, the reason for each dependency version and the data-security rules. A first version was deleted and rebuilt from scratch under this specification after repeated deployment crashes.
+- **Logic apart from the interface.** The Streamlit file only orchestrates; loading and validation, preprocessing, peak detection and fitting, visualisation, export and batch processing are separate modules that tests can call without a browser.
+- **Input validation:** one file or several `.txt` files with two columns (wavenumber, intensity), checked on load.
 
-The application implements a full-featured spectroscopy workflow across several tabs:
+## Testing
 
-* **Data Handling:** Supports easy upload of single or multiple `.txt` files with Wavenumber and Intensity columns. Includes data **validation** and metadata extraction.
-* **Preprocessing:** Essential steps to prepare spectra for analysis:
-    * **Baseline Correction:** Algorithms including **Linear (Endpoints)** and **Asymmetric Least Squares (ALS)** to remove fluorescence background. 
-    * **Normalization:** Methods like Min-Max, Max-Intensity, Area, and Vector (L2) normalization for comparison.
-    * **Smoothing:** Optional Savitzky-Golay filtering to reduce noise.
-* **Peak Analysis:** Automated detection and categorization of Raman bands (**D, G, 2D bands** for carbon materials). Calculates fundamental peak statistics.
-* **Quantitative Fitting & Deconvolution:** Advanced fitting using **Lorentzian** or **Gaussian** models for precise deconvolution of overlapping bands (e.g., D and G bands). This allows calculation of critical ratios.
-* **Material Characterization:** Calculates key material parameters based on fitting results, such as:
-    * The **$I_D/I_G$ ratio**, crucial for determining defect density/crystallinity, plus an estimated crystallite size (La) via the Tuinstra-Koenig relation — parameterized by the instrument's actual laser excitation wavelength (458-785 nm) rather than a single hardcoded constant.
-    * The **$I_{2D}/I_G$ ratio**, critical for characterizing the number of graphene layers.
-* **Visualization & Export:** Interactive plots (Plotly) at every stage of the pipeline and the ability to export final results.
+**65 automated tests run on every push** (pytest in GitHub Actions).
 
-## 💻 Technical Stack
+**What is verified**
 
-| Category | Technology | Purpose |
-| :--- | :--- | :--- |
-| **Frontend/App** | **Streamlit** | Rapid web application development and interactive UI/UX. |
-| **Data Processing** | **Python (Pandas, NumPy)** | Core data manipulation and scientific computing. |
-| **Signal Processing** | **SciPy** | Implementation of advanced algorithms (Savitzky-Golay, Peak Detection, ALS). |
-| **Peak Fitting** | **SciPy** (`curve_fit`) | Bounded non-linear least squares for peak deconvolution, with parameter uncertainties from the fit covariance matrix. |
-| **Visualization** | **Plotly** / **Matplotlib** | Generating responsive, interactive data visualizations. |
+- **Each module of the logic layer:** data loading and validation, preprocessing, peak detection, peak fitting, export and batch processing.
 
-## 🧪 Testing
+**Not covered**
 
-Core logic (data loading/validation, preprocessing, peak detection, peak fitting,
-export, batch processing) is covered by a 65-test pytest suite, run automatically
-on every push via GitHub Actions.
+- **Agreement with reference values.** No comparison with other Raman software or with published ratios for the sample spectra is documented, so the tests show that the code runs as designed, not that the numbers match another tool.
+- The Streamlit interface and the interactive charts.
+- Spectra of materials other than the carbon samples used during development.
 
-## 🌟 Contributions and Impact
+## Limitations
 
-This project showcases expertise in:
+- The Tuinstra-Koenig relation was derived for graphitic carbons. For nanotube samples the crystallite size from I<sub>D</sub>/I<sub>G</sub> is an indication, not a measurement.
+- I<sub>2D</sub>/I<sub>G</sub> as a layer count applies to graphene; for nanotubes it should be read with the same care.
+- The sample data are three CNT-COOH spectra; the behaviour on noisy or strongly fluorescent spectra of other materials was not evaluated.
 
-* **Scientific Software Development:** Creating reliable, user-friendly tools for specialized scientific domains.
-* **Signal and Data Processing:** Applying statistical methods to complex spectral data.
-* **Chemical/Materials Informatics:** Direct application of computational tools to characterize physical properties from spectroscopic data.
+**Tech stack:** Python, Streamlit, NumPy, pandas, SciPy, Plotly, Matplotlib, pytest, GitHub Actions.
 
-## 🔗 Project Links
-
-* <a href="https://raman-spectroscopy-analyzer.streamlit.app/" target="_blank">Live Demo</a>
-* <a href="https://github.com/slastrzelec/raman-spectroscopy-analyzer" target="_blank">GitHub Repository</a>
-
-## 🧬 Related Projects
-
-Part of the same carbon-nanotube work as the
-[Carbon Nanotube Visualizer](../carbon-nanotube-visualizer/index.md) (structure and
-electronic-property modeling) and the
-[Carbon Nanotubes RAG System](../carbon-nanotubes-rag/index.md) (literature Q&A over the
-underlying research papers).
-
+**Related:** the same carbon-nanotube topic is covered by the [Carbon Nanotube Visualizer](../carbon-nanotube-visualizer/index.md) (structure and electronic properties) and the [Carbon Nanotubes RAG System](../carbon-nanotubes-rag/index.md) (questions over the research literature).

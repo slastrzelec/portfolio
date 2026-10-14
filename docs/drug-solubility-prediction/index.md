@@ -1,136 +1,67 @@
-# 💊 Drug Solubility Prediction using Machine Learning
+# 💊 Drug Solubility Predictor
 
-## Overview
+An XGBoost pipeline that predicts the aqueous solubility of a drug molecule from its SMILES string, with a prediction interval, an applicability-domain check, a Streamlit app and a FastAPI service.
 
-The **Drug Solubility Prediction Tool** is a machine learning application built with Streamlit (and a FastAPI service) that predicts aqueous solubility of pharmaceutical compounds. This project combines **cheminformatics** knowledge with modern **machine learning** engineering practice to solve a real problem in drug development.
-
-Given a drug's chemical structure (SMILES notation), the model predicts how well it will dissolve in water, which is crucial for determining drug bioavailability and efficacy. The model combines Morgan fingerprints with RDKit physicochemical descriptors, feature selection, and an XGBoost regressor trained on 1,144 pharmaceutical compounds — then validated against a second, independent dataset before being trusted.
-
-🚀 **Live Demo:** <a href="https://drug-solubility-prediction.streamlit.app/" target="_blank">Try the Streamlit app</a>
-
-📋 **Some key results from the project:**
-
-## 🎯 Model Performance
-
-| Metric | Value |
-|--------|-------|
-| **Best Algorithm** | XGBoost |
-| **Test R² Score** | 0.9116 (91% variance explained) |
-| **Test RMSE** | 0.6203 log(mol/L) |
-| **Test MAE** | 0.4824 log(mol/L) |
-| **External validation (AqSolDB, 8,881 compounds)** | R² = 0.6381 |
-| **Dataset Size** | 1,144 compounds (ESOL) |
-| **Features** | 2,048 Morgan fingerprint bits + 7 RDKit descriptors, 1,028 selected |
-
-## 🔬 Feature Engineering
-
-**Morgan Fingerprints + physicochemical descriptors** — the fingerprint encodes:
-- Molecular connectivity patterns
-- Atomic neighborhoods at different radii
-- Specific chemical substructures
-
-...alongside 7 RDKit descriptors (molecular weight, LogP, TPSA, H-bond donor/acceptor counts, rotatable bonds, aromatic rings). Feature selection (`SelectFromModel`, fit on the training fold only) narrows 2,055 features down to 1,028.
-
-Key insight: **LogP alone accounts for 17.5% of feature importance** — more than the next 5 fingerprint bits combined — consistent with LogP's well-established role in aqueous solubility (Yalkowsky's General Solubility Equation). Adding physicochemical descriptors, not just a bigger model, was the single biggest lever for accuracy.
-
-## 📊 Model Comparison
-
-Four algorithms were compared via 5-fold cross-validation (train set only):
-
-```
-SVR                     🟡  CV R² = 0.732
-Random Forest           ✅  CV R² = 0.852
-Gradient Boosting       ✅  CV R² = 0.887
-XGBoost                 🏆  CV R² = 0.893  ← BEST
-```
-
-XGBoost was refit on the full training set and evaluated once on the held-out test set: **R² = 0.9116**, a substantial jump from an earlier fingerprint-only Random Forest baseline (R² = 0.6985) — and the train/test gap shrank from 0.24 to 0.06, meaning this is better generalization, not just a better fit.
-
-## 🌍 External Validation
-
-Rather than stopping at the in-distribution test score, the model was also evaluated on **AqSolDB** (Sorkun et al., 2019) — 8,881 compounds never seen during training, after removing 1,099 that overlap with the ESOL training data by canonical SMILES. Result: **R² = 0.638**, reported honestly alongside the 0.91 in-distribution score rather than blended into one number. The gap shows how much accuracy depends on staying close to the training distribution — exactly the kind of check that's easy to skip and easy to regret skipping.
-
-## 🎯 Prediction Uncertainty & Applicability Domain
-
-Every prediction ships with:
-
-- **A 90% prediction interval** (split conformal, calibrated on the test set's residuals)
-- **An applicability-domain flag** — Tanimoto similarity to the nearest training compound; below 0.40 similarity, the app warns the prediction is extrapolation
-
-![Database examples tab: precomputed predictions for common drugs](screenshot_examples.png)
-
-## 💡 Key Features and Workflow
-
-### Data Pipeline
-1. **Input**: Drug structure as SMILES notation
-2. **Feature Generation**: Morgan fingerprints (2,048 bits) + 7 RDKit descriptors
-3. **Selection & Scaling**: `SelectFromModel` + `StandardScaler`, fit on the training fold only
-4. **Prediction**: XGBoost pipeline inference
-5. **Output**: Solubility value, classification (High/Medium/Low), prediction interval, applicability-domain check
-
-### Hyperparameter Optimization
-- **Method**: `GridSearchCV` with 5-fold cross-validation, one grid per candidate model
-- **Result**: XGBoost (`n_estimators=400, max_depth=4, learning_rate=0.05`), CV R² = 0.893
-
-## 🧪 Example Predictions
+<a href="https://github.com/slastrzelec/drug-solubility-prediction" target="_blank" rel="noopener noreferrer">GitHub Repository</a> · <a href="https://github.com/slastrzelec/drug-solubility-prediction/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">Specification</a> · <a href="https://drug-solubility-prediction.streamlit.app/" target="_blank" rel="noopener noreferrer">Live demo (Streamlit)</a>
 
 ![Prediction example: aspirin in the Streamlit app](screenshot_prediction.png)
 
+## Why this project
 
-| Drug | log(Solubility) | Category | Solubility (mol/L) |
-|------|-----------------|----------|-------------------|
-| Aspirin | -2.55 | 🟡 Medium | 2.82e-3 |
-| Paracetamol | -1.21 | 🟢 High | 6.17e-2 |
-| Caffeine | -1.47 | 🟢 High | 3.39e-2 |
-| Ibuprofen | -3.15 | 🔴 Low | 7.08e-4 |
+A compound that does not dissolve in water is hard to turn into a drug, so solubility is checked early. Measuring it for every candidate is slow, and a model that gives only a number is risky: a user cannot tell when the number is a guess. This project predicts log solubility and says how far to trust the answer. The first version, a fingerprint-only Random Forest, reached R² 0.70. I rebuilt it from a written specification with leakage rules, then tested it on a second dataset.
 
-**Solubility Categories:**
-- 🟢 **High** (> -1): Very soluble, good bioavailability
-- 🟡 **Medium** (-1 to -3): Moderately soluble, may need formulation
-- 🔴 **Low** (< -3): Poorly soluble, requires alternatives
+## Results at a glance
 
-## 🛠️ Technical Stack
+ESOL, 1,144 compounds, random 80/20 split (915 training and 229 test molecules). Features: a 2,048-bit Morgan fingerprint and 7 RDKit descriptors; 1,028 of the 2,055 features are kept by feature selection.
 
-**Core Libraries:**
-- **RDKit** - Molecular structure parsing, fingerprints, and descriptors
-- **scikit-learn** - Feature selection, pipelines, cross-validation
-- **XGBoost** - Final regression model
-- **FastAPI + Pydantic** - `/predict` API, request validation
-- **Docker** - Containerized API deployment
-- **Streamlit** - Interactive web application
-- **pandas/numpy** - Data manipulation and numerical computing
+| | Test R² | RMSE | MAE |
+|---|---|---|---|
+| Fingerprint-only Random Forest (baseline) | 0.6985 | 1.146 | 0.860 |
+| XGBoost with descriptors (current) | 0.9116 | 0.620 | 0.482 |
+| AqSolDB, 8,881 compounds never seen in training | 0.638 | 1.443 | 0.988 |
 
-**Skills Demonstrated:**
-- ✅ Cheminformatics (SMILES, molecular fingerprints, physicochemical descriptors)
-- ✅ Machine Learning (model selection, hyperparameter tuning, feature selection)
-- ✅ Rigorous evaluation (leakage-safe pipelines, external validation, honest reporting of what didn't fully transfer)
-- ✅ Uncertainty quantification (prediction intervals, applicability-domain analysis)
-- ✅ API development and containerization (FastAPI, Docker)
-- ✅ Automated testing and CI (pytest, GitHub Actions)
+RMSE and MAE are in log(mol/L). Four models were compared with 5-fold cross-validation on the training set only (SVR 0.732, Random Forest 0.852, Gradient Boosting 0.887, XGBoost 0.893), and the 229-row test set was scored once.
 
-**Related projects:**
-- [logP Predictor](../molecular-lipophilicity-ai/index.md) — same task family (single-molecule physicochemical property prediction from SMILES via RDKit descriptors/fingerprints), different target property and model (PyTorch neural network).
-- [Buchwald-Hartwig C-N Coupling Optimizer](../buchwald-hartwig-optimizer/index.md) — same cheminformatics toolkit (RDKit descriptors + Morgan fingerprints, XGBoost), different task: reaction-condition/yield optimization across substrate pairs rather than a single-molecule property.
+![Database examples tab](screenshot_examples.png)
 
-## 🌟 Contributions and Impact
+## What the evaluation showed
 
-**Research Applications:**
-- High-throughput drug candidate screening
-- Solubility-driven medicinal chemistry optimization
-- Virtual compound library filtering
+- **Descriptors, not a bigger model, made the difference.** MolLogP alone carries 17.5% of the feature importance, more than the next five fingerprint bits together, which agrees with the role of LogP in solubility theory. The train/test gap fell from 0.24 to 0.06, so the gain is generalisation and not only a better fit.
+- **The external score is much lower, and it is reported next to the 0.91.** On AqSolDB R² drops to 0.64. The test score measures how well the model works close to ESOL, not how well it works on drugs in general.
+- **Every prediction carries a warning signal.** A 90% interval of about ±0.96 log units, and a flag when the nearest training molecule has a Tanimoto similarity below 0.40. The flag was motivated by the external result.
 
-**Project Outcomes:**
-- Trained a model that explains ~91% of test-set solubility variance (up from 70% for the original fingerprint-only baseline)
-- Validated it honestly on an independent dataset (AqSolDB) rather than trusting the in-distribution score alone
-- Shipped both a Streamlit UI and a documented, tested FastAPI + Docker service on the same underlying pipeline
-- Every prediction comes with a calibrated confidence interval and an applicability-domain warning, not just a bare number
+## Methodology
 
-## 🔗 Project Links
+- **Specification first.** `SPEC.md` fixes the feature set and the leakage rules before the code.
+- **No leakage into the test set.** Scaling and feature selection are steps of one scikit-learn pipeline fitted on the training data only; nothing from the test set or from AqSolDB reaches them.
+- **External data cleaned of overlap.** 1,099 AqSolDB compounds that also appear in ESOL (found by canonical SMILES) were removed before scoring.
+- **Interval:** split conformal prediction, a 90th percentile of absolute residuals.
+- **Two front ends, one implementation:** the Streamlit app and the FastAPI service (`POST /predict`, `GET /health`, Pydantic validation, Dockerfile) load the same trained pipeline and call the same prediction function.
 
-- **📂 GitHub Repository** - <a href="https://github.com/slastrzelec/drug-solubility-prediction" target="_blank">View on GitHub</a>
-- **🚀 Web App** - <a href="https://drug-solubility-prediction.streamlit.app/" target="_blank">Streamlit App</a>
-- **📊 Full Analysis** - See the repository's README and SPEC.md for methodology, results, and the data-leakage guardrails followed throughout
+## Testing
 
----
+**Automated tests run on every push and pull request** (pytest in GitHub Actions).
 
-**Project Status**: ✅ Complete | **Last Updated**: September 2026
+**What is verified**
+
+- **Features and prediction logic:** feature construction and the solubility classification.
+- **A leakage guardrail** is part of the suite.
+- **Uncertainty:** the prediction interval and the applicability-domain check.
+- **API:** the FastAPI service.
+
+**Not covered**
+
+- The accuracy of the model: tests check the code, not that R² stays at 0.91.
+- The Docker image and the Streamlit interface are not covered by the test suite.
+- Predictions for molecule classes outside ESOL, apart from the AqSolDB evaluation above.
+
+## Limitations
+
+- **The interval is not a textbook conformal guarantee.** It is calibrated on the same 229 test rows that give the headline R², so the reported coverage is optimistic. A separate calibration set would fix it, but ESOL is too small to give up more data.
+- **The accuracy depends on distance from ESOL.** R² 0.91 inside, 0.64 outside; which compound classes cause the drop was not analysed.
+- It is a random split of a small dataset: the 0.91 comes from 229 test molecules, and its own uncertainty was not quantified.
+- The API is documented and containerised but not deployed anywhere public.
+
+**Tech stack:** Python, RDKit, scikit-learn, XGBoost, pandas, FastAPI, Pydantic, Docker, Streamlit, pytest, GitHub Actions.
+
+**Related:** the [logP Predictor](../molecular-lipophilicity-ai/index.md) is a neural-network model for a neighbouring property, and the [Buchwald-Hartwig C-N Coupling Optimizer](../buchwald-hartwig-optimizer/index.md) uses the same toolkit for reaction yield.

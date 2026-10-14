@@ -39,8 +39,24 @@ Dataset: NFFA-EUROPE "100% SEM Dataset", 10 classes, 20,837 images after removin
 ## Engineering
 
 - **Deployment:** Streamlit Community Cloud; the weights live on the Hugging Face Hub and are downloaded on the first start and verified against a recorded sha256 (a mismatch means no model is loaded). Uploads are processed in memory only, nothing is stored or logged.
-- **Tests and CI:** pytest (splits, metrics, calibration, inference, download integrity), ruff, and a CI guard that fails if weights, archives, keys or files over 5 MB are ever committed.
-- **Tech stack:** PyTorch, torchvision (ConvNeXt-Tiny, ResNet-50), Grad-CAM, Streamlit, GitHub Actions, Hugging Face Hub.
+- **Repository guard:** a CI check fails if weights, archives, keys or files over 5 MB are ever committed.
+
+## Testing
+
+**Automated tests run on every push and pull request** (pytest and ruff in GitHub Actions). Tests that need PyTorch are skipped without it, and CI runs both variants. No dataset and no trained checkpoint are needed.
+
+**What is verified**
+
+- **Splits:** the near-duplicate groups are built correctly and no cluster crosses the train, validation and test splits.
+- **Metrics and calibration:** the evaluation and calibration code.
+- **Inference:** the prediction path of the demo.
+- **Download integrity:** the weights are accepted only when the sha256 matches.
+- **Repository hygiene:** no weights, archives, keys or large files tracked.
+
+**Not covered**
+
+- **The published numbers.** Training and the one-time test evaluation ran in Kaggle notebooks that are not in the repository, so CI does not recompute any result; every number comes from a logged run in `reports/`.
+- Behaviour on images from other instruments or laboratories (there is no external test set).
 
 ## Limitations
 
@@ -49,5 +65,7 @@ Dataset: NFFA-EUROPE "100% SEM Dataset", 10 classes, 20,837 images after removin
 - Small classes have 22-46 test images, so per-class numbers move by several points with one image.
 - The demo has no out-of-distribution detector: any image, including a photograph, gets one of the 10 SEM classes.
 - Two ablations from the original plan (class weights, stronger augmentation) were **not run**.
+
+**Tech stack:** PyTorch, torchvision (ConvNeXt-Tiny, ResNet-50), Grad-CAM, Streamlit, Hugging Face Hub, pytest, ruff, GitHub Actions.
 
 **Related:** the same discipline of group-aware splits and honest error analysis, applied to a different domain, is in the [Cuneiform Sign Classifier](../20_cuneiform-sign-classifier/index.md) (split by tablet, not by image). A smaller transfer-learning classifier with an honest baseline comparison is the [Emotion Recognition](../emotion-recognition-cv/index.md) project. The nanostructures behind the SEM classes connect to the [Carbon Nanotube Visualizer](../carbon-nanotube-visualizer/index.md).

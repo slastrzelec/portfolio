@@ -42,20 +42,29 @@ Evaluated against a real labeled sample (62 people-containing images from the pu
 | F1 | 0.638 |
 | CPU inference speed | ~95 FPS (10.5 ms/image) |
 
-## Limitations, stated plainly
-
-- **Recall is the honest weak point.** YOLOX-*nano* is the smallest model in its family (built for speed over accuracy) and struggles most on dense crowd scenes with many small, overlapping people. A larger YOLOX variant would trade some CPU speed for materially better recall.
-- **The counting line only works if it's oriented against the actual direction of motion in the video.** A camera looking *across* a path (people moving left/right) needs a vertical line; a camera looking *down* a corridor (people moving toward/away from camera) needs a horizontal one. There's no universally-correct default — this is why the line is configurable with sliders rather than fixed.
-- Free-tier CPU-only hosting means very long or very high-resolution video uploads are capped (frames are downscaled before processing, and there's a hard length limit) to avoid exhausting the host's memory.
-
 ## Data security & privacy
 
 All inference runs locally — no image or video is ever sent to a third-party API. Uploaded video is written to a private temp file only because OpenCV needs a real file path to read it, and that file is deleted immediately after processing, even if something goes wrong. Nothing uploaded is logged, stored, or kept between requests.
 
-## Tech stack
+## Testing
 
-Python · Streamlit · ONNX Runtime · OpenCV · `trackers` (ByteTrack) · `supervision` · imageio-ffmpeg
+**Automated tests run on every push and pull request** (pytest in GitHub Actions). All tracking and line-crossing logic is tested with synthetic, injectable detectors, so the suite needs no video, no images and no model weights.
 
-## License
+**What is verified**
 
-Code is MIT-licensed. The bundled YOLOX-nano weights are Apache License 2.0 ([Megvii-BaseDetection/YOLOX](https://github.com/Megvii-BaseDetection/YOLOX)), used unmodified for inference only — chosen specifically over Apache/AGPL alternatives like Ultralytics YOLOv8 to keep the whole repo under a permissive, MIT-compatible license even when deployed as a publicly network-accessible app.
+- **Line-crossing counting:** the pure-Python counter is driven with synthetic positions: a crossing is counted when the side of the line flips.
+- **Video pipeline:** the wiring of detector, tracker and counter is tested with a fake detector (`FakeDetector`).
+
+**Not covered**
+
+- **Detection accuracy in CI.** Precision, recall and speed are measured separately by `evaluate.py` on the public coco128 sample; CI does not run it.
+- **Counting accuracy on real video.** The IN/OUT counts were not compared with manually counted ground truth.
+- The ONNX model itself, real video files and the Streamlit interface in a browser.
+
+## Limitations
+
+- **Recall is the honest weak point.** YOLOX-*nano* is the smallest model in its family (built for speed over accuracy) and struggles most on dense crowd scenes with many small, overlapping people. A larger YOLOX variant would trade some CPU speed for materially better recall.
+- **The counting line only works if it's oriented against the actual direction of motion in the video.** A camera looking *across* a path (people moving left/right) needs a vertical line; a camera looking *down* a corridor (people moving toward/away from camera) needs a horizontal one. There's no universally-correct default — this is why the line is configurable with sliders rather than fixed.
+- Free-tier CPU-only hosting means very long or very high-resolution video uploads are capped (frames are downscaled before processing, and there's a hard length limit) to avoid exhausting the host's memory.- The evaluation uses a small public image sample (coco128), not surveillance-style video, so the accuracy figures describe detection on still images and say nothing about counting on a specific camera.
+
+**Tech stack:** Python, Streamlit, ONNX Runtime, OpenCV, `trackers` (ByteTrack), `supervision`, imageio-ffmpeg, pytest, GitHub Actions. License: code MIT, YOLOX-nano weights Apache 2.0.

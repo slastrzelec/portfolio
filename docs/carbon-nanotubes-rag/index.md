@@ -1,75 +1,77 @@
 # 💡 Carbon Nanotubes RAG System
 
-**Production-grade Retrieval-Augmented Generation system — from a Streamlit prototype to a tested, containerized, deployed REST API**
+A retrieval-augmented question-answering system over 24 scientific papers on Raman spectroscopy of carbon nanotubes, with hybrid search, a FastAPI service, Docker, CI and a measured answer-quality score.
 
-## 🎯 Overview
-
-A full RAG system for semantic search and Q&A over 24 scientific papers on Raman spectroscopy of carbon nanotubes. What started as a simple Streamlit demo was rebuilt in six deliberate phases into a system with correct retrieval math, hybrid search, a validated REST API, structured logging, Docker containers, automated CI testing, and a live public deployment.
+<a href="https://github.com/slastrzelec/carbon-nanotubes-rag" target="_blank" rel="noopener noreferrer">GitHub Repository</a> · <a href="https://carbon-nanotubes-raman-rag.streamlit.app" target="_blank" rel="noopener noreferrer">Live Streamlit demo</a> · <a href="https://rag-raman-api.onrender.com/docs" target="_blank" rel="noopener noreferrer">Live REST API (Swagger docs)</a>
 
 ![Streamlit demo](demo.png)
 
-## 🚀 What This Project Demonstrates
+## Why this project
 
-This isn't just a working demo — it's built and documented the way a production system would be:
+A language model asked about a narrow technical field answers fluently and sometimes wrongly. For a domain question such as "what does the D/G ratio tell about defects?" the useful answer comes from the papers, with the source named. This project builds that path: the papers are indexed, the question is matched to the relevant passages, and the model answers only from them. It started as a Streamlit prototype that used Euclidean distance on unnormalised vectors and cut text at 500 characters, and was rebuilt in six documented phases into a tested, deployed service.
 
-- **Correct retrieval math** — `IndexFlatIP` with L2-normalized embeddings for true cosine similarity, hybrid dense + BM25 search, sentence-aware chunking, content-hash deduplication of source documents
-- **Measured quality** — evaluated with [RAGAs](https://github.com/explodinggradients/ragas) (faithfulness ≈ 0.80–0.82 across 14 domain questions, including a deliberate out-of-scope question as a hallucination check)
-- **A real REST API** (FastAPI), not just a UI — request validation, proper HTTP error handling, auto-generated interactive docs, and its own test suite
-- **31 automated tests**, running on every push via GitHub Actions (green build badge on the repo)
-- **Structured JSON logging** — every request logged with method, path, status, and duration
-- **Dockerized** — separate containers for the API and the UI, orchestrated with docker-compose, optimized to fit a 512MB free-tier deployment
-- **Live deployment** — the API runs publicly on Render, not just on localhost
-- **Protected public demo** — per-client rate limit, global daily query cap, question-length limit and a cached default answer keep the free demo from burning API budget
+## Results at a glance
 
-## 🛠️ Tech Stack
+| Measure | Result |
+|---|---|
+| Answer faithfulness (RAGAs, LLM judge) | about 0.80–0.82 over 14 domain questions |
+| Out-of-scope question ("melting point of carbon nanotubes") | 1.0: the system said the context did not contain the answer |
+| Automated tests | 31, on every push |
+| Public API | `/query`, `/documents`, `/health`; request validation, readable errors, Swagger docs |
 
-- **Retrieval**: FAISS (`IndexFlatIP`, cosine similarity), Sentence Transformers, BM25 (hybrid search)
-- **Generation**: OpenAI API (`gpt-4o-mini`)
-- **API**: FastAPI, Pydantic validation
-- **UI**: Streamlit
-- **Testing**: pytest (31 tests), RAGAs (answer quality evaluation)
-- **Infra**: Docker, docker-compose, GitHub Actions (CI), Render (deployment)
+Faithfulness asks whether the answer stays within the retrieved context. In most of the lower-scoring answers retrieval was correct, but the model added accurate textbook facts that the retrieved passages did not contain; that is a property of the current prompt, not hallucination, and it is recorded rather than hidden.
 
-## 📊 How It Works
+## What the evaluation showed
+
+- **The duplicate check found a real data problem.** The same paper was saved under two filenames and filled the top of every search with identical results. Content hashing removed it.
+- **Hybrid search covers what embeddings miss.** Exact terms and abbreviations such as RBM or SWNT are matched by BM25 next to the dense retrieval.
+- **A 512 MB free-tier container only fits with CPU-only PyTorch.** The default build pulls a CUDA version of 800 MB to 2 GB.
+
+## Methodology
 
 ```
 PDF corpus
     ↓
-Dedup + sentence-based chunking
+Deduplication + sentence-based chunking (about 120 words, with overlap)
     ↓
-Embeddings → FAISS (IndexFlatIP, normalized)
+Embeddings (all-MiniLM-L6-v2, L2-normalised) → FAISS IndexFlatIP
     ↓
-User question
+Question → hybrid retrieval (dense + BM25)
     ↓
-Hybrid retrieval (dense + BM25)
-    ↓
-Context-grounded generation (GPT-4o-mini)
+Generation from the retrieved context only (gpt-4o-mini)
     ↓
 Answer + cited sources
 ```
 
-Both the Streamlit UI and the FastAPI backend are thin interface layers over the exact same retrieval/generation modules — no duplicated logic between them.
+- **Cosine similarity done correctly:** `IndexFlatIP` over normalised vectors instead of Euclidean distance on raw ones.
+- **One implementation, two interfaces:** the Streamlit UI and the FastAPI service are thin layers over the same modules for ingestion, retrieval and generation.
+- **Operations:** structured JSON logs (method, path, status, duration, and for queries the number of sources and generation time), separate Docker images for API and UI with docker-compose, CI on every push, deployment on Render from the same Dockerfile.
+- **Cost protection for the public demo:** questions are limited to 500 characters; the API allows 10 requests per minute per client and 500 queries per day in total; the UI has daily and per-session caps; the default example answer is cached.
 
-## 🔗 Links
+## Testing
 
-- <a href="https://carbon-nanotubes-raman-rag.streamlit.app" target="_blank">Live Streamlit Demo</a>
-- <a href="https://rag-raman-api.onrender.com/docs" target="_blank">Live REST API (interactive Swagger docs)</a>
-- <a href="https://github.com/slastrzelec/carbon-nanotubes-rag" target="_blank">GitHub Repository</a> — full commit history across all 6 development phases
+**31 automated tests run on every push and pull request** (pytest in GitHub Actions). They need no OpenAI key and no built index.
 
-## 📈 Results
+**What is verified**
 
-- **31/31 tests passing**, enforced automatically on every push
-- **Faithfulness ≈ 0.80–0.82** (RAGAs, 14-question domain eval set)
-- Duplicate source detection caught real data-quality issues (same paper saved under two filenames)
-- Live API deployment fits a 512MB free-tier container thanks to a CPU-only PyTorch build
-- Full REST API with `/query`, `/documents`, `/health` endpoints, input validation, and structured error responses
+- **Ingestion:** chunking and content-hash deduplication.
+- **API:** all three endpoints, request validation (empty or whitespace questions, `top_k` out of range, missing fields) and the 502 response when the pipeline fails.
+- **Logging middleware:** request details are captured for successful and for rejected requests.
 
-## 🧬 Related Projects
+**Not covered**
 
-Part of the same carbon-nanotube work as the
-[Raman Spectroscopy Analyzer](../raman-spectroscopy-analyzer/index.md) (experimental
-spectral characterization of the CNT samples referenced in the corpus) and the
-[Carbon Nanotube Visualizer](../carbon-nanotube-visualizer/index.md) (structure and
-electronic-property modeling).
+- **Answer quality in CI.** The OpenAI calls are mocked in the tests. Quality is measured separately with RAGAs, which makes real API calls and is not part of the suite.
+- **Retrieval quality.** `context_precision` was not measured because it needs reference answers.
+- The deployed service under load, and the rate limiter across restarts or several instances.
 
-*Note: the live API runs on a free-tier instance and spins down after 15 minutes of inactivity — the first request after idle time may take 30–60 seconds to respond (cold start).*
+## Limitations
+
+- The evaluation uses 14 hand-written questions and one metric scored by an LLM judge, so 0.80–0.82 is an indication, not a precise measurement.
+- The corpus is 24 papers. A question outside it gets a refusal or a general-knowledge answer, not a literature search.
+- The embedding model is small and general-purpose, not tuned for spectroscopy terms.
+- The rate limits live in process memory: they reset on restart and are not shared between instances. The per-client key comes from `X-Forwarded-For` and can be spoofed, so the daily cap is the real cost ceiling.
+- The live API runs on a free tier and sleeps after 15 minutes without requests; the first request can take 30–60 seconds.
+
+**Tech stack:** Python, FAISS, sentence-transformers, BM25, OpenAI API, FastAPI, Pydantic, Streamlit, Docker, docker-compose, RAGAs, pytest, GitHub Actions, Render.
+
+**Related:** the same carbon-nanotube topic is covered by the [Raman Spectroscopy Analyzer](../raman-spectroscopy-analyzer/index.md) (experimental spectra) and the [Carbon Nanotube Visualizer](../carbon-nanotube-visualizer/index.md) (structure and electronic properties).

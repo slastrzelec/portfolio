@@ -1,160 +1,65 @@
-# Buchwald-Hartwig C-N Coupling Optimizer
+# 🧪 Buchwald-Hartwig C-N Coupling Optimizer
 
-📈 Screenshots from the application:
+A gradient-boosting model and Streamlit app that predicts the yield of Buchwald-Hartwig C-N couplings for a user-supplied aryl halide and amine, across 288 combinations of base, ligand and additive.
+
+<a href="https://github.com/slastrzelec/buchwald-hartwig-optimizer" target="_blank" rel="noopener noreferrer">GitHub Repository</a> · <a href="https://buchwald-hartwig-optimizer.streamlit.app/" target="_blank" rel="noopener noreferrer">Live demo (Streamlit)</a>
 
 ![Input substrates and live structure preview](zdj_1.png)
-*Enter aryl halide and nucleophile SMILES; structures render automatically and the v3 model (XGBoost, R² = 0.93) is loaded and ready.*
 
-![Detailed statistics for the predicted conditions](zdj_2.png)
-*Yield statistics across all 288 base/ligand/additive combinations for the given substrates, plus a per-base and per-ligand performance breakdown.*
+## Why this project
 
-## Overview
+Choosing a base, a ligand and an additive for a cross-coupling is mostly trial and error, and one high-throughput screen can cover only so many combinations. The goal is to shortlist promising conditions for a given pair of substrates before they are run at the bench. The project also shows how a plausible-looking model can be completely wrong: its first version reached R² 0.30 because of a silent bug, and the story of finding it is part of the result.
 
-An **interactive ML-powered web application** that predicts optimal reaction conditions for Buchwald-Hartwig C-N cross-coupling reactions. Users input substrate SMILES strings and receive AI-generated recommendations for base, ligand, and additive combinations, with the coupling product generated automatically and its real molecular structure (descriptors + Morgan fingerprints) used in the prediction.
+## Results at a glance
 
-- **🚀 Live Demo** - <a href="https://buchwald-hartwig-optimizer.streamlit.app/" target="_blank">View Live App</a>
-- **📂 GitHub Repository** - <a href="https://github.com/slastrzelec/buchwald-hartwig-optimizer" target="_blank">View on GitHub</a>
+XGBoost regressor on 4,312 reactions; features are 19 physicochemical descriptors and a 128-bit Morgan fingerprint for the aryl halide and for the coupling product, combined with the one-hot identity of 3 bases, 4 ligands and 24 additives (327 features).
 
-## Tech Stack
+| Version | Approach | Test R² |
+|---|---|---|
+| v1 | Descriptors only (the descriptor code silently failed) | 0.30 |
+| v2 | Same descriptors, bug fixed | 0.72 |
+| v3 | Added 128-bit Morgan fingerprints | 0.93 (5-fold CV 0.933 ± 0.005) |
 
-- **Backend:** Python, XGBoost, Scikit-learn, RDKit
-- **Frontend:** Streamlit
-- **Data Processing:** Pandas, NumPy
-- **Deployment:** Streamlit Cloud
-- **Version Control:** Git/GitHub
+![Yield statistics for the predicted conditions](zdj_2.png)
 
-## Key Features
+## What the evaluation showed
 
-✅ **Real-time Predictions** - Get top 10 reaction condition recommendations instantly, computed from the actual substrates entered  
-✅ **Molecular Visualization** - Auto-generate structure diagrams from SMILES (PubChem API)  
-✅ **Detailed Analytics** - Statistical breakdown of base/ligand performance  
-✅ **Export Options** - Download results as CSV or PDF reports with structures  
-✅ **Prediction History** - Track all past predictions in sidebar  
-✅ **Interactive UI** - Clean, responsive design with intuitive controls
+- **The 0.30 was a bug, not a limit of the data.** Two RDKit calls were wrong (`Descriptors.FractionCsp3` has a different capitalisation and `Descriptors.NumAromaticAtoms` does not exist). Both raised `AttributeError`, which a broad `except Exception: return None` swallowed. Every descriptor of every reaction came back empty and was dropped, so the model learned from the identity of the base, ligand and additive alone.
+- **The deployed app had a second, separate bug.** It validated the user's SMILES and then ignored them, so every input got the same answer, and it offered an additive list that was not the one the model was trained on. Fixing the pipeline and the app took R² from 0.30 to 0.72.
+- **Fingerprints added the structural information that bulk descriptors lack.** Molecular weight, LogP and TPSA summarise a molecule but do not encode its substructure. With the fingerprints R² rose to 0.93, and the feature importance ranks individual fingerprint bits above every descriptor.
+- **Five-fold cross-validation agrees with the single split** (0.933 ± 0.005), so 0.93 is not a lucky split. See the limitations for what that number does and does not say.
 
-## Project Architecture
-```
-data/
-├── doyle_buchwald_data_cleaned.csv      # 4,312 training samples
-├── X_features_scaled_v3.csv             # Scaled/encoded feature matrix (327 features)
-├── trained_models/
-│   ├── best_model_v3.pkl                # XGBoost model (Test R² = 0.93)
-│   ├── scaler_v2.pkl                    # Feature scaler for the descriptor block
-│   ├── feature_names_v2.pkl             # Descriptor+categorical feature order (71)
-│   └── feature_names_v3.pkl             # Full feature order incl. fingerprints (327)
-│
-app.py                                   # Streamlit application (feature engineering + inference)
-```
+## Methodology
 
-## How It Works
+- **Input and product:** SMILES are validated with RDKit, and the coupling product is generated from an RDKit reaction template. The more reactive C–I or C–Br bond is preferred over C–Cl.
+- **Prediction:** for the given substrates the model scores all 288 base × ligand × additive combinations and returns the top 10.
+- **Data:** a high-throughput experimentation (HTE) dataset of Buchwald-Hartwig yields; 287 incomplete rows were removed.
+- **Model choice:** Random Forest, Gradient Boosting and XGBoost were compared at each stage; XGBoost was kept.
+- **Export:** results can be downloaded as CSV or as a PDF report with structures.
 
-1. **Input:** User provides SMILES for the aryl halide and the amine nucleophile
-2. **Validation:** SMILES syntax checking via RDKit
-3. **Product generation:** The coupling product is generated automatically from the two substrates using an RDKit reaction template (most-reactive-halide priority: I/Br over Cl)
-4. **Feature Generation:** Real molecular descriptors (MW, LogP, TPSA, aromaticity, H-bond donors/acceptors, etc.) *and* 128-bit Morgan fingerprints computed for both the aryl halide and the predicted product, combined with one-hot encoded base/ligand/additive identity — 327 features total
-5. **Prediction:** XGBoost model predicts yield for all 288 base × ligand × additive combinations, using the actual substrate structure
-6. **Output:** Top 10 recommendations sorted by predicted yield
-7. **Export:** Results downloadable as CSV or PDF with molecular structures
+## Testing
 
-## Model Performance
+**22 automated tests run on every push and pull request** (pytest in GitHub Actions).
 
-- **Algorithm:** XGBoost Regressor (also compared against Random Forest and Gradient Boosting)
-- **Training Samples:** 4,312 reactions
-- **Features:** 327 (physicochemical descriptors + Morgan fingerprints + reagent identity)
-- **Test R²:** **0.93** (single 80/20 split)
-- **5-fold Cross-Validation R²:** **0.933 ± 0.005** — confirms the result is stable, not a lucky split
+**What is verified**
 
-## Development story: from a silently broken pipeline to R² = 0.93
+- **Chemistry and features:** input validation, descriptor calculation and fingerprints on known molecules.
+- **Reaction generation:** the coupling product is produced for typical substrates.
+- **Regression test for the second bug:** two different substrates must give different predicted yields, so an app that ignores its input fails the suite.
 
-An earlier version of this project reported a disappointing **Test R² = 0.30**. Investigating why turned up
-a real bug worth documenting rather than hiding: the descriptor-extraction function called two RDKit APIs
-that don't actually work as written — `Descriptors.FractionCsp3` (wrong capitalization; the real function is
-`FractionCSP3`) and `Descriptors.NumAromaticAtoms` (which doesn't exist in RDKit at all). Both calls raised
-`AttributeError`, which was silently swallowed by a broad `except Exception: return None`. The result: **every
-molecular descriptor for every one of the 4,312 reactions came back as `None`**, so those columns were 100%
-NaN and got dropped before training. The model was never trained on any actual chemistry — only on the
-categorical identity of the base, ligand and additive.
+**Not covered**
 
-Separately, the deployed Streamlit app had the same problem one level up: it validated the user's input
-SMILES but never actually used them to compute prediction features, so the app returned identical results
-for every substrate. It also used a hardcoded 7-item "additive" list that mixed in unrelated base/salt names
-(e.g. Cs2CO3, K2CO3) that were never part of the 24 additives the model was actually trained on.
+- The model's accuracy: tests check that the pipeline works, not that R² stays at 0.93.
+- Predictions for substrates outside the training data.
+- The Streamlit interface and the PDF export: there are no automated tests for them.
 
-**v2 — bug fixed:**
-- Corrected the two broken RDKit calls (plus two more of the same pattern found while rewriting)
-- Rewired the Streamlit app to compute real descriptors from the user's input and from an RDKit-generated coupling product
-- Replaced the incorrect additive list with the real 24-item trained set
-- Removed three dead stub files (`src/predictor.py`, `src/feature_engineering.py`, `src/app/app.py`) that were never imported by the real app
-- **Result: Test R² improved from 0.30 to 0.72**, just from fixing the pipeline
+## Limitations
 
-**v3 — Morgan fingerprints added:**
-- The v2 descriptors are all *bulk* molecular properties (molecular weight, LogP, TPSA, etc.) — they summarize a molecule but don't encode its actual substructure
-- Added 128-bit Morgan fingerprints (radius 2) for both the aryl halide and the coupling product, giving the model direct access to structural fragment information
-- **Result: Test R² improved further to 0.93**, confirmed with 5-fold cross-validation (mean 0.933, std 0.005) rather than relying on a single train/test split
-- Feature importance now ranks specific fingerprint bits above every individual physicochemical descriptor — a sensible result, since substructure presence/absence is exactly what fingerprints are designed to capture
+- **The R² of 0.93 comes from a random split of the reactions.** Reactions that share a substrate end up in both the training and the test set, so the score says how well the model fills gaps in a known screen. It does not show how it behaves for a new aryl halide or amine. A split that holds out substrates has not been run.
+- **A high-throughput screen covers a limited set of substrates.** For structures far from them the predictions are extrapolation.
+- **The product is made by one simplified reaction template** (the most reactive halide and the first available N–H). It may not resolve a product for unusual structures.
+- Predicted yields are a shortlist to test, not a replacement for the experiment.
 
-## Data Source
+**Tech stack:** Python, XGBoost, scikit-learn, RDKit, Streamlit, ReportLab, pytest, GitHub Actions.
 
-Dataset: Buchwald-Hartwig C-N Coupling Reactions (Doyle et al. / Ahneman et al.)
-- 4,312 high-throughput experimental reactions
-- Conditions: 3 bases, 4 ligands, 24 additives
-- Target: Reaction yield (0-100%)
-
-## Development & Roadmap
-
-**✅ Completed:**
-- Data cleaning & preprocessing (287 incomplete rows removed)
-- Feature engineering (RDKit descriptors + one-hot encoding) — bug found and fixed, R² 0.30 → 0.72
-- Morgan fingerprints added on top of the fixed descriptors — R² 0.72 → 0.93, confirmed via 5-fold CV
-- Model comparison (Random Forest, Gradient Boosting, XGBoost) at each stage
-- Streamlit app rewired to use real substrate descriptors + fingerprints end-to-end
-- Visual refresh of the app UI
-- PDF/CSV export with molecular visualizations
-- Prediction history tracking
-
-**📋 Planned:**
-- Hyperparameter tuning (GridSearch/RandomizedSearch)
-- MACCS keys as an additional fingerprint type
-- Reaction mechanism insights
-- Real-time model performance metrics dashboard
-
-## Learning Outcomes
-
-This project demonstrates:
-
-- **Data Science:** Data cleaning, feature engineering, ML model training & evaluation, cross-validation
-- **Debugging:** Diagnosing a silent bug hidden behind a broad exception handler, verifying the root cause, and quantifying the fix's impact
-- **Cheminformatics:** Molecular descriptors, Morgan fingerprints, reaction-template-based product generation
-- **Python:** Pandas, NumPy, Scikit-learn, XGBoost, RDKit, Streamlit
-- **Web Development:** Interactive UI design, API integration (PubChem)
-- **Deployment:** Streamlit Cloud, Git/GitHub workflows
-
-## Usage
-```bash
-# Clone repository
-git clone https://github.com/slastrzelec/buchwald-hartwig-optimizer.git
-cd buchwald-hartwig-optimizer
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run application locally
-streamlit run app.py
-
-# Open http://localhost:8501
-```
-
-**Related projects:**
-- [Drug Solubility Predictor](../drug-solubility-prediction/index.md) — same cheminformatics toolkit (RDKit descriptors + Morgan fingerprints), different task: single-molecule solubility prediction rather than reaction-yield optimization.
-- [logP Predictor](../molecular-lipophilicity-ai/index.md) — same cheminformatics toolkit, different task: single-molecule lipophilicity prediction (PyTorch neural network) rather than reaction-yield optimization.
-
-## Disclaimer
-
-⚠️ This tool is for research and educational purposes. Predicted yields should always be validated
-experimentally. The coupling product is generated with a simplified single-step reaction template
-(most-reactive-halide + first available N-H), which works well for typical substrates but may not
-resolve a product for more complex or unusual structures.
-
----
-
-**Status:** Active Development | **Last Updated:** September 2026
+**Related:** the [Drug Solubility Predictor](../drug-solubility-prediction/index.md) and the [logP Predictor](../molecular-lipophilicity-ai/index.md) use the same cheminformatics toolkit for single-molecule properties instead of reaction yield.

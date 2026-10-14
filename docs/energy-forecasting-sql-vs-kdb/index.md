@@ -1,348 +1,86 @@
-# ⚡ KDB+/Q vs SQL Benchmark & AWS Time Series Forecasting
+# ⚡ KDB+/Q vs SQL Benchmark
 
-## Project Overview
+A same-machine performance comparison of kdb+/q and DuckDB on 46 million smart-meter readings, plus an AWS time-series analysis of the same dataset.
 
-A two-part energy analytics project built on the same London smart meter
-dataset. **Part 2** is a from-scratch performance benchmark comparing
-**KDB+/Q** against **SQL (DuckDB)** on ~46M raw meter readings, built to
-develop hands-on KDB+/Q skills for time-series/database engineering roles.
-**Part 1** demonstrates end-to-end **AWS cloud analytics** (S3 → Athena → SQL)
-with time-series forecasting, anomaly detection, and segmentation on the same
-dataset's aggregated form. Together they show the same data problem solved at
-two different layers: raw row-level performance engineering, and cloud-scale
-analytics/forecasting.
+<a href="https://github.com/slastrzelec/energy-forecasting-sql-vs-kdb" target="_blank" rel="noopener noreferrer">GitHub Repository</a> · <a href="https://github.com/slastrzelec/energy-forecasting-sql-vs-kdb/tree/main/part2_kdb_vs_sql" target="_blank" rel="noopener noreferrer">Benchmark code and methodology</a>
 
-- **📂 GitHub Repository** - <a href="https://github.com/slastrzelec/energy-forecasting-sql-vs-kdb" target="_blank">View on GitHub</a>
+## Why this project
 
----
+I built it before an interview for a Junior KDB+/Q Developer role, to learn q by measuring something instead of reading about it. The question: on the same raw data and the same machine, where does kdb+/q beat a modern columnar SQL engine, and where does it not? Benchmarks that answer "kdb+ is faster" are easy to write. This one reports where it lost, and why.
 
-## Part 2 — KDB+/Q vs SQL (DuckDB) Benchmark
+The repository has two parts on the same "Smart meters in London" dataset. **Part 2**, the benchmark, is the main result and is described first. **Part 1** is an AWS (S3, Athena) analysis of the aggregated data with segmentation, anomaly detection and Prophet forecasts; it is shorter and has more caveats (see below).
 
-**Skills demonstrated:**
+## Results at a glance
 
-- 🗄️ **KDB+/Q:** table loading, q-SQL queries, joins, grouped attributes (`` `g# ``)
-- ⚙️ **Performance Engineering:** rigorous same-hardware benchmarking methodology
-- 🦆 **DuckDB / SQL:** columnar analytical SQL as the comparison baseline
-- 🔬 **Experimental Discipline:** hypothesis testing, including reporting a negative result honestly
-- 🧠 **Systems Thinking:** diagnosing and working around a real memory-ceiling limit
-
-### Setup
-
-Both engines run the **identical 5 queries** against the same raw half-hourly
-readings CSVs (`LCLid`, `tstp`, `energy(kWh/hh)`), entirely locally — **KDB-X
-5.0 Community Edition** (kdb+/q, via WSL2/Ubuntu) and **DuckDB** (Python), on
-the same machine, in the same WSL environment. No AWS involved in this half —
-Part 1 already covers cloud skills, so this is a deliberately local,
-apples-to-apples comparison.
-
-**Dataset:** "Smart meters in London" (Kaggle), long-format half-hourly
-readings, ~167M rows across 112 block files, plus a household → Acorn
-socioeconomic-group mapping table.
-
-### Headline Results
-
-**30 blocks / 45,948,372 rows, average of 3 runs (ms):**
+Both engines ran the same 5 queries on the raw half-hourly readings (30 blocks, 45,948,372 rows), in the same WSL2 environment. kdb+ is KDB-X 5.0 Community Edition, DuckDB runs from Python. Times in milliseconds, average of 3 runs.
 
 | Query | DuckDB | kdb+/q | Faster engine |
-|-------|-------:|-------:|----------------|
-| Q1 — full row count | 2.15 | 0.0007 | kdb+/q, **~3,220×** |
-| Q2 — point filter (1 household) | 2.36 | 0.048 | kdb+/q, **~49×** |
-| Q3 — group by household | 133.33 | 291.66 | DuckDB, ~2.2× |
-| Q4 — group by hour of day | 41.12 | 645.38 | DuckDB, ~15.7× |
-| Q5 — join + group by Acorn group | 226.80 | 404.89 | DuckDB, ~1.8× |
+|---|---:|---:|---|
+| Q1: full row count | 2.15 | 0.0007 | kdb+/q, ~3,220× |
+| Q2: point filter (one household) | 2.36 | 0.048 | kdb+/q, ~49× |
+| Q3: group by household | 133.33 | 291.66 | DuckDB, ~2.2× |
+| Q4: group by hour of day | 41.12 | 645.38 | DuckDB, ~15.7× |
+| Q5: join + group by Acorn group | 226.80 | 404.89 | DuckDB, ~1.8× |
 
 ![Main comparison](images/kdb_main_comparison.png)
 
 ![Speedup factor per query](images/kdb_speedup_factor.png)
 
-**Takeaway:** kdb+/q wins decisively on narrow, selective operations (counts,
-point lookups), where its in-memory columnar design and attribute indexing
-shine — but loses to DuckDB's query optimizer on heavier grouping/join
-workloads. A genuinely mixed result, not a blanket "kdb+ is faster" story.
+## What the evaluation showed
 
-### Optimization: the `` `g# `` grouped attribute
-
-Setting a grouped attribute on the filter column turned the point-filter query
-from a 10.79 ms linear scan into a 0.029 ms hash lookup — a **~375× speedup**
-— for a one-time indexing cost of under a second. Without it, kdb+/q actually
-*loses* the point-filter query to DuckDB.
-
-![Attribute impact](images/kdb_attribute_impact.png)
-
-### A negative result, reported honestly
+- **A mixed result, not a win for either engine.** kdb+/q is far ahead on narrow operations (count, point lookup) and slower on grouping and joins, where DuckDB's optimiser does better. Q1 should be read with care: a row count in kdb+ is a stored length, so it says little about scan speed.
+- **One attribute changes the point-filter result.** Setting the grouped attribute `` `g# `` on the filter column turned Q2 from a 10.79 ms linear scan into a 0.029 ms hash lookup (about 375×) for an indexing cost under a second. Without it, kdb+/q loses even Q2 to DuckDB.
+- **A hypothesis that failed.** I expected the `` `tstp.hh `` temporal accessor to be the bottleneck of Q4 and tested an alternative extraction. The timings were the same (645.38 ms against 649.71 ms). The cost is in grouping by a derived column, not in the extraction.
+- **A hardware limit, not a bug.** kdb+/q loaded all 112 blocks (167.8M rows, about 15 minutes) and was then killed by the WSL2 memory ceiling while holding 112 intermediate tables. The final benchmark uses 30 blocks, a size that runs repeatably, and the scope decision is documented.
 
-Hypothesized that the `` `tstp.hh `` temporal accessor was the bottleneck in
-the slow hour-of-day query (Q4), and tested an alternative extraction
-(`` (`int$`minute$tstp) div 60 ``) as a controlled comparison. Timings came
-back statistically identical (645.38 ms vs 649.71 ms) — hypothesis disproven.
-The real cost is the group-by-on-derived-column mechanism itself, not the
-extraction method. Worth including precisely *because* it didn't confirm the
-hypothesis — a benchmark is only credible if negative results get reported too.
+![Impact of the grouped attribute](images/kdb_attribute_impact.png)
 
-### A real infrastructure limit, not a bug
+## Methodology
 
-kdb+/q successfully loaded the full 112-block dataset (167.8M rows, ~15.2 min)
-but the process was then OOM-killed by WSL2's memory ceiling while holding all
-112 intermediate block-tables in memory prior to concatenation. Rather than
-guess at an untested larger scale, 30 blocks (45.9M rows) was chosen as a
-safe, repeatable scale for the final benchmark — a deliberate scope decision,
-documented rather than hidden.
+- **Same work on both sides:** identical 5 queries on the same CSV files, the same machine and the same environment. The point-filter household is fixed in both scripts.
+- **Load time is separate** from query time, because loading is a one-off cost and a real workload does not repeat it.
+- **Data quality:** 50 rows per block hold the literal string `"Null"` instead of a number in the energy column. Both engines convert it to a proper null (`TRY_CAST` in DuckDB, string substitution in q) instead of failing or dropping rows.
+- **Scale chosen from a measurement:** the largest size that completed repeatably, not an extrapolation from a smaller one.
 
-### Data quality
+## Part 1: AWS analysis of the aggregated data
 
-50 rows per block carry the literal string `"Null"` instead of a numeric
-reading in the energy column — converted to a proper null in both engines
-(`TRY_CAST` in DuckDB, `ssr` substitution in q) rather than erroring or
-silently dropping rows.
+Raw meter data in S3, queried with Athena (serverless SQL), then analysed in Python: 4,443 meters, 17,520 half-hourly observations, 2013; 305 meters with more than 20% missing data removed, 4,138 kept.
 
-### Tools & Technologies
+| What | Result |
+|---|---|
+| Consumption groups | Three groups of nearly equal size (34%, 33%, 33%) plus 2 inactive meters |
+| Prophet forecasts, one meter per group | MAE 0.036, 0.070 and 0.495 from the lowest- to the highest-consuming group |
+| Anomalies in the daily total | Z-score flagged 7 days, IQR 8 days; they agree on 87.5% |
 
-| Category | Tools |
-|----------|-------|
-| **Database** | KDB-X 5.0 Community Edition (kdb+/q), DuckDB |
-| **Environment** | WSL2 / Ubuntu |
-| **Language** | q, Python |
-| **Visualization** | matplotlib |
-| **Version Control** | Git, GitHub |
+![Anomaly detection](images/anomaly_detection.png)
 
----
+Read these results with the caveats:
 
-## Part 1 — AWS Time Series Forecasting
+- **The group names are interpretation.** The groups were named Industrial, Commercial and Residential from consumption level. The dataset has no building-type label, so the names are not ground truth.
+- **Three meters are a sample, not an evaluation.** The forecast errors come from one meter per group and show that error grows with consumption, not how well the method forecasts in general.
+- **Explanations for the anomalous days are guesses.** A cold snap on 18 Feb 2013 (the highest day) is a plausible reason, but no weather data is used in the analysis, so it was not tested.
 
-This project demonstrates **end-to-end data engineering and analytics** using cloud infrastructure and advanced data science techniques. The analysis covers 4,443 smart meters from London (2013) with forecasting, anomaly detection, and segmentation.
+## Testing
 
-**Skills demonstrated:**
-- ☁️ **AWS Cloud:** S3, Athena, serverless architecture
-- 📊 **SQL:** Complex queries, aggregations, filtering on 4.4M data points
-- 📈 **Time Series:** Prophet forecasting, decomposition, stationarity testing
-- 🔍 **Anomaly Detection:** Z-score and IQR methods
-- 📋 **Data Segmentation:** Clustering based on consumption patterns
-- 📉 **Visualization:** Interactive dashboards with Plotly
+There is **no automated test suite and no CI** in this repository. What was checked, by hand:
 
-### Dataset
+- Each timing is the average of repeated runs on the same machine; the DuckDB side was run against real data before the q side.
+- The `"Null"` rows are handled in both engines.
+- The one hypothesis test (Q4 accessor) is a controlled comparison.
 
-**London Smart Meter Energy Data (2013)**
-- **Size:** 587 MB (17,520 observations × 4,444 columns)
-- **Meters:** 4,443 smart meters
-- **Frequency:** 30-minute intervals
-- **Period:** Jan 1 - Dec 31, 2013
-- **Features:** Electricity and gas consumption
+**Not covered**
 
-Source: [Low Carbon London smart meter data (refactored) — 4TU.ResearchData](https://data.4tu.nl/datasets/fbbe775b-48d8-469f-a39b-b64488bfd6fd)
+- **Equal results from both engines.** The q script does not record the number of rows a query returns, so the benchmark compares times, not that both engines return the same answer.
+- **Other hardware, other data sizes and other versions.** The numbers come from one machine under WSL2 at 46M rows. kdb+/q ran out of memory at 167M rows, so that size was not compared.
+- **Cold-cache runs and concurrent load:** not measured; each figure is an average of repeated runs.
+- **Part 1:** no tests; the notebooks run against an S3 and Athena setup that is not in the repository.
 
-### Architecture
+## Limitations
 
-**Cloud Infrastructure**
-```
-Raw Data (S3: 587MB)
-        ↓
-   Athena (SQL)
-        ↓
-Python Processing
-        ↓
-Visualization & Dashboard
-```
+- One machine, one data set and five queries are enough to show where each engine is strong, not to rank them in general.
+- The benchmark ran on kdb+ Community Edition with no tuning beyond the grouped attribute.
+- Part 1's conclusions are descriptive: the consumption groups, the anomaly explanations and the forecast errors come from small samples and no external labels.
 
-**AWS Services Used:**
-- **S3:** Data storage (no preprocessing needed)
-- **Athena:** Serverless SQL queries (pay-per-query, no infrastructure)
-- **No EC2:** Fully managed, cost-effective solution
+**Tech stack:** kdb+/q (KDB-X 5.0 Community Edition), DuckDB, Python, WSL2, AWS S3 and Athena, pandas, statsmodels, Prophet, Plotly, matplotlib.
 
-**Local Processing**
-- **Python:** pandas, numpy, statsmodels, prophet
-- **Visualization:** Plotly, matplotlib
-- **Output:** Interactive HTML dashboard
-
-### Key Findings
-
-#### 1️⃣ Data Overview
-
-![Top 20 Consumers](images/top_20_meters.png)
-
-**Statistics:**
-- **Total Meters:** 4,443 (cleaned: 4,138 after removing >20% missing data)
-- **Average Consumption:** 0.215 kWh per meter
-- **Maximum Consumption:** 36,994 kWh (MAC004179 - Industrial)
-- **Minimum Consumption:** 0 kWh (2 inactive meters)
-
-**Key Insight:** Pareto principle evident - top 20 meters (0.45%) consume 15% of total energy. High inequality suggests market optimization opportunity.
-
-#### 2️⃣ Meter Segmentation
-
-![Segmentation Distribution](images/segmentation_count.png)
-
-**Three Categories:**
-
-| Segment | Count | Avg Consumption | Peak | Characteristics |
-|---------|-------|-----------------|------|-----------------|
-| **Industrial** | 1,407 (34%) | 6,478 kWh | 5.79 kWh/day | Factories, large facilities. High volatility, strong seasonality |
-| **Commercial** | 1,365 (33%) | 3,099 kWh | 0.31 kWh/day | Offices, warehouses. Declining trend (efficiency gains) |
-| **Residential** | 1,364 (33%) | 1,549 kWh | 0.19 kWh/day | Homes. Stable, low volatility, highly predictable |
-| **Inactive** | 2 (0.05%) | 0 kWh | 0 kWh | No data collected |
-
-![Consumption by Segment](images/segmentation_consumption.png)
-
-**Volatility Analysis:**
-```
-Residential:  1.191 (high variance relative to mean)
-Commercial:   1.015 (moderate variance)
-Industrial:   0.955 (more stable absolute values)
-```
-
-#### 3️⃣ Time Series Analysis & Forecasting
-
-**Method:** Prophet (Facebook's forecasting library)
-
-**Results:**
-
-| Segment | Meter | Daily Avg | Trend | Seasonality | Forecast MAE |
-|---------|-------|-----------|-------|-------------|--------------|
-| **Residential** | MAC003008 | 0.13 kWh | ↑ Increasing | Low | **0.0360** ✅ |
-| **Commercial** | MAC004186 | 0.23 kWh | ↓ Decreasing | Moderate | 0.0702 |
-| **Industrial** | MAC004179 | 2.11 kWh | ↑ Increasing | **High** | 0.4946 |
-
-**Key Findings:**
-
-1. **Stationarity Test:** ADF test p-value = 0.000441
-   - Data is stationary → suitable for ARIMA/Prophet
-
-2. **Seasonality:** Strong 365-day cycle
-   - Winter (Jan-Mar): ~0.8 kWh/day
-   - Summer (Jun-Aug): ~0.3 kWh/day
-   - Residential: minimal seasonality
-   - Industrial: amplitude 0.28 kWh
-
-3. **Forecast Accuracy:**
-   - Residential meters are 10x more predictable than Industrial
-   - MAE increases with consumption volatility
-   - Useful for demand planning and pricing strategies
-
-#### 4️⃣ Anomaly Detection
-
-![Anomalies Detected](images/anomaly_detection.png)
-
-**Methods:**
-- **Z-Score:** Values >2.5 standard deviations → 7 anomalies
-- **IQR (Interquartile Range):** Q1-1.5×IQR to Q3+1.5×IQR → 8 anomalies
-- **Confidence:** 87.5% agreement between methods
-
-**Top 5 Anomalous Days:**
-
-| Date | Consumption | Reason |
-|------|-------------|--------|
-| **Feb 18, 2013** | 278.0 kWh | Extreme cold snap - maximum heating demand |
-| **Nov 13, 2013** | 270.8 kWh | Seasonal transition - heating season begins |
-| **Feb 17, 2013** | 234.4 kWh | Cold weather continuation |
-| **Nov 14, 2013** | 201.8 kWh | Winter approaching |
-| **Nov 12, 2013** | 191.8 kWh | Heating systems activated |
-
-**Pattern:** Most anomalies are upward spikes caused by:
-- Extreme weather (cold snaps)
-- Seasonal transitions
-- Equipment failures or maintenance
-
-### Technical Implementation
-
-**AWS + SQL**
-
-**Athena Queries (Sample):**
-
-```sql
--- Segment meters by consumption
-SELECT 
-    'MAC000002' as meter,
-    COUNT(*) as measurements,
-    AVG(MAC000002) as avg_consumption,
-    MAX(MAC000002) as peak,
-    STDDEV(MAC000002) as std_dev
-FROM lcl_2013
-WHERE MAC000002 IS NOT NULL
-```
-
-**Key SQL Features Used:**
-- Aggregations: SUM, AVG, MAX, MIN, STDDEV, COUNT
-- String functions: SUBSTR for date parsing
-- Set operations: UNION ALL for combining results
-- Filtering: WHERE for NULL handling and data quality
-- Sorting: ORDER BY for ranking
-
-**Performance:** Sub-second queries on 4.4M data points
-
-**Time Series (Python)**
-
-**Libraries:**
-```python
-from statsmodels.tsa.seasonal import seasonal_decompose
-from statsmodels.tsa.stattools import adfuller
-from prophet import Prophet
-from sklearn.metrics import mean_absolute_error
-```
-
-**Pipeline:**
-1. **Data Preparation:** Aggregate to daily frequency
-2. **Stationarity Test:** ADF test (p-value = 0.000441)
-3. **Decomposition:** Trend + Seasonal + Residual
-4. **Forecasting:** Prophet model with yearly & weekly seasonality
-5. **Validation:** 80/20 train-test split, MAE metric
-6. **Anomaly Detection:** Z-score & IQR methods
-
-**Code Example:**
-```python
-# Train Prophet model
-model = Prophet(yearly_seasonality=True, weekly_seasonality=True)
-model.fit(train_data)
-
-# Make predictions
-future = model.make_future_dataframe(periods=365)
-forecast = model.predict(future)
-
-# Evaluate
-mae = mean_absolute_error(test_data, forecast['yhat'])
-```
-
-### Project Statistics
-
-| Metric | Value |
-|--------|-------|
-| Data Points | 17,520 observations |
-| Meters Analyzed | 4,443 |
-| Time Period | 1 year (2013) |
-| Data Cleaning | Removed 305 meters (>20% missing) |
-| SQL Queries | 10+ complex queries |
-| Forecasts Generated | 3 (one per segment) |
-| Anomalies Detected | 8 (2% of data) |
-| Average MAE | 0.20 |
-
-### Tools & Technologies
-
-| Category | Tools |
-|----------|-------|
-| **Cloud** | AWS S3, AWS Athena |
-| **Data Processing** | Python, pandas, numpy |
-| **Time Series** | statsmodels, Prophet |
-| **Visualization** | Plotly, matplotlib |
-| **Database** | SQL (Presto/Trino) |
-| **Version Control** | Git, GitHub |
-
-### Files & Resources
-
-- **Data:** `data/meter_segmentation.csv`, `data/anomalies.csv`
-- **Images:** PNG exports of all charts
-- **Code:** Python notebooks with full pipeline
-
----
-
-## Conclusion
-
-Together, these two parts demonstrate the same energy dataset worked at two
-different layers: **Part 2** shows raw row-level database performance
-engineering (KDB+/Q vs SQL, ~46M rows, with rigorous benchmarking
-methodology, a documented optimization, an honest negative result, and a
-real infrastructure limit worked around deliberately) and **Part 1** shows
-cloud-scale analytics and forecasting (AWS S3/Athena, Prophet, anomaly
-detection, segmentation) across 4,443 meters over a full year — actionable
-for energy companies in demand planning, pricing, and anomaly detection.
-
----
-
-*Last Updated: September 2026*
+**Related:** a measurement-first project with a stricter test suite and written leakage rules is [ML Data Guard](../ml-data-guard/index.md).

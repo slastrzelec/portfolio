@@ -43,13 +43,25 @@ A casual photo, outside the FER-2013 distribution. The model predicts **Neutral 
 
 Transfer learning beats the best from-scratch CNN by about 4.9 points of accuracy and 13 points of macro F1. Happy and Surprise are recognized well; Fear is the weakest class (recall 0.44).
 
-## Related projects
+## Data security & privacy
 
-- [Cuneiform Sign Classifier](../20_cuneiform-sign-classifier/index.md) — the same ResNet18 transfer-learning approach on a very different image domain.
-- [People Counter](../people-counter-yolox/index.md) — modern object detection and tracking; this project keeps a classical Haar Cascade for the face-detection step and puts the effort into the classifier.
-- [Erythrocyte Shape Analyzer](../erythrocyte-shape-analyzer/index.md) — classical image processing (thresholding, contours, ellipse fitting) instead of a learned model.
+All inference runs locally — an uploaded photo is never sent to a third-party API, processed in memory only, and not logged or stored. Upload size and type are validated.
 
-## Limitations, stated plainly
+## Testing
+
+**Automated tests run on every push and pull request** (pytest in GitHub Actions). They are organised by module: data handling, evaluation code and model code.
+
+**What is verified**
+
+- The code around the model: data handling, the evaluation metrics and the model definition.
+
+**Not covered**
+
+- **The accuracy of the trained model.** The numbers above come from `evaluate.py` on the FER-2013 test split, run by hand after training on a free Colab GPU; CI does not recompute them.
+- Face detection with the Haar Cascade on real photographs, and the Streamlit interface in a browser.
+- Photographs from outside FER-2013 beyond the single example above.
+
+## Limitations
 
 - The 68–72% target I set in the spec was **not reached** — the ResNet ends at 67.96%.
 - The first CNN run (51.70%) was underfit, which would have made the gap look like ~16 points. I re-ran the CNN under two lighter pipelines to get a fair baseline, and the table shows all runs.
@@ -57,14 +69,10 @@ Transfer learning beats the best from-scratch CNN by about 4.9 points of accurac
 - FER-2013 is a curated dataset; accuracy on casual, in-the-wild photos will likely be lower. The Haar Cascade also misses faces at extreme angles or with occlusion.
 - Disgust has only 111 test images, so its per-class numbers are statistically weak.
 
-## Data security & privacy
+**Tech stack:** Python, PyTorch, torchvision (ResNet18), OpenCV, Streamlit, scikit-learn, pytest, GitHub Actions. License: MIT.
 
-All inference runs locally — an uploaded photo is never sent to a third-party API, processed in memory only, and not logged or stored. Upload size and type are validated.
+**Related projects:**
 
-## Tech stack
-
-Python · PyTorch · torchvision (ResNet18) · OpenCV · Streamlit · scikit-learn · GitHub Actions
-
-## License
-
-MIT
+- [Cuneiform Sign Classifier](../20_cuneiform-sign-classifier/index.md) — the same ResNet18 transfer-learning approach on a very different image domain.
+- [People Counter](../people-counter-yolox/index.md) — modern object detection and tracking; this project keeps a classical Haar Cascade for the face-detection step and puts the effort into the classifier.
+- [Erythrocyte Shape Analyzer](../erythrocyte-shape-analyzer/index.md) — classical image processing (thresholding, contours, ellipse fitting) instead of a learned model.
