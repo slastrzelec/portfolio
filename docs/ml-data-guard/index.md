@@ -80,7 +80,7 @@ pip install ml-data-guard
 As a step in GitHub Actions, failing the job on any anomaly:
 
 ```yaml
-- uses: slastrzelec/ml-data-guard@v0.1.0
+- uses: slastrzelec/ml-data-guard@v0.2.0
   with:
     batch: data/batch.csv
     schema: schema.json
@@ -97,9 +97,26 @@ The package is published from a tagged commit by a GitHub Actions workflow with 
 
 Every command exits with 0 (clean), 1 (anomaly) or 2 (unreadable input) and prints text or JSON.
 
+## Web service (FastAPI)
+
+The same checks as a small HTTP service with a one-page front end: break a synthetic batch and see which rule notices, or infer a schema from a CSV file and check another file against it. Interactive API documentation is generated at `/docs`.
+
+```bash
+pip install "ml-data-guard[api]"
+python -m mlguard.api          # http://localhost:7860
+docker build -t mlguard-api . && docker run -p 7860:7860 mlguard-api
+```
+
+- **Endpoints:** `/api/v1/demo` (fault injection on synthetic data, verdict of every rule), `/api/v1/infer`, `/api/v1/validate`, `/api/v1/compare` (CSV uploads), `/api/v1/health`.
+- **Uploads:** read into memory and released with the request, never written to disk or logged; 2 MB, 50,000 rows and 200 columns at most; no category value in any answer unless asked for; inferred schemas store categories hashed.
+- **Browser side:** no cookies, no third-party script on the page, a strict Content-Security-Policy, answers written as text and never as markup.
+- **Logs:** method, path, status and duration only; no client address, no query string, no file name.
+- **Container:** non-root user; CI builds the image, starts it and checks that it answers and logs no client address.
+- **No public instance.** Docker hosting is not free on Hugging Face any more, and free Gradio Spaces stop any app without a GPU function; faking one to pass the check was rejected. The results explorer above is the public demo.
+
 ## Testing
 
-699 tests; no network, no API key and no data download needed. `ruff`, `pytest` with a 95% coverage threshold and `pip-audit` run on Python 3.11 and 3.12 in GitHub Actions; Dependabot watches the dependencies.
+780 tests; no network, no API key and no data download needed. `ruff`, `pytest` with a 95% coverage threshold and `pip-audit` run on Python 3.11 and 3.12 in GitHub Actions; Dependabot watches the dependencies.
 
 **What is verified**
 
@@ -109,9 +126,10 @@ Every command exits with 0 (clean), 1 (anomaly) or 2 (unreadable input) and prin
 - **The validator's limits:** it catches six of the twelve faults; the other six are asserted to be missed, so the blind spot is documented by a test.
 - **Privacy:** with hashed or omitted domains no category value appears in a schema file or a report; cell values are not printed unless asked for.
 - **Command line:** exit codes, JSON output and the walk-through in the examples, which is executed command by command.
-- **Hygiene:** no socket can be opened during tests; no data, secret or large file is tracked.
+- **Web service:** every endpoint, each upload limit and malformed input (zip, gzip, binary, non-UTF-8, broken quoting, too many rows, columns or bytes) answered with a short error and no traceback; a sentinel category value placed in an upload appears in no answer; no file is written during requests; the log holds no query string, file name or client; the demo calibrates on clean rows only.
+- **Hygiene:** no test can connect to another host; no data, secret or large file is tracked.
 - **The results explorer:** every cell of every published result file appears in it with the same rate and interval, cells that were not scored stay empty, and a stale page fails the suite.
-- **The tests themselves:** a script re-introduces 95 hand-written bugs one at a time (for example, thresholds calibrated on the evaluation split, or exit code 0 despite anomalies) and requires the suite to fail for each. This is targeted, not exhaustive, mutation testing.
+- **The tests themselves:** a script re-introduces 104 hand-written bugs one at a time (for example, thresholds calibrated on the evaluation split, or exit code 0 despite anomalies) and requires the suite to fail for each. This is targeted, not exhaustive, mutation testing.
 
 **Not covered**
 
@@ -119,7 +137,9 @@ Every command exits with 0 (clean), 1 (anomaly) or 2 (unreadable input) and prin
 - The published numbers themselves: tests cover the code on small synthetic runs; the full runs were made on one machine.
 - The loaders on the real files (CI has no network; they are tested on hand-made archives of the same format) and the download script.
 - Whether the synthetic faults resemble real incidents.
-- How the explorer renders: no JavaScript test in CI; it was stepped through all 559 combinations in one browser engine.
+- The web front end and the explorer in a browser: no JavaScript test in CI; both were clicked through in headless Chromium.
+- Abuse of the web service: no rate limiting by client, no timeout, no load test.
+- How the explorer renders: it was stepped through all 559 combinations in one browser engine.
 - pandas nullable and Arrow-backed dtypes, Parquet input, and tables above 20,000 rows for validation and the skew check.
 
 ## Limitations
