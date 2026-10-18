@@ -3,7 +3,7 @@
 # Welcome to My Portfolio 👋
 
 <p style="text-align: justify;">
-Hi! My name is <strong>Sławomir Strzelec</strong>. I'm an <strong>ML Engineer & Data Scientist</strong> with a research background in organic chemistry, nanotechnology, and spectroscopy, and hands-on experience shipping production AI systems: retrieval-augmented generation with a tested REST API and CI/CD, autonomous LLM agents, computer vision, and deployed ML models for chemical property prediction.
+Hi! My name is <strong>Sławomir Strzelec</strong>. I'm an <strong>AI/ML Engineer</strong> with a research background in organic chemistry, nanotechnology, and spectroscopy, and hands-on experience shipping production AI systems: retrieval-augmented generation with a tested REST API and CI/CD, autonomous LLM agents, computer vision, and deployed ML models for chemical property prediction.
 In this portfolio, you'll find selected projects showcasing that mix of scientific depth and engineering practice.
 </p>
 

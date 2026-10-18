@@ -4,7 +4,7 @@
 
 <p style="text-align: justify;">
 Hello! 👋  
-My name is <strong>Sławomir Strzelec</strong>. I'm an <strong>ML Engineer & Data Scientist</strong> with a research background in organic chemistry, nanotechnology, and spectroscopy — and hands-on engineering experience building production-grade AI systems, from retrieval-augmented generation pipelines to deployed REST APIs.
+My name is <strong>Sławomir Strzelec</strong>. I'm an <strong>AI/ML Engineer</strong> with a research background in organic chemistry, nanotechnology, and spectroscopy — and hands-on engineering experience building production-grade AI systems, from retrieval-augmented generation pipelines to deployed REST APIs.
 </p>
 
 <p style="text-align: justify;">
