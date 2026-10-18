@@ -2,13 +2,13 @@
 
 <img src="../dowod.jpg" alt="Sławomir Strzelec" width="250" style="float: right; margin-left: 20px; margin-bottom: 20px; border-radius: 10px;">
 
-<p style="text-align: justify;">
+<p>
 Hello! 👋  
-My name is <strong>Sławomir Strzelec</strong>. I'm an <strong>AI/ML Engineer</strong> with a research background in organic chemistry, nanotechnology, and spectroscopy — and hands-on engineering experience building production-grade AI systems, from retrieval-augmented generation pipelines to deployed REST APIs.
+My name is <strong>Sławomir Strzelec</strong>. I'm an <strong>AI/ML Engineer</strong> with a research background in organic chemistry, nanotechnology, and spectroscopy — and hands-on engineering practice building AI systems end to end, from retrieval-augmented generation pipelines to tested, publicly deployed REST APIs.
 </p>
 
-<p style="text-align: justify;">
-I combine a rigorous scientific foundation with modern software engineering practices: not just prototyping ML models, but shipping them as tested, containerized, monitored, and publicly deployed systems. My flagship project — a Carbon Nanotubes RAG System — went through six deliberate development phases: correct retrieval math, a validated REST API, structured logging, Docker, CI/CD, and live deployment. It's the clearest demonstration of how I work.
+<p>
+I combine a rigorous scientific foundation with modern software engineering practices: not just prototyping ML models, but packaging them as tested, containerized, and publicly deployed systems. My flagship project — a Carbon Nanotubes RAG System — went through six deliberate development phases: correct retrieval math, a validated REST API, structured logging, Docker, CI/CD, and live deployment. It's the clearest demonstration of how I work.
 </p>
 
 ---
@@ -27,9 +27,9 @@ I combine a rigorous scientific foundation with modern software engineering prac
 
 ## 🚀 Featured Project
 
-**Carbon Nanotubes RAG System — Production RAG**
+**Carbon Nanotubes RAG System**
 
-A Streamlit prototype rebuilt into a full production system: hybrid dense+BM25 retrieval, a validated REST API, 31 automated tests (CI via GitHub Actions), Docker containers, and a live public deployment.
+A Streamlit prototype rebuilt into a deployed, tested system: hybrid dense+BM25 retrieval, a validated REST API, 31 automated tests (CI via GitHub Actions), Docker containers, and a live public deployment.
 
 - **Faithfulness ≈ 0.80–0.82** (RAGAs evaluation, 14-question domain set)
 - **31/31 tests passing**, enforced automatically on every push
@@ -39,42 +39,27 @@ A Streamlit prototype rebuilt into a full production system: hybrid dense+BM25 r
 
 ## Skills
 
-### 🤖 AI & Machine Learning
-- **LLM & Generative AI:** RAG, LangChain, LangGraph, prompt engineering, OpenAI API, agentic AI systems
-- **AI Evaluation:** RAGAs (faithfulness, answer quality)
-- **Vector Search:** FAISS, embeddings, hybrid (dense + BM25) retrieval
-- **Classical ML:** scikit-learn, PyCaret, regression, classification, model evaluation
-- **Deep Learning:** PyTorch
-- **Computer Vision:** OpenCV, CNN-based models
+**Core (used in my projects daily)**
 
-### 🧑‍💻 Backend, APIs & Engineering
-- **Python**, FastAPI, REST API design
-- SQL, PostgreSQL
-- **Docker** & docker-compose (multi-container systems, production deployment)
-- **CI/CD:** GitHub Actions, automated testing (pytest)
-- Structured logging & observability
-- Git, GitHub
-- PySpark (distributed data processing)
-- Linux (CLI, environment management)
+- **Python**, FastAPI, REST API design, pytest
+- **LLM & agentic AI:** RAG, LangChain, LangGraph, OpenAI API, prompt engineering, RAGAs evaluation
+- **Vector search:** FAISS, embeddings, hybrid (dense + BM25) retrieval
+- **ML / DL:** scikit-learn, PyTorch, XGBoost, model evaluation
+- **Engineering:** Docker, GitHub Actions (CI/CD), Git, structured logging
+- **SQL**, PostgreSQL
 
-### 📊 Data Analysis & Visualization
-- Exploratory Data Analysis (EDA)
-- Descriptive and inferential statistics
-- Data visualization and storytelling
+**Working knowledge**
 
-### 🧪 Chemistry, Materials Science & Scientific Computing
-- Organic synthesis and reaction optimization
-- Nanotechnology of carbon structures (CNTs)
-- Spectroscopy: NMR, Raman, UV–Vis
-- **Chemoinformatics** (RDKit, molecular descriptors)
-- Scientific literature research (SciFinder, Reaxys)
+- Computer vision: OpenCV, CNN-based models
+- Chemoinformatics: RDKit, molecular descriptors
+- Streamlit, EDA, statistics, data visualization (Plotly, Looker Studio)
+- Spectroscopy and scientific computing: NMR, Raman, UV–Vis, SciFinder, Reaxys
 
-### 🧠 Soft Skills
-- Grant writing & stakeholder communication
-- Analytical thinking
-- Teaching and mentoring
-- Science communication
-- Time management and teamwork
+**Familiar**
+
+- PySpark, BigQuery, AWS SageMaker, Linux CLI
+
+**Also:** grant writing, teaching and mentoring, science communication.
 
 ---
 
@@ -107,11 +92,6 @@ A Streamlit prototype rebuilt into a full production system: hybrid dense+BM25 r
 - **UNISON Project (2018–2019)**
   Authored and defended a national R&D funding application before an NCBR expert panel — application approved
 
-- **UNISON Internship – Chemical-Resistant Coatings (2016)**
-
-- **Coordination Chemistry Group – Jagiellonian University (2010)**
-  Research on vanadium-based metallopharmaceuticals
-
 ---
 
 ### 🧪 Scientific Interests
@@ -132,7 +112,7 @@ Organic chemistry, nanotechnology, spectroscopy, machine learning in science, qu
 
 ## My Projects
 
-My projects reflect both my scientific background and my engineering practice: production-grade RAG and agentic AI systems, computer vision for biomedical imaging, machine learning models for chemical property prediction, and end-to-end ML applications with full deployment — not just notebooks, but tested, documented, and shipped systems.
+My projects reflect both my scientific background and my engineering practice: RAG and agentic AI systems, computer vision for biomedical imaging, machine learning models for chemical property prediction, and end-to-end ML applications with deployment — not just notebooks, but tested and documented systems.
 
 <a href="../" target="_blank">→ See all projects</a>
 
@@ -147,6 +127,6 @@ My projects reflect both my scientific background and my engineering practice: p
 
 ---
 
-<p style="text-align: justify;">
+<p>
 I'm open to new challenges, collaborations, and opportunities in <strong>AI/ML engineering</strong>, <strong>agentic AI</strong>, and <strong>data science</strong>. 🚀
 </p>

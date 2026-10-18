@@ -2,9 +2,12 @@
 
 # Welcome to My Portfolio 👋
 
-<p style="text-align: justify;">
-Hi! My name is <strong>Sławomir Strzelec</strong>. I'm an <strong>AI/ML Engineer</strong> with a research background in organic chemistry, nanotechnology, and spectroscopy, and hands-on experience shipping production AI systems: retrieval-augmented generation with a tested REST API and CI/CD, autonomous LLM agents, computer vision, and deployed ML models for chemical property prediction.
-In this portfolio, you'll find selected projects showcasing that mix of scientific depth and engineering practice.
+<p>
+Hi! I'm <strong>Sławomir Strzelec</strong>, an <strong>AI/ML Engineer</strong> building RAG systems, LLM agents and computer-vision models. My background is in chemistry and nanotechnology, which is why I care about measurable results and honest evaluation, not just demos.
+</p>
+
+<p>
+<strong>Looking for:</strong> AI/ML engineering, agentic AI or data science roles · Kraków, Poland
 </p>
 
 
@@ -31,9 +34,10 @@ In this portfolio, you'll find selected projects showcasing that mix of scientif
 * [🌈 Raman Spectroscopy Analyzer (SciPy · Plotly)](raman-spectroscopy-analyzer/index.md)
 * [⛓️ Carbon Nanotube Visualizer (Plotly · ASE · Streamlit)](carbon-nanotube-visualizer/index.md)
 
-## About Me
+## About & Contact
 
-* [About Me](o-mnie.md) – learn more about my background and skills
+* [About Me](o-mnie.md) – background, skills and experience
+* 📧 [sla.strzelec@gmail.com](mailto:sla.strzelec@gmail.com) · 💼 [LinkedIn](https://www.linkedin.com/in/s%C5%82awomir-strzelec/) · 🐙 [GitHub](https://github.com/slastrzelec)
 
 
 
