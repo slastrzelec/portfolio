@@ -20,6 +20,9 @@ Hi! I'm <strong>Sławomir Strzelec</strong>, an <strong>AI/ML Engineer</strong> 
 * [🎯 CV-Job Matching System (OpenAI embeddings · Streamlit)](cv-job-matcher/index.md)
 * [⚡ KDB+/Q vs SQL Benchmark (kdb+/q · DuckDB · AWS · Prophet)](energy-forecasting-sql-vs-kdb/index.md)
 
+## ☁️ Cloud & Deployment
+* [☁️ GadAround on Google Cloud (Cloud Run · Cloud SQL · GitHub Actions · Cloudflare)](gadaround-gcp-deployment/index.md)
+
 ## 🖼️ Computer Vision
 * [🔬 Erythrocyte Analysis (OpenCV · Streamlit)](erythrocyte-shape-analyzer/index.md)
 * [🚶 People Counter (YOLOX-nano · ONNX Runtime · ByteTrack)](people-counter-yolox/index.md)

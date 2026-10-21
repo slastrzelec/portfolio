@@ -46,6 +46,8 @@ nav:
           - 🤖 Scientific Research Agent (LangChain · LangGraph · LangFuse): research-agent-langchain/index.md
           - 🎯 CV-Job Matching System (OpenAI embeddings · Streamlit): cv-job-matcher/index.md
           - ⚡ KDB+/Q vs SQL Benchmark (kdb+/q · DuckDB · AWS · Prophet): energy-forecasting-sql-vs-kdb/index.md
+      - ☁️ Cloud & Deployment:
+          - ☁️ GadAround on Google Cloud (Cloud Run · Cloud SQL · GitHub Actions · Cloudflare): gadaround-gcp-deployment/index.md
       - 🖼️ Computer Vision:
           - 🔬 Erythrocyte Analysis (OpenCV · Streamlit): erythrocyte-shape-analyzer/index.md
           - 🚶 People Counter (YOLOX-nano · ONNX Runtime · ByteTrack): people-counter-yolox/index.md
