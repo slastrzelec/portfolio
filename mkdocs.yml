@@ -1,4 +1,7 @@
 site_name: Portfolio - Sławomir Strzelec
+site_url: https://slastrzelec.github.io/portfolio/
+site_description: AI/ML Engineer portfolio of Sławomir Strzelec - RAG systems, LLM agents, computer vision and scientific ML. Tested, containerized, publicly deployed projects.
+site_author: Sławomir Strzelec
 extra_css:
   - stylesheets/extra.css
 
@@ -12,6 +15,7 @@ extra_javascript:
 
 theme:
   name: material
+  custom_dir: overrides
   palette:
     scheme: default
     primary: deep orange
