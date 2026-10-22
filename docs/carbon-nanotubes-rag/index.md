@@ -74,4 +74,4 @@ Answer + cited sources
 
 **Tech stack:** Python, FAISS, sentence-transformers, BM25, OpenAI API, FastAPI, Pydantic, Streamlit, Docker, docker-compose, RAGAs, pytest, GitHub Actions, Render.
 
-**Related:** the same carbon-nanotube topic is covered by the [Raman Spectroscopy Analyzer](../raman-spectroscopy-analyzer/index.md) (experimental spectra) and the [Carbon Nanotube Visualizer](../carbon-nanotube-visualizer/index.md) (structure and electronic properties).
+**Related:** the same carbon-nanotube topic is covered by the [Raman Spectroscopy Analyzer](../raman-spectroscopy-analyzer/index.md) (experimental spectra) and the [Carbon Nanotube Visualizer](../carbon-nanotube-visualizer/index.md) (structure and electronic properties). The same system is exposed to AI agents through a read-only MCP server in [Carbon Nanotubes RAG over MCP](../carbon-nanotubes-rag-mcp/index.md).

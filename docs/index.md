@@ -13,6 +13,7 @@ Hi! I'm <strong>Sławomir Strzelec</strong>, an <strong>AI/ML Engineer</strong> 
 
 ## 🌟 Featured Projects
 * [💡 Carbon Nanotubes RAG System (FastAPI · Docker · FAISS · RAGAs)](carbon-nanotubes-rag/index.md)
+* [🔌 Carbon Nanotubes RAG over MCP (MCP · LangGraph · Agent evaluation)](carbon-nanotubes-rag-mcp/index.md)
 * [🛡️ ML Data Guard (Data validation · Fault-injection benchmark · CI)](ml-data-guard/index.md)
 * [🔍 SEM Nanostructure Classifier (PyTorch · ConvNeXt · Leakage-free evaluation)](sem-nanostructure-classifier/index.md)
 * [🏺 Cuneiform Sign Classifier (PyTorch · Grad-CAM · HF Hub)](20_cuneiform-sign-classifier/index.md)
