@@ -1,0 +1,58 @@
+/* Palette: calm navy and teal, checked for readable contrast on white */
+:root > * {
+  --md-primary-fg-color: #1f3a5f;
+  --md-primary-fg-color--light: #3b5b86;
+  --md-primary-fg-color--dark: #14263f;
+  --md-accent-fg-color: #0b7285;
+  --md-typeset-a-color: #0b5fa5;
+}
+
+/* Body text: left-aligned for easier reading */
+.md-typeset p,
+.md-typeset li {
+  text-align: left;
+}
+
+.md-typeset {
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+/* Project cards on the home page */
+.md-typeset .card {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-left: 4px solid var(--md-accent-fg-color);
+  border-radius: 6px;
+  padding: 0.2rem 1.1rem 0.6rem;
+  margin: 1.1rem 0;
+  background: var(--md-default-bg-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.md-typeset .card h3 {
+  margin-top: 0.9rem;
+  margin-bottom: 0.4rem;
+  font-weight: 700;
+}
+
+.md-typeset .card ul {
+  margin-top: 0.3rem;
+}
+
+.md-typeset .card li {
+  margin-bottom: 0.25rem;
+}
+
+/* Buttons under the intro */
+.md-typeset .md-button {
+  margin: 0.2rem 0.4rem 0.2rem 0;
+}
+
+/* Tables and images: keep wide content inside the page */
+.md-typeset table:not([class]) {
+  font-size: 0.78rem;
+}
+
+.md-typeset img {
+  border-radius: 4px;
+}
