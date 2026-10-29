@@ -46,6 +46,7 @@ A Streamlit prototype rebuilt into a deployed, tested system: hybrid dense+BM25 
 - **Vector search:** FAISS, embeddings, hybrid (dense + BM25) retrieval
 - **ML / DL:** scikit-learn, PyTorch, XGBoost, model evaluation
 - **Engineering:** Docker, GitHub Actions (CI/CD), Git, structured logging
+- **Cloud:** Google Cloud (Cloud Run, Cloud SQL, Secret Manager, Artifact Registry), Cloudflare
 - **SQL**, PostgreSQL
 
 **Working knowledge**
@@ -79,6 +80,9 @@ A Streamlit prototype rebuilt into a deployed, tested system: hybrid dense+BM25 
 ---
 
 ### 🔬 Scientific & Industry Experience
+
+- **Cloud & Data Engineer (AI/ML developer) – GadAround, early-stage startup (2026–present)**
+  Migrated a Flask application from SQLite to Cloud Run and PostgreSQL on Cloud SQL; built the CI/CD pipeline (GitHub Actions, keyless authentication to GCP) and custom-domain routing through Cloudflare. Two-person team. [Project page](gadaround-gcp-deployment/index.md)
 
 - **Data Engineer – HSBC (Apr 2026 – May 2026)**
   ETL/ELT pipelines, BigQuery, Looker Studio dashboards
@@ -128,5 +132,5 @@ My projects reflect both my scientific background and my engineering practice: R
 ---
 
 <p>
-I'm open to new challenges, collaborations, and opportunities in <strong>AI/ML engineering</strong>, <strong>agentic AI</strong>, and <strong>data science</strong>. 🚀
+I'm looking for <strong>AI/ML Engineer</strong> roles where I can build, evaluate and deploy AI applications.
 </p>
